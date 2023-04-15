@@ -1,9 +1,28 @@
+import axios from "axios";
 import Sidebar from "../../components/Sidebar";
+import { useState } from "react";
 
 function HomeDashboard() {
+    // Constants para recuperar dados do localStorage
     const nomeUsuario = localStorage.getItem("nome");
     const idUsuario = localStorage.getItem("id");
-    const tokenUsuario = localStorage.getItem("token");
+    // const tokenUsuario = localStorage.getItem("token");
+
+    // useStates para salvar os dados e exibir na tela
+    const [saldo, setSaldo] = useState();
+    const [receita, setReceita] = useState();
+    const [despesa, setDespesa] = useState();
+
+    // Constants para mes e ano que serão passadas na url
+    const data = new Date();
+    const mes = data.getMonth();
+    const ano = data.getFullYear();
+    axios.get(`//localhost:8080/api/home/${ idUsuario }/${ mes }/${ ano }`).then((response) => {
+        console.log(response);
+        setSaldo(response.data.saldo);
+        setReceita(response.data.receita);
+        setDespesa(response.data.despesas);
+    });
     return (
         <div>
             <Sidebar />
@@ -33,7 +52,7 @@ function HomeDashboard() {
                         <div className="card-single">
                             <div>
                                 <span>Saldo</span>
-                                <h2>R$548,56</h2>
+                                <h2>R${saldo}</h2>
                             </div>
                             <div>
                                 <span id="money" className="material-symbols-outlined">
@@ -44,14 +63,14 @@ function HomeDashboard() {
                         <div className="card-single">
                             <div>
                                 <span>Receita</span>
-                                <h2>R$1200,00</h2>
+                                <h2>R${receita}</h2>
                             </div>
                             <span id="up" className="material-symbols-outlined">arrow_upward</span>
                         </div>
                         <div className="card-single">
                             <div>
                                 <span>Despesa</span>
-                                <h2>R$651,44</h2>
+                                <h2>R${despesa}</h2>
                             </div>
                             <div>
                                 <span id="down" className="material-symbols-outlined">

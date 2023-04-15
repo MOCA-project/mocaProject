@@ -14,7 +14,7 @@ function Sidebar() {
                         <a href="/dashboard" className="active"><span className="material-symbols-outlined">pie_chart</span><span>Dashboard</span></a>
                     </li>
                     <li>
-                        <a href="/dashboard"><span className="material-symbols-outlined">description</span><span>Extrato</span></a>
+                        <a href="/dashboard/extrato"><span className="material-symbols-outlined">description</span><span>Extrato</span></a>
                     </li>
                     <li>
                         <a href="/dashboard"><span className="material-symbols-outlined">arrow_upward</span><span>Receita</span></a>
