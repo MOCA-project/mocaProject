@@ -8,7 +8,8 @@ import Extrato from "./pages/Dashboards/Extrato";
 // CSS
 import "./assets/css/style.css";
 import "./assets/css/header.css";
-import "./assets/css/style2.css"
+import "./assets/css/style2.css";
+import "./assets/css/popup.css";
 
 
 function App() {
