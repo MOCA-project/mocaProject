@@ -1,6 +1,7 @@
 import axios from "axios";
 import Sidebar from "../../components/Sidebar";
 import { useState } from "react";
+import Select from "../../components/Select";
 
 function HomeDashboard() {
     // Constants para recuperar dados do localStorage
@@ -16,7 +17,7 @@ function HomeDashboard() {
 
     // Constants para mes e ano que serão passadas na url
     const data = new Date();
-    const mes = data.getMonth();
+    const mes = data.getMonth() + 1;
     const ano = data.getFullYear();
     axios.get(`//localhost:8080/api/home/${ idUsuario }/${ mes }/${ ano }`).then((response) => {
         console.log(response);
@@ -35,10 +36,9 @@ function HomeDashboard() {
                             <span className="material-symbols-outlined">menu</span>
                         </label>
                     </h2>
-
+                    
                     <div className="search-wrapper">
-                        <span className="material-symbols-outlined">playlist_add_check</span>
-                        <input type="month" />
+                        <Select/>
                     </div>
 
                     <div className="user-wrapper">
@@ -94,7 +94,8 @@ function HomeDashboard() {
                     </div>
 
                     <div className="cards-dash">
-                        <div className="card-pos"></div>
+                        <div className="card-pos">
+                        </div>
                         <div className="card-pos">
                             <h2>Receitas por categorias</h2>
                         </div>
