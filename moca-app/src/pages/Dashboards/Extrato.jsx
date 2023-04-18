@@ -1,6 +1,7 @@
 import axios from "axios";
 import PopupReceita from "../../components/PopupReceita";
 import { useState } from "react";
+import Sidebar from "../../components/Sidebar";
 
 function Extrato() {
     const idUsuario = localStorage.getItem("id");
@@ -19,6 +20,7 @@ function Extrato() {
 
     return (
         <div>
+            {/* <Sidebar /> */}
             <button onClick={cadReceita}>Cadastrar receita</button>
             {showModal && (
                 <PopupReceita />

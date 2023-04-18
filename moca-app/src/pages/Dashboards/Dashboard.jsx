@@ -12,6 +12,7 @@ function HomeDashboard() {
     const [saldo, setSaldo] = useState();
     const [receita, setReceita] = useState();
     const [despesa, setDespesa] = useState();
+    const [saldoCartao, setSaldoCartao] = useState();
 
     // Constants para mes e ano que serão passadas na url
     const data = new Date();
@@ -22,6 +23,7 @@ function HomeDashboard() {
         setSaldo(response.data.saldo);
         setReceita(response.data.receita);
         setDespesa(response.data.despesas);
+        setSaldoCartao(response.data.despesaCartao);
     });
     return (
         <div>
@@ -36,7 +38,7 @@ function HomeDashboard() {
 
                     <div className="search-wrapper">
                         <span className="material-symbols-outlined">playlist_add_check</span>
-                        <input type="" />
+                        <input type="month" />
                     </div>
 
                     <div className="user-wrapper">
@@ -81,7 +83,7 @@ function HomeDashboard() {
                         <div className="card-single">
                             <div>
                                 <span>Cartões</span>
-                                <h2>R$352,25</h2>
+                                <h2>R${saldoCartao}</h2>
                             </div>
                             <div>
                                 <span id="cartao" className="material-symbols-outlined">
