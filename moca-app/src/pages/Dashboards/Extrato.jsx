@@ -7,7 +7,7 @@ import "../../assets/css/style2.css";
 function Extrato() {
     const idUsuario = localStorage.getItem("id");
     const data = new Date();
-    const mes = data.getMonth();
+    const mes = data.getMonth() + 1;
     const ano = data.getFullYear();
     const [showModal, setShowModal] = useState(false);
 
