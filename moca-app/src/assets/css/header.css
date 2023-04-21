@@ -8,7 +8,7 @@
     --cinza-claro: #EFEFEF;
 }
 
-header {
+#header {
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -19,36 +19,36 @@ header {
 }
 
 
-header nav {
+#header nav {
     display: flex;
     justify-content: space-around;
     align-items: center;
 }
 
-header #logo {
+#header #logo {
     display: flex;
     justify-content: center;
     align-items: center;
     margin: 0 30px 0 0;
 }
 
-header #logo img {
+#header #logo img {
     width: 4rem;
 }
 
-header #logo h1 {
+#header #logo h1 {
     font-size: 2rem;
     font: 800;
 }
 
-header ul {
+#header ul {
     display: flex;
     justify-content: space-around;
     align-items: center;
     list-style: none;
 }
 
-header ul li a {
+#header ul li a {
     color: var(--preto);
     text-decoration: none;
     font-size: 0.9rem;
@@ -57,17 +57,17 @@ header ul li a {
     margin: 0 10px;
 }
 
-header ul li a:hover {
+#header ul li a:hover {
     color: var(--azul-claro);
 }
 
-header #btns {
+#header #btns {
     display: flex;
     align-items: center;
     gap: 1rem;
 }
 
-header #btns button {
+#header #btns button {
     width: 7.5rem;
     height: 2rem;
     font-size: 0.75rem;
@@ -90,7 +90,7 @@ header #btns button {
     border: 2px solid var(--azul-claro);
 }
 
-header .material-symbols-outlined {
+#header .material-symbols-outlined {
     color: var(--azul-claro);
     font-size: 30px;
     font-weight: 700;
@@ -143,11 +143,11 @@ header .material-symbols-outlined {
 
 
 @media screen and (max-width: 1200px) {
-    header .material-symbols-outlined {
+    #header .material-symbols-outlined {
         display: block;
     }
 
-    header ul, header #btns button {
+    #header ul, header #btns button {
         display: none;
     }
 

@@ -3,6 +3,7 @@ import Header from "../components/Header";
 import bolaAzul from "../assets/img/Vector (5).png";
 import bolaPreta from "../assets/img/Vector (4).png";
 import { armazenar } from "../LocalStorages";
+import "../assets/css/style.css";
 
 function Login() {
     function postLogin() {

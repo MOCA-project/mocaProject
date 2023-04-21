@@ -1,4 +1,5 @@
 import logo from "../assets/img/logoMoca.png";
+import "../assets/css/style2.css";
 
 function Sidebar() {
     return (
@@ -17,7 +18,7 @@ function Sidebar() {
                         <a href="/dashboard/extrato"><span className="material-symbols-outlined">description</span><span>Extrato</span></a>
                     </li>
                     <li>
-                        <a href="/dashboard"><span className="material-symbols-outlined">arrow_upward</span><span>Receita</span></a>
+                        <a href="/dashboard/receita"><span className="material-symbols-outlined">arrow_upward</span><span>Receita</span></a>
                     </li>
                     <li>
                         <a href="/dashboard"><span className="material-symbols-outlined">arrow_downward</span><span>Despesa</span></a>

@@ -14,7 +14,7 @@ function Header() {
 
   // Retornando a estrutura do component Header
   return (
-    <header className="col-xxl-12 col-xl-12 col-lg-12 col-md-12 col-sm-12 col-es-12">
+    <header id="header" className="col-xxl-12 col-xl-12 col-lg-12 col-md-12 col-sm-12 col-es-12">
       <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,700,0,0" />
       <nav>
         <a className="text-none" href="/">

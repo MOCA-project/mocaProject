@@ -1,6 +1,7 @@
 import axios from "axios";
 import Sidebar from "../../components/Sidebar";
 import { useState } from "react";
+import "../../assets/css/style2.css";
 
 function HomeDashboard() {
     // Constants para recuperar dados do localStorage
@@ -18,7 +19,7 @@ function HomeDashboard() {
     const data = new Date();
     const mes = data.getMonth();
     const ano = data.getFullYear();
-    axios.get(`//localhost:8080/api/home/${ idUsuario }/${ mes }/${ ano }`).then((response) => {
+    axios.get(`//localhost:8080/api/home/${idUsuario}/${mes}/${ano}`).then((response) => {
         console.log(response);
         setSaldo(response.data.saldo);
         setReceita(response.data.receita);
@@ -27,29 +28,30 @@ function HomeDashboard() {
     });
     return (
         <div>
+            <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0" />
             <Sidebar />
             <div className="main-content">
-                <header>
+                <header className="header">
                     <h2>
-                        <label style={{ cursor: "pointer" }} htmlFor="nav-toggle">
+                        <label style={{ cursor: 'pointer' }} htmlFor="nav-toggle">
                             <span className="material-symbols-outlined">menu</span>
                         </label>
                     </h2>
 
                     <div className="search-wrapper">
                         <span className="material-symbols-outlined">playlist_add_check</span>
-                        <input type="month" />
+                        <input type="text" />
                     </div>
 
                     <div className="user-wrapper">
                         <div>
+                            <small>Bem vindo,</small>
                             <h4>{nomeUsuario}</h4>
-                            <small>Super Admin</small>
                         </div>
                     </div>
                 </header>
 
-                <main>
+                <main className="main">
                     <div className="cards">
                         <div className="card-single">
                             <div>
@@ -57,9 +59,7 @@ function HomeDashboard() {
                                 <h2>R${saldo}</h2>
                             </div>
                             <div>
-                                <span id="money" className="material-symbols-outlined">
-                                    attach_money
-                                </span>
+                                <span id="money" className="material-symbols-outlined">attach_money</span>
                             </div>
                         </div>
                         <div className="card-single">
@@ -75,9 +75,7 @@ function HomeDashboard() {
                                 <h2>R${despesa}</h2>
                             </div>
                             <div>
-                                <span id="down" className="material-symbols-outlined">
-                                    arrow_downward
-                                </span>
+                                <span id="down" className="material-symbols-outlined">arrow_downward</span>
                             </div>
                         </div>
                         <div className="card-single">
@@ -86,27 +84,17 @@ function HomeDashboard() {
                                 <h2>R${saldoCartao}</h2>
                             </div>
                             <div>
-                                <span id="cartao" className="material-symbols-outlined">
-                                    credit_card
-                                </span>
+                                <span id="cartao" className="material-symbols-outlined">credit_card</span>
                             </div>
                         </div>
                     </div>
 
                     <div className="cards-dash">
                         <div className="card-pos"></div>
-                        <div className="card-pos">
-                            <h2>Receitas por categorias</h2>
-                        </div>
-                        <div className="card-pos">
-                            <h2>Cartões</h2>
-                        </div>
-                        <div className="card-pos">
-                            <h2>Despesa por categoria</h2>
-                        </div>
-                        <div className="card-pos">
-                            <h2>Porquinho</h2>
-                        </div>
+                        <div className="card-pos"><h2>Receitas por categorias</h2></div>
+                        <div className="card-pos"><h2>Cartões</h2></div>
+                        <div className="card-pos"><h2>Despesa por categoria</h2></div>
+                        <div className="card-pos"><h2>Porquinho</h2></div>
                     </div>
                 </main>
             </div>

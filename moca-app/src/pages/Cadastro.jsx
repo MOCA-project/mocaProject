@@ -3,6 +3,7 @@ import Header from "../components/Header";
 import vetorCadastro1 from "../assets/img/vetorCadastro1.png";
 import vetorCadastro2 from "../assets/img/vetorCadastro2.png";
 import { useState } from "react";
+import "../assets/css/style.css";
 
 function Cadastro() {
     const [data, setData] = useState(null);

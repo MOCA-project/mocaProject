@@ -5,11 +5,10 @@ import Login from "./pages/Login";
 import Cadastro from "./pages/Cadastro";
 import HomeDashboard from "./pages/Dashboards/Dashboard";
 import Extrato from "./pages/Dashboards/Extrato";
+import Receitas from "./pages/Dashboards/Receita";
 // CSS
 import "./assets/css/style.css";
 import "./assets/css/header.css";
-import "./assets/css/style2.css";
-import "./assets/css/popup.css";
 
 
 function App() {
@@ -21,6 +20,7 @@ function App() {
         <Route path="/cadastro" element={<Cadastro/>}/>
         <Route path="/dashboard" element={<HomeDashboard/>}/>
         <Route path="/dashboard/extrato" element={<Extrato/>}/>
+        <Route path="/dashboard/receita" element={<Receitas/>}/>
       </Routes>
     </Router>
   );

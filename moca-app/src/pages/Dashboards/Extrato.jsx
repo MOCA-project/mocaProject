@@ -2,6 +2,7 @@ import axios from "axios";
 import PopupReceita from "../../components/PopupReceita";
 import { useState } from "react";
 import Sidebar from "../../components/Sidebar";
+import "../../assets/css/style2.css";
 
 function Extrato() {
     const idUsuario = localStorage.getItem("id");
