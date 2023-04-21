@@ -1,17 +1,20 @@
 import axios from "axios";
 import Sidebar from "../../components/Sidebar";
 import { useState } from "react";
-<<<<<<< HEAD
 import "../../assets/css/style2.css";
-=======
 import Select from "../../components/Select";
->>>>>>> 063f332f714e7f2be34e2ba212c2825cc9a5dac1
+
+
 
 function HomeDashboard() {
+
+
     // Constants para recuperar dados do localStorage
     const nomeUsuario = localStorage.getItem("nome");
     const idUsuario = localStorage.getItem("id");
     // const tokenUsuario = localStorage.getItem("token");
+
+
 
     // useStates para salvar os dados e exibir na tela
     const [saldo, setSaldo] = useState();
@@ -19,10 +22,16 @@ function HomeDashboard() {
     const [despesa, setDespesa] = useState();
     const [saldoCartao, setSaldoCartao] = useState();
 
+
+
     // Constants para mes e ano que serão passadas na url
     const data = new Date();
     const mes = data.getMonth() + 1;
     const ano = data.getFullYear();
+
+
+
+    // Requisição do endpoint para mostrar as informações do usuário
     axios.get(`//localhost:8080/api/home/${idUsuario}/${mes}/${ano}`).then((response) => {
         console.log(response);
         setSaldo(response.data.saldo);
@@ -30,6 +39,8 @@ function HomeDashboard() {
         setDespesa(response.data.despesas);
         setSaldoCartao(response.data.despesaCartao);
     });
+
+
     return (
         <div>
             <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0" />
@@ -43,12 +54,9 @@ function HomeDashboard() {
                     </h2>
                     
                     <div className="search-wrapper">
-<<<<<<< HEAD
+
                         <span className="material-symbols-outlined">playlist_add_check</span>
-                        <input type="text" />
-=======
                         <Select/>
->>>>>>> 063f332f714e7f2be34e2ba212c2825cc9a5dac1
                     </div>
 
                     <div className="user-wrapper">
@@ -98,28 +106,12 @@ function HomeDashboard() {
                     </div>
 
                     <div className="cards-dash">
-<<<<<<< HEAD
+
                         <div className="card-pos"></div>
                         <div className="card-pos"><h2>Receitas por categorias</h2></div>
                         <div className="card-pos"><h2>Cartões</h2></div>
                         <div className="card-pos"><h2>Despesa por categoria</h2></div>
                         <div className="card-pos"><h2>Porquinho</h2></div>
-=======
-                        <div className="card-pos">
-                        </div>
-                        <div className="card-pos">
-                            <h2>Receitas por categorias</h2>
-                        </div>
-                        <div className="card-pos">
-                            <h2>Cartões</h2>
-                        </div>
-                        <div className="card-pos">
-                            <h2>Despesa por categoria</h2>
-                        </div>
-                        <div className="card-pos">
-                            <h2>Porquinho</h2>
-                        </div>
->>>>>>> 063f332f714e7f2be34e2ba212c2825cc9a5dac1
                     </div>
                 </main>
             </div>
