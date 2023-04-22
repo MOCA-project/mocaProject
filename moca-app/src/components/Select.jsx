@@ -17,7 +17,7 @@ function Select() {
     return (
       <select>
         {opcoes.map((opcao) => (
-          <option key={opcao.value} value={opcao.value} onChange={() => {setMesRequest(opcao.value)}}>
+          <option key={opcao.value} value={opcao.value}>
             {opcao.label} / {opcao.value}
           </option>
         ))}

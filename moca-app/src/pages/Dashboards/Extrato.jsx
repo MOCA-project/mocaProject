@@ -5,11 +5,27 @@ import Sidebar from "../../components/Sidebar";
 import "../../assets/css/style2.css";
 
 function Extrato() {
+
+    
+
+    // Validar se o usuario efetuou login antes de acessar a dashboard
+    function verificarAutenticacao(){
+        if(idUsuario === ""){
+            window.location.href = "/login";
+        }
+    }
+    verificarAutenticacao();
+
+
+
+
     const idUsuario = localStorage.getItem("id");
     const data = new Date();
     const mes = data.getMonth() + 1;
     const ano = data.getFullYear();
     const [showModal, setShowModal] = useState(false);
+
+
 
     axios.get(`//localhost:8080/api/extrato/${idUsuario}/${mes}/${ano}`).then((response) => {
         console.log(response);
@@ -21,7 +37,7 @@ function Extrato() {
 
     return (
         <div>
-            {/* <Sidebar /> */}
+            <Sidebar />
             <button onClick={cadReceita}>Cadastrar receita</button>
             {showModal && (
                 <PopupReceita />

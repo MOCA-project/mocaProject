@@ -36,7 +36,11 @@ function Sidebar() {
                         <a href="/dashboard"><span className="material-symbols-outlined">settings</span><span>Configurações</span></a>
                     </li>
                     <li>
-                        <a href="/dashboard"><span className="material-symbols-outlined">keyboard_backspace</span><span>Sair</span></a>
+                        <a href="/login" onClick={() => {
+                            localStorage.setItem("id", "");
+                            localStorage.setItem("nome", "");
+                            localStorage.setItem("token", "");
+                        }}><span className="material-symbols-outlined">keyboard_backspace</span><span>Sair</span></a>
                     </li>
                 </ul>
             </div>

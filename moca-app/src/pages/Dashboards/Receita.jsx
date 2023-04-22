@@ -5,15 +5,31 @@ import "../../assets/css/style2.css";
 
 function Receitas() {
 
+
+    
+    // Validar se o usuario efetuou login antes de acessar a dashboard
+    function verificarAutenticacao(){
+        if(idUsuario === ""){
+            window.location.href = "/login";
+        }
+    }
+    verificarAutenticacao();
+
+
+
     // Constants para recuperar dados do localStorage
     const nomeUsuario = localStorage.getItem("nome");
     const idUsuario = localStorage.getItem("id");
     const [receita, setReceita] = useState();
 
+
+
     // Constants para mes e ano que serão passadas na url
     const data = new Date();
     const mes = data.getMonth();
     const ano = data.getFullYear();
+
+
 
     // Requisição para buscar as receitas do usuario
     axios.get(`//localhost:8080/api/home/${idUsuario}/${mes}/${ano}`).then((response) => {

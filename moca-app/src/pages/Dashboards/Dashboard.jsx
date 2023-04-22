@@ -1,12 +1,21 @@
 import axios from "axios";
 import Sidebar from "../../components/Sidebar";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import "../../assets/css/style2.css";
-import Select from "../../components/Select";
 
 
 
 function HomeDashboard() {
+
+
+    // Validar se o usuario efetuou login antes de acessar a dashboard
+    function verificarAutenticacao(){
+        if(idUsuario === ""){
+            window.location.href = "/login";
+        }
+    }
+    verificarAutenticacao();
+
 
 
     // Constants para recuperar dados do localStorage
@@ -24,21 +33,38 @@ function HomeDashboard() {
 
 
 
-    // Constants para mes e ano que serão passadas na url
-    const data = new Date();
-    const mes = data.getMonth() + 1;
-    const ano = data.getFullYear();
+    // Constants para mes e ano que serão passadas no endpoint
+    const [opcoes, setOpcoes] = useState([]);
+    // const anoAtual = dataAtual.getFullYear();
+
+    useEffect(() => {
+        const dataAtual = new Date();
+        const meses = [];
+        for (let i = 0; i < 12; i++) {
+          const data = new Date(dataAtual.getFullYear(), dataAtual.getMonth() + i, 1);
+          const mes = data.toLocaleString('pt-br', { month: 'long' });
+          meses.push({ value: `${1 + data.getMonth()}`, label: `${mes}` });
+       }
+        setOpcoes(meses);
+      }, []);
+
+      requisicao();
 
 
 
     // Requisição do endpoint para mostrar as informações do usuário
-    axios.get(`//localhost:8080/api/home/${idUsuario}/${mes}/${ano}`).then((response) => {
+    function requisicao(props){
+        const data = new Date();
+        const ano = data.getFullYear();
+        axios.get(`//localhost:8080/api/home/${idUsuario}/${props ? props : data.getMonth() + 1}/${ano}`).then((response) => {
         console.log(response);
         setSaldo(response.data.saldo);
         setReceita(response.data.receita);
         setDespesa(response.data.despesas);
         setSaldoCartao(response.data.despesaCartao);
     });
+    // console.log(props);
+    }
 
 
     return (
@@ -52,11 +78,16 @@ function HomeDashboard() {
                             <span className="material-symbols-outlined">menu</span>
                         </label>
                     </h2>
-                    
-                    <div className="search-wrapper">
 
+                    <div className="search-wrapper">
                         <span className="material-symbols-outlined">playlist_add_check</span>
-                        <Select/>
+                        <select onChange={(event) => {requisicao(event.target.value)}}>
+                            {opcoes.map((opcao) => (
+                                <option key={opcao.value} value={opcao.value}>
+                                    {opcao.label}
+                                </option>
+                            ))}
+                        </select>
                     </div>
 
                     <div className="user-wrapper">
