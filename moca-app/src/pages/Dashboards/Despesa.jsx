@@ -1,30 +1,46 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import PopUpCadastro from "../../components/PopupCadastro";
 import Meses from "../../components/PaginacaoMeses";
 import Sidebar from "../../components/Sidebar";
 import LinhaTabla from "../../components/Tabela";
+import axios from "axios";
 
 function Despesas() {
 
     // Constants para recuperar dados do localStorage
     const nomeUsuario = localStorage.getItem("nome");
-    // const idUsuario = localStorage.getItem("id");
+    const idUsuario = localStorage.getItem("id");
     // const tokenUsuario = localStorage.getItem("token");
     const [ativo, setAtivo] = useState(true);
     const [despesa, setDespesa] = useState();
     const [mesAtual, setMesAtual] = useState(new Date().getMonth());
 
     // Validar se o usuario efetuou login antes de acessar a dashboard
-    // function verificarAutenticacao(){
-    //     if(idUsuario === ""){
+    // function verificarAutenticacao() {
+    //     if (idUsuario === "") {
     //         window.location.href = "/login";
     //     }
     // }
-    // verificarAutenticacao();
+    useEffect(() => {
+        // verificarAutenticacao();
+        requisicao();
+    }, []);
 
 
 
     const [showModal, setShowModal] = useState(false);
+
+
+    // Requisição do endpoint para mostrar as informações do usuário
+    function requisicao(props) {
+        const data = new Date();
+        const ano = data.getFullYear();
+        axios.get(`//localhost:8080/api/home/${idUsuario}/${4}/${ano}`).then((response) => {
+            console.log(response);
+            setDespesa(response.data.despesas);
+        });
+        // console.log(props);
+    }
 
 
     return (
@@ -80,13 +96,13 @@ function Despesas() {
                                     <th>Ações</th>
                                 </tr>
                             </thead>
-                            <LinhaTabla props={mesAtual}/>
+                            <LinhaTabla props={mesAtual} />
                         </table>
                     </div>
                 </main>
             </div>
-            <PopUpCadastro isOpen={showModal} setModalOpen={() => {setShowModal(!showModal)}}>
-                
+            <PopUpCadastro isOpen={showModal} setModalOpen={() => { setShowModal(!showModal) }}>
+
             </PopUpCadastro>
         </div>
     );

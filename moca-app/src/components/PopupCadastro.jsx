@@ -52,94 +52,94 @@ function PopUpCadastro({ isOpen, setModalOpen, children }) {
 
 
 
-    function adicionar() {
+    function adicionarDespesa() {
 
         //SE A PAGINA ESTIVER EM DESPESA IRA EXECUTAR A FUNCAO DESPESA
-        if (window.location.pathname === '/dashboard/despesa') {
 
-            if (valorValue > 0 && categoria !== 0 && descricaoValue !== "" && descricaoValue !== " ") {
-                console.log({
-                    valor: valorValue,
-                    categoria: categoria,
-                    descricao: descricaoValue,
-                    data: dataConvert,
-                });
-                axios.post("//localhost:8080/api/despesas/", {
-                    descricao: descricaoValue,
-                    valor: valorValue,
-                    data: dataConvert,
-                    isPaid: false,
-                    isParcela: false,
-                    idCliente: idUsuario,
-                    idTipoDespesa: categoria,
-                }).then((response) => {
-                    // console.log(response.data);
-                }).catch((err) => {
+        if (valorValue <= 0) {
+            alert("Informe um valor positivo!");
+        } else if (categoria === 0) {
+            alert("Selecione uma categoria!");
+        } else if (descricaoValue === "" || descricaoValue === " ") {
+            alert("Digite uma descrição!");
+        } else if (valorValue > 0 && categoria !== 0 && descricaoValue !== "" && descricaoValue !== " ") {
+            console.log({
+                valor: valorValue,
+                categoria: categoria,
+                descricao: descricaoValue,
+                data: dataConvert,
+            });
+            axios.post("//localhost:8080/api/despesas/", {
+                descricao: descricaoValue,
+                valor: valorValue,
+                data: dataConvert,
+                isPaid: false,
+                isParcela: false,
+                idCliente: idUsuario,
+                idTipoDespesa: categoria,
+            }).then((response) => {
+                // console.log(response.data);
+            }).catch((err) => {
+                if (err.response.status() === 404) {
+                    alert("Página não encontrada!");
+                }
+            });
+        }
+
+    }
+
+    function adicionarReceita() {
+        if (valorValue > 0 && categoria !== 0 && descricaoValue !== "" && descricaoValue !== " ") {
+            // console
+            console.log({
+                valor: valorValue,
+                categoria: categoria,
+                descricao: descricaoValue,
+                data: dataConvert,
+            });
+
+            axios.post("//localhost:8080/api/receitas/", {
+                descricao: descricaoValue,
+                valor: valorValue,
+                data: dataConvert,
+                idCliente: idUsuario,
+                idTipoReceita: categoria,
+            })
+                .then((response) => {
+                    console.log(response.data);
+                })
+                .catch((err) => {
                     if (err.response.status() === 404) {
                         alert("Página não encontrada!");
                     }
                 });
-            } else if (valorValue <= 0) {
-                alert("Informe um valor positivo!");
-            } else if (categoria === 0) {
-                alert("Selecione uma categoria!");
-            } else if (descricaoValue === "" || descricaoValue === " ") {
-                alert("Digite uma descrição!");
-            }
 
-        } else { // SE NÃO ESTIVER NA PAGINA DE DESPESA IRA EXECUTAR A FUNCAO DE RECEITA
-
-            if (valorValue > 0 && categoria !== 0 && descricaoValue !== "" && descricaoValue !== " ") {
-                // console
-                console.log({
-                    valor: valorValue,
-                    categoria: categoria,
-                    descricao: descricaoValue,
-                    data: dataConvert,
-                });
-
-                axios.post("//localhost:8080/api/receitas/", {
-                    descricao: descricaoValue,
-                    valor: valorValue,
-                    data: dataConvert,
-                    idCliente: idUsuario,
-                    idTipoReceita: categoria,
-                })
-                    .then((response) => {
-                        // console.log(response.data);
-                    })
-                    .catch((err) => {
-                        if (err.response.status() === 404) {
-                            alert("Página não encontrada!");
-                        }
-                    });
-
-            } else if (valorValue <= 0) {
-                alert("Informe um valor positivo!");
-            } else if (categoria === 0) {
-                alert("Selecione uma categoria!");
-            } else if (descricaoValue === "" || descricaoValue === " ") {
-                alert("Digite uma descrição!");
-            }
-
+        } else if (valorValue <= 0) {
+            alert("Informe um valor positivo!");
+        } else if (categoria === 0) {
+            alert("Selecione uma categoria!");
+        } else if (descricaoValue === "" || descricaoValue === " ") {
+            alert("Digite uma descrição!");
         }
+
+
 
     }
 
 
 
 
-    if(isOpen) {
+    if (isOpen) {
         return (
             <div id="demo-modal" className="modal">
                 <div className="modal__content">
                     <h1>{window.location.pathname === '/dashboard/despesa' ? 'Nova Despesa' : 'Nova Receita'}</h1>
-    
+
                     <div className="input-box">
                         <label className="input-label">Valor</label>
                         <input placeholder="00,00" id="valor" className="input" type="number" />
                     </div>
-    
+
                     <div className="input-box">
                         <label className="input-label">Categoria</label>
                         <select id="categoria" className="selecao" onChange={(event) => { setCategoria(event.target.value) }}>
@@ -158,16 +158,21 @@ function PopUpCadastro({ isOpen, setModalOpen, children }) {
                             }
                         </select>
                     </div>
-    
+
+                    <div className="input-box">
+                        <label className="input-label">Descrição</label>
+                        <input id="descricao" className="input" type="text" />
+                    </div>
+
                     <div className="input-box">
                         <label className="input-label">Data</label>
                         <input placeholder={dataConvertPt} className="input" type="text" disabled />
                     </div>
-    
+
                     <div className={window.location.pathname === '/dashboard/despesa' ? "modal__footer modal_footer_depesa" : "modal__footer modal_footer_receita"}>
-                        <button onClick={() => {adicionar()}}>Adicionar</button>
+                        <button onClick={window.location.pathname === '/dashboard/despesa' ? () => adicionarDespesa() : () => adicionarReceita()}>Adicionar</button>
                     </div>
-    
+
                     <span onClick={setModalOpen} className="modal__close">&times;</span>
                 </div>
             </div>
