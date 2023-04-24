@@ -7,6 +7,11 @@ import "../../assets/css/style2.css";
 
 function HomeDashboard() {
 
+    // Constants para recuperar dados do localStorage
+    const nomeUsuario = localStorage.getItem("nome");
+    const idUsuario = localStorage.getItem("id");
+    // const tokenUsuario = localStorage.getItem("token");
+
 
     // Validar se o usuario efetuou login antes de acessar a dashboard
     function verificarAutenticacao(){
@@ -14,14 +19,10 @@ function HomeDashboard() {
             window.location.href = "/login";
         }
     }
-    verificarAutenticacao();
-
-
-
-    // Constants para recuperar dados do localStorage
-    const nomeUsuario = localStorage.getItem("nome");
-    const idUsuario = localStorage.getItem("id");
-    // const tokenUsuario = localStorage.getItem("token");
+    useEffect(() => {
+        verificarAutenticacao();
+        requisicao();
+    }, []);
 
 
 
@@ -30,6 +31,7 @@ function HomeDashboard() {
     const [receita, setReceita] = useState();
     const [despesa, setDespesa] = useState();
     const [saldoCartao, setSaldoCartao] = useState();
+    const [ativo, setAtivo] = useState(true);
 
 
 
@@ -47,8 +49,6 @@ function HomeDashboard() {
        }
         setOpcoes(meses);
       }, []);
-
-      requisicao();
 
 
 
@@ -70,11 +70,11 @@ function HomeDashboard() {
     return (
         <div>
             <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0" />
-            <Sidebar />
+            {ativo && <Sidebar />}
             <div className="main-content">
                 <header className="header">
                     <h2>
-                        <label style={{ cursor: 'pointer' }} htmlFor="nav-toggle">
+                        <label style={{ cursor: 'pointer' }} htmlFor="nav-toggle" onClick={() => ativo ? setAtivo(false) : setAtivo(true)}>
                             <span className="material-symbols-outlined">menu</span>
                         </label>
                     </h2>

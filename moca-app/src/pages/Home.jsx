@@ -12,6 +12,14 @@ import Whatsapp from "../assets/img/whatsapp.png";
 import "../assets/css/style.css";
 
 function Home() {
+
+    if (!localStorage.getItem("id", "")) {
+
+    } else {
+        localStorage.setItem("id", "");
+        localStorage.setItem("nome", "");
+        localStorage.setItem("token", "");
+    }
     // Retornando a estrutura do site e o Header
     return (
         <div>

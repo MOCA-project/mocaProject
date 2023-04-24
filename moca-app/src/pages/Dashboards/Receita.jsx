@@ -6,21 +6,19 @@ import "../../assets/css/style2.css";
 function Receitas() {
 
 
-    
-    // Validar se o usuario efetuou login antes de acessar a dashboard
-    function verificarAutenticacao(){
-        if(idUsuario === ""){
-            window.location.href = "/login";
-        }
-    }
-    verificarAutenticacao();
-
-
-
     // Constants para recuperar dados do localStorage
     const nomeUsuario = localStorage.getItem("nome");
     const idUsuario = localStorage.getItem("id");
     const [receita, setReceita] = useState();
+
+
+    // Validar se o usuario efetuou login antes de acessar a dashboard
+    function verificarAutenticacao() {
+        if (idUsuario === "") {
+            window.location.href = "/login";
+        }
+    }
+    verificarAutenticacao();
 
 
 

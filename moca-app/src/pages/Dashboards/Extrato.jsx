@@ -1,11 +1,14 @@
 import axios from "axios";
-import PopupReceita from "../../components/PopupReceita";
-import { useState } from "react";
 import Sidebar from "../../components/Sidebar";
 import "../../assets/css/style2.css";
 
 function Extrato() {
 
+
+    // Constants para recuperar dados do localStorage
+    // const nomeUsuario = localStorage.getItem("nome");
+    const idUsuario = localStorage.getItem("id");
+    // const tokenUsuario = localStorage.getItem("token");
     
 
     // Validar se o usuario efetuou login antes de acessar a dashboard
@@ -17,13 +20,9 @@ function Extrato() {
     verificarAutenticacao();
 
 
-
-
-    const idUsuario = localStorage.getItem("id");
     const data = new Date();
     const mes = data.getMonth() + 1;
     const ano = data.getFullYear();
-    const [showModal, setShowModal] = useState(false);
 
 
 
@@ -31,17 +30,9 @@ function Extrato() {
         console.log(response);
     });
 
-    function cadReceita() {
-        setShowModal(true)
-    }
-
     return (
         <div>
             <Sidebar />
-            <button onClick={cadReceita}>Cadastrar receita</button>
-            {showModal && (
-                <PopupReceita />
-            )}
         </div>
     );
 }

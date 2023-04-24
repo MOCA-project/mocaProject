@@ -1,92 +1,145 @@
-.modal-body {
-    display: flex;
-    padding: 0;
-    border-radius: 4rem;
-    font-family: 'PT Sans', sans-serif;
-  }
-  
-  .modal-content {
-    border-radius: 4rem;
-    width: 140%;
-    -webkit-box-shadow: -1px -2px 42px -19px rgba(0,0,0,0.74);
-  -moz-box-shadow: -1px -2px 42px -19px rgba(0,0,0,0.74);
-  box-shadow: -1px -2px 42px -19px rgba(0,0,0,0.74);
-  }
-  .modal-content h1, .modal-content h2, .modal-content h3 {
-      text-align: center;
-  }
-  .modal-content h1 {
-    font-size: 1.3em;
-    text-transform: uppercase;
-  }
-  
-  .modal-content h2 {
-      font-size: 1.1em;
-  }
-  .modal-content h3 {
-    font-size: .8em;
-    letter-spacing: 2px;
-  }
-  form {
-      font-size: .8em;
-  }
-  .column {
-    flex: 50%;
-    padding: 10px;
-  }
-  
-  .column#main {
-    flex: 75%;
-    padding: 50px;
-    margin-top: 30px;
-    margin-left: 15px;
-  }
-  
-  #secondary {
-    background-color: #F9BC35;
-    border-radius: 0 4rem 4rem 0;
-    text-align: center;
-  }
-  
-  #main .form-control {
-    border-radius: 0;
-    font-size: .9em;
-  }
-  
-  .btn {
-    text-transform: uppercase;
-    border-radius: .15rem;
-    width: 200px;
-    padding: .150rem .75rem;
-    margin: 30px auto;
-    font-family: 'PT Sans', sans-serif;
-    letter-spacing: 2px;
-  }
-  
-  .btn-primary {
-    border-color: rgba( 255, 255, 255, 0);
-    background: #f1da36; /* Old browsers */
-  background: -moz-linear-gradient(left, #f1da36 0%, #fca86c 99%); /* FF3.6-15 */
-  background: -webkit-linear-gradient(left, #f1da36 0%,#fca86c 99%); /* Chrome10-25,Safari5.1-6 */
-  background: linear-gradient(to right, #f1da36 0%,#fca86c 99%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
-  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#f1da36', endColorstr='#fca86c',GradientType=1 ); /* IE6-9 */
-  }
-  
-  .btn-primary:hover {
-    border-color: rgba( 255, 255, 255, 0);
-  }
-  
-  #main .btn-primary {
-    width: 100%;
-  }
-  #secondary .btn-primary {
-    background: #f8f9fa4f;
-    color: #000;
-  }
-  .modal-body label {
-    margin-bottom: 0;
-  }
-  
-  .sec-content {
-    margin-top: 85%;
-  }
+.modal {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  left: 0;
+  background: rgba(77, 77, 77, .7);
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all .5s;
+  /* visibility: hidden;
+  opacity: 0;
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(77, 77, 77, .7);
+  transition: all .5s; */
+}
+
+.modal:target {
+  visibility: visible;
+  opacity: 1;
+}
+
+.modal__content {
+  border-radius: 10px;
+  position: fixed;
+  display: flex;
+  flex-direction: column;
+  width: 30vw;
+  background: #fff;
+  padding: 1em 2em;
+}
+
+.modal__content span {
+  cursor: pointer;
+}
+
+.modal__content h1 {
+  margin: 0.6em 0;
+}
+
+.modal__content p {
+  margin: 1em 0 0 0;
+  color: #9C9C9C;
+}
+
+
+
+
+.input,
+.selecao {
+  position: relative;
+  border: none;
+  box-shadow: 0px 1.5px 0px 0px #858585;
+  padding: .2rem;
+  font-size: 1em;
+  transition: all 200ms ease-in-out;
+  opacity: .8;
+  margin-top: 0.2em;
+}
+
+.input-box {
+  display: flex;
+  flex-direction: column;
+  margin: 0.5em 0;
+}
+
+.input-label {
+  font-size: 1em;
+  margin-left: 1px;
+  color: #858585;
+}
+
+.input::placeholder,
+.selecao::placeholder {
+  color: rgb(145, 145, 145);
+  font-size: .75rem;
+}
+
+.input::after {
+  content: attr(placeholder);
+  position: absolute;
+  color: #161616;
+  top: 0;
+  left: 0;
+}
+
+.input:focus,
+.selecao:focus {
+  border: none;
+  box-shadow: 0px 1.5px 0px 0px #0b0b65;
+  outline: none;
+}
+
+.input:focus+.input-helper {
+  visibility: visible;
+  transform: translateY(0rem);
+}
+
+.input:focus::placeholder {
+  visibility: hidden;
+}
+
+
+
+.modal__footer {
+  margin-top: 2rem;
+  text-align: right;
+}
+
+.modal__footer button {
+  border: none;
+  width: 120px;
+  height: 40px;
+  border-radius: 6px;
+  font-size: 1rem;
+  color: #fff;
+  cursor: pointer;
+}
+
+.modal_footer_depesa button {
+  background: #EC5959;
+}
+
+.modal_footer_receita button {
+  background: #4BA64F;
+}
+
+.modal__close {
+  position: absolute;
+  top: 10px;
+  right: 20px;
+  color: #585858;
+  text-decoration: none;
+  font-size: 30px;
+  font-weight: 700;
+}

@@ -6,6 +6,7 @@ import Cadastro from "./pages/Cadastro";
 import HomeDashboard from "./pages/Dashboards/Dashboard";
 import Extrato from "./pages/Dashboards/Extrato";
 import Receitas from "./pages/Dashboards/Receita";
+import Despesas from "./pages/Dashboards/Despesa";
 // CSS
 import "./assets/css/style.css";
 import "./assets/css/header.css";
@@ -21,6 +22,7 @@ function App() {
         <Route path="/dashboard" element={<HomeDashboard/>}/>
         <Route path="/dashboard/extrato" element={<Extrato/>}/>
         <Route path="/dashboard/receita" element={<Receitas/>}/>
+        <Route path="/dashboard/despesa" element={<Despesas/>}/>
       </Routes>
     </Router>
   );
