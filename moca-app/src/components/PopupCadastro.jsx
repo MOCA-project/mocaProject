@@ -38,89 +38,99 @@ function PopUpCadastro({ isOpen, setModalOpen, children }) {
     const dataConvertPt = dateSystem.toLocaleDateString("pt-BR");
     const dataConvert = dateSystem.toLocaleDateString("sv-SE");
 
-    // Valor
-    const valor = document.getElementById("valor");
-    const valorValue = valor;
 
     // Categoria
     const [categoria, setCategoria] = useState();
-
-    // Descrição
-    const descricao = document.getElementById("descricao");
-    const descricaoValue = descricao;
-
 
 
 
     function adicionarDespesa() {
 
-        //SE A PAGINA ESTIVER EM DESPESA IRA EXECUTAR A FUNCAO DESPESA
+        // Valor
+        const valor = document.getElementById("valor");
+        const valorValue = valor.value;
 
-        if (valorValue <= 0) {
-            alert("Informe um valor positivo!");
-        } else if (categoria === 0) {
-            alert("Selecione uma categoria!");
-        } else if (descricaoValue === "" || descricaoValue === " ") {
-            alert("Digite uma descrição!");
-        } else if (valorValue > 0 && categoria !== 0 && descricaoValue !== "" && descricaoValue !== " ") {
-            console.log({
-                valor: valorValue,
-                categoria: categoria,
-                descricao: descricaoValue,
-                data: dataConvert,
-            });
-            axios.post("//localhost:8080/api/despesas/", {
-                descricao: descricaoValue,
-                valor: valorValue,
-                data: dataConvert,
-                isPaid: false,
-                isParcela: false,
-                idCliente: idUsuario,
-                idTipoDespesa: categoria,
-            }).then((response) => {
-                // console.log(response.data);
-            }).catch((err) => {
-                if (err.response.status() === 404) {
-                    alert("Página não encontrada!");
-                }
-            });
-        }
+        // Descrição
+        const descricao = document.getElementById("descricao");
+        const descricaoValue = descricao.value;
+
+        //SE A PAGINA ESTIVER EM DESPESA IRA EXECUTAR A FUNCAO DESPESA
+        console.log({
+            valor: valorValue,
+            categoria: categoria,
+            descricao: descricaoValue,
+            data: dataConvert,
+        });
+        axios.post("//localhost:8080/api/despesas/", {
+            descricao: descricaoValue,
+            valor: valorValue,
+            data: dataConvert,
+            isPaid: false,
+            isParcela: false,
+            idCliente: idUsuario,
+            idTipoDespesa: categoria,
+        }).then((response) => {
+            console.log(response.data);
+        }).catch((err) => {
+            if (err.response.status() === 404) {
+                alert("Página não encontrada!");
+            }
+        });
+
+        // if (valorValue <= 0) {
+        //     alert("Informe um valor positivo!");
+        // } else if (categoria === 0) {
+        //     alert("Selecione uma categoria!");
+        // } else if (descricaoValue === "" || descricaoValue === " ") {
+        //     alert("Digite uma descrição!");
+        // } else if (valorValue > 0 && categoria !== 0 && descricaoValue !== "" && descricaoValue !== " ") {
+
+        // }
 
     }
 
     function adicionarReceita() {
-        if (valorValue > 0 && categoria !== 0 && descricaoValue !== "" && descricaoValue !== " ") {
-            // console
-            console.log({
-                valor: valorValue,
-                categoria: categoria,
-                descricao: descricaoValue,
-                data: dataConvert,
-            });
 
-            axios.post("//localhost:8080/api/receitas/", {
-                descricao: descricaoValue,
-                valor: valorValue,
-                data: dataConvert,
-                idCliente: idUsuario,
-                idTipoReceita: categoria,
+        // Valor
+        const valor = document.getElementById("valor");
+        const valorValue = valor.value;
+
+        // Descrição
+        const descricao = document.getElementById("descricao");
+        const descricaoValue = descricao.value;
+
+        console.log({
+            valor: valorValue,
+            categoria: categoria,
+            descricao: descricaoValue,
+            data: dataConvert,
+        });
+
+        axios.post("//localhost:8080/api/receitas/", {
+            descricao: descricaoValue,
+            valor: valorValue,
+            data: dataConvert,
+            idCliente: idUsuario,
+            idTipoReceita: categoria,
+        })
+            .then((response) => {
+                console.log(response.data);
             })
-                .then((response) => {
-                    console.log(response.data);
-                })
-                .catch((err) => {
-                    if (err.response.status() === 404) {
-                        alert("Página não encontrada!");
-                    }
-                });
+            .catch((err) => {
+                if (err.response.status() === 404) {
+                    alert("Página não encontrada!");
+                }
+            });
+        // if (valorValue > 0 && categoria !== 0 && descricaoValue !== "" && descricaoValue !== " ") {
+        //     // console
 
-        } else if (valorValue <= 0) {
-            alert("Informe um valor positivo!");
-        } else if (categoria === 0) {
-            alert("Selecione uma categoria!");
-        } else if (descricaoValue === "" || descricaoValue === " ") {
-            alert("Digite uma descrição!");
-        }
+        // } else if (valorValue <= 0) {
+        //     alert("Informe um valor positivo!");
+        // } else if (categoria === 0) {
+        //     alert("Selecione uma categoria!");
+        // } else if (descricaoValue === "" || descricaoValue === " ") {
+        //     alert("Digite uma descrição!");
+        // }
 
 
 

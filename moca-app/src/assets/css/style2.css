@@ -197,7 +197,7 @@
 /* ===================MAIN=================== */
 
 .main {
-  margin-top: 85px;
+  margin-top: 8vh;
   padding: 2rem 1.5rem;
   background: var(--cor-fundo);
   min-height: calc(100vh - 90px);

@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import PopUpCadastro from "../../components/PopupCadastro";
 import Meses from "../../components/PaginacaoMeses";
 import Sidebar from "../../components/Sidebar";
-import LinhaTabla from "../../components/Tabela";
+import LinhaTabela from "../../components/Tabela";
 import axios from "axios";
 
 function Despesas() {
@@ -35,7 +35,7 @@ function Despesas() {
     function requisicao(props) {
         const data = new Date();
         const ano = data.getFullYear();
-        axios.get(`//localhost:8080/api/home/${idUsuario}/${4}/${ano}`).then((response) => {
+        axios.get(`//localhost:8080/api/home/${idUsuario}/${props ? props : data.getMonth() + 1}/${ano}`).then((response) => {
             console.log(response);
             setDespesa(response.data.despesas);
         });
@@ -75,11 +75,10 @@ function Despesas() {
                         </div>
                         <div className="card-despesa" onClick={() => { setShowModal(true) }}>
                             <div>
-                                <span>Nova Receita</span> <br />
+                                <span>Nova Despesa</span> <br />
                                 <h2 className="material-symbols-outlined">add</h2>
                             </div>
                         </div>
-                        {/* {showModal && (<PopUpCadastro />)} */}
                     </div>
                     <Meses mesAtual={mesAtual} setMesAtual={setMesAtual} />
                     <div className="table-container">
@@ -96,7 +95,7 @@ function Despesas() {
                                     <th>Ações</th>
                                 </tr>
                             </thead>
-                            <LinhaTabla props={mesAtual} />
+                            <LinhaTabela props={mesAtual} />
                         </table>
                     </div>
                 </main>

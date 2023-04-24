@@ -1,46 +1,70 @@
 import axios from "axios";
+import { useEffect } from "react";
 import { useState } from "react";
 
-function LinhaTabla(props) {
+function LinhaTabela(props) {
 
     // Constants para recuperar dados do localStorage
-    const nomeUsuario = localStorage.getItem("nome");
+    // const nomeUsuario = localStorage.getItem("nome");
     const idUsuario = localStorage.getItem("id");
     // const tokenUsuario = localStorage.getItem("token");
 
     const data = new Date();
     const ano = data.getFullYear();
 
-    const [todasDespesas, setTodasDespesas] = useState([]);
+    const [infoGastoReceita, setInfoGastoReceita] = useState([]);
 
-    axios.get(`//localhost:8080/api/despesas/${idUsuario}/${props}/${ano}`).then((response) => {
-        setTodasDespesas(response.data);
-    })
+
+    useEffect(() => {
+        // verificarAutenticacao();
+        requisicaoDespesaEReceita();
+    }, []);
+
+
+    function requisicaoDespesaEReceita() {
+        if (window.location.pathname === '/dashboard/despesa') {
+            axios.get(`//localhost:8080/api/despesas/${idUsuario}/${props.props + 1}/${ano}`).then((response) => {
+                setInfoGastoReceita([...response.data]);
+                console.log(response.data)
+                // console.log('tabela')
+            });
+        } else {
+            axios.get(`//localhost:8080/api/receitas/${idUsuario}/${props.props + 1}/${ano}`).then((response) => {
+                setInfoGastoReceita([...response.data]);
+                console.log(response.data)
+                // console.log('tabela')
+            });
+        }
+    }
 
     return (
         <tbody>
-            {todasDespesas.map(() => (
-                <tr>
-                <td data-label="Situação">
-                    <span id="positivo" className="material-symbols-outlined">close</span>
-                    <span id="negativo" className="material-symbols-outlined">done</span>
-                </td>
-                <td data-label="Data">20/12/2023</td>
-                <td data-label="Descrição">Compra feita em tabacaria</td>
-                <td data-label="Categoria">Crédito</td>
-                <td data-label="Valor">R$200</td>
-                <td data-label="Ações">
-                    <button>
-                        <span className="material-symbols-outlined">edit</span>
-                    </button>
-                    <button>
-                        <span className="material-symbols-outlined">delete</span>
-                    </button>
-                </td>
-            </tr>
+            {infoGastoReceita.map((valor) => (
+                <tr key={window.location.pathname === '/dashboard/despesa' ? valor.idDespesa : valor.idReceita}>
+                    <td data-label="Situação">
+                        <span id="positivo" className="material-symbols-outlined">
+                            close
+                        </span>
+                        <span id="negativo" className="material-symbols-outlined">
+                            done
+                        </span>
+                    </td>
+                    <td data-label="Data">{valor.data}</td>
+                    <td data-label="Descrição">{valor.descricao}</td>
+                    <td data-label="Categoria">{window.location.pathname === '/dashboard/despesa' ? valor.idTipoDespesa : valor.idTipoReceita}</td>
+                    <td data-label="Valor">{valor.valor}</td>
+                    <td data-label="Ações">
+                        <button>
+                            <span className="material-symbols-outlined">edit</span>
+                        </button>
+                        <button>
+                            <span className="material-symbols-outlined">delete</span>
+                        </button>
+                    </td>
+                </tr>
             ))}
         </tbody>
     );
 }
 
-export default LinhaTabla;
+export default LinhaTabela;
