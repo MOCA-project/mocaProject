@@ -14,6 +14,9 @@ function Despesas() {
     const [ativo, setAtivo] = useState(true);
     const [despesa, setDespesa] = useState();
     const [mesAtual, setMesAtual] = useState(new Date().getMonth());
+    const [listaDespesa, setListaDespesa] = useState([]);
+    const data = new Date();
+    const ano = data.getFullYear();
 
     // Validar se o usuario efetuou login antes de acessar a dashboard
     // function verificarAutenticacao() {
@@ -23,7 +26,8 @@ function Despesas() {
     // }
     useEffect(() => {
         // verificarAutenticacao();
-        requisicao();
+        requisicao(mesAtual);
+        requisicaoListaDespesa(mesAtual);
     }, []);
 
 
@@ -33,15 +37,28 @@ function Despesas() {
 
     // Requisição do endpoint para mostrar as informações do usuário
     function requisicao(props) {
-        const data = new Date();
-        const ano = data.getFullYear();
-        axios.get(`//localhost:8080/api/home/${idUsuario}/${props ? props : data.getMonth() + 1}/${ano}`).then((response) => {
+        axios.get(`//localhost:8080/api/home/${idUsuario}/${props + 1}/${ano}`).then((response) => {
             console.log(response);
             setDespesa(response.data.despesas);
         });
         // console.log(props);
     }
 
+    function requisicaoListaDespesa(props) {
+
+        axios.get(`//localhost:8080/api/despesas/${idUsuario}/${props + 1}/${ano}`).then((response) => {
+            setListaDespesa([...response.data]);
+            console.log(response.data)
+        });
+
+    }
+
+    // Extrato por mes 
+    const atualizarMesSelecionado = (novoMes) => {
+        setMesAtual(novoMes);
+        requisicao(novoMes);
+        requisicaoListaDespesa(novoMes);
+    }
 
     return (
         <div>
@@ -82,7 +99,7 @@ function Despesas() {
                             </div>
                         </div>
                     </div>
-                    <Meses mesAtual={mesAtual} setMesAtual={setMesAtual} />
+                    <Meses setMesAtual={atualizarMesSelecionado} />
                     <div className="table-container">
                         <h2 className="heading">
                         </h2>
@@ -97,7 +114,11 @@ function Despesas() {
                                     <th>Ações</th>
                                 </tr>
                             </thead>
-                            <LinhaTabela props={mesAtual} />
+                            {listaDespesa.map((despesa) => {
+                                return (
+                                    <LinhaTabela despesa={despesa} key={despesa.idDespesa} />
+                                )
+                            })}
                         </table>
                     </div>
                 </main>

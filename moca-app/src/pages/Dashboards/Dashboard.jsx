@@ -80,7 +80,7 @@ function HomeDashboard() {
                     </h2>
 
                     <div className="search-wrapper">
-                    <span class="material-symbols-outlined">calendar_month</span>
+                    <span className="material-symbols-outlined">calendar_month</span>
                         <select onChange={(event) => {requisicao(event.target.value)}}>
                             {opcoes.map((opcao) => (
                                 <option key={opcao.value} value={opcao.value}>

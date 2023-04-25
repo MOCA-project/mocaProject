@@ -16,6 +16,9 @@ function Receitas() {
     const [receita, setReceita] = useState();
     const [mesAtual, setMesAtual] = useState(new Date().getMonth());
     const [showModal, setShowModal] = useState(false);
+    const [listaReceitas, setListaReceitas] = useState([]);
+    const data = new Date();
+    const ano = data.getFullYear();
 
 
     // Validar se o usuario efetuou login antes de acessar a dashboard
@@ -28,23 +31,35 @@ function Receitas() {
 
     useEffect(() => {
         // verificarAutenticacao();
-        requisicao();
+        requisicao(mesAtual);
+        requisicaoListaReceita(mesAtual);
     }, []);
 
 
-    function requisicao() {
+    function requisicao(props) {
         // Constants para mes e ano que serão passadas na url
-        const data = new Date();
-        const mes = data.getMonth();
-        const ano = data.getFullYear();
         // Requisição para buscar as receitas do usuario
-        axios.get(`//localhost:8080/api/home/${idUsuario}/${mes + 1}/${ano}`).then((response) => {
+        axios.get(`//localhost:8080/api/home/${idUsuario}/${props + 1}/${ano}`).then((response) => {
             console.log(response);
             setReceita(response.data.receita);
         });
     }
 
+    function requisicaoListaReceita(props) {
 
+        axios.get(`//localhost:8080/api/receitas/${idUsuario}/${props + 1}/${ano}`).then((response) => {
+            setListaReceitas([...response.data]);
+            console.log(response.data)
+        });
+
+    }
+
+    // Extrato por mes 
+    const atualizarMesSelecionado = (novoMes) => {
+        setMesAtual(novoMes);
+        requisicao(novoMes);
+        requisicaoListaReceita(novoMes);
+    }
 
     return (
         <div>
@@ -81,7 +96,7 @@ function Receitas() {
                             </div>
                         </div>
                     </div>
-                    <Meses mesAtual={mesAtual} setMesAtual={setMesAtual} />
+                    <Meses setMesAtual={atualizarMesSelecionado} />
                     <div className="table-container">
                         <h2 className="heading">
                         </h2>
@@ -96,7 +111,11 @@ function Receitas() {
                                     <th>Ações</th>
                                 </tr>
                             </thead>
-                            <LinhaTabela props={mesAtual} />
+                            {listaReceitas.map((receita) => {
+                                return (
+                                    <LinhaTabela receita={receita} key={receita.idReceita} />
+                                )
+                            })}
                         </table>
                     </div>
                 </main>
