@@ -33,24 +33,28 @@ function LinhaTabela(props) {
                     }
                 </td>
                 <td data-label="Data">
-                    <input type="text"
+                    {/* <input type="text"
                         disabled={isEditando === false}
-                        defaultValue={window.location.pathname === '/dashboard/despesa' ? props.despesa.data : props.receita.data} />
+                        defaultValue={window.location.pathname === '/dashboard/despesa' ? props.despesa.data : props.receita.data} /> */}
+                    {window.location.pathname === '/dashboard/despesa' ? props.despesa.data : props.receita.data}
                 </td>
                 <td data-label="Descrição">
-                    <input type="text"
+                    {/* <input type="text"
                         disabled={isEditando === false}
-                        defaultValue={window.location.pathname === '/dashboard/despesa' ? props.despesa.descricao : props.receita.descricao} />
+                        defaultValue={window.location.pathname === '/dashboard/despesa' ? props.despesa.descricao : props.receita.descricao} /> */}
+                    {window.location.pathname === '/dashboard/despesa' ? props.despesa.descricao : props.receita.descricao}
                 </td>
                 <td data-label="Categoria">
-                    <input type="text"
+                    {/* <input type="text"
                         disabled={isEditando === false}
-                        defaultValue={window.location.pathname === '/dashboard/despesa' ? props.despesa.idTipoDespesa : props.receita.idTipoReceita} />
+                        defaultValue={window.location.pathname === '/dashboard/despesa' ? props.despesa.idTipoDespesa : props.receita.idTipoReceita} /> */}
+                    {window.location.pathname === '/dashboard/despesa' ? props.despesa.idTipoDespesa : props.receita.idTipoReceita}
                 </td>
                 <td data-label="Valor">
-                    <input type="number"
+                    {/* <input type="number"
                         disabled={isEditando === false}
-                        defaultValue={window.location.pathname === '/dashboard/despesa' ? props.despesa.valor : props.receita.valor} />
+                        defaultValue={window.location.pathname === '/dashboard/despesa' ? props.despesa.valor : props.receita.valor} /> */}
+                    {window.location.pathname === '/dashboard/despesa' ? props.despesa.valor : props.receita.valor}
                 </td>
                 <td data-label="Ações">
                     <button onClick={() => setIsEditando(!isEditando)}>
