@@ -2,10 +2,11 @@ import axios from "axios";
 import Sidebar from "../../components/Sidebar";
 import { useEffect, useState } from "react";
 import "../../assets/css/style2.css";
-
+import { FaSpinner } from 'react-icons/fa';
 
 
 function HomeDashboard() {
+    const [loading, setLoading] = useState(false);
 
     // Constants para recuperar dados do localStorage
     const nomeUsuario = localStorage.getItem("nome");
@@ -22,6 +23,7 @@ function HomeDashboard() {
     useEffect(() => {
         verificarAutenticacao();
         requisicao();
+        setLoading(true);
     }, []);
 
 
@@ -62,6 +64,7 @@ function HomeDashboard() {
         setReceita(response.data.receita);
         setDespesa(response.data.despesas);
         setSaldoCartao(response.data.despesaCartao);
+        setLoading(false);
     });
     // console.log(props);
     }
@@ -103,7 +106,7 @@ function HomeDashboard() {
                         <div className="card-single">
                             <div>
                                 <span>Saldo</span>
-                                <h2>R${saldo}</h2>
+                                <h2>R${saldo === undefined ? <FaSpinner className="spinner" /> : saldo}</h2>
                             </div>
                             <div>
                                 <span id="money" className="material-symbols-outlined">attach_money</span>
@@ -112,14 +115,14 @@ function HomeDashboard() {
                         <div className="card-single">
                             <div>
                                 <span>Receita</span>
-                                <h2>R${receita}</h2>
+                                <h2>R${receita === undefined ? <FaSpinner className="spinner" /> : receita}</h2>
                             </div>
                             <span id="up" className="material-symbols-outlined">arrow_upward</span>
                         </div>
                         <div className="card-single">
                             <div>
                                 <span>Despesa</span>
-                                <h2>R${despesa}</h2>
+                                <h2>R${receita === undefined ? <FaSpinner className="spinner" /> : receita}</h2>
                             </div>
                             <div>
                                 <span id="down" className="material-symbols-outlined">arrow_downward</span>
@@ -128,7 +131,7 @@ function HomeDashboard() {
                         <div className="card-single">
                             <div>
                                 <span>Cartões</span>
-                                <h2>R${saldoCartao}</h2>
+                                <h2>R${saldoCartao === undefined ? <FaSpinner className="spinner" /> : saldoCartao}</h2>
                             </div>
                             <div>
                                 <span id="cartao" className="material-symbols-outlined">credit_card</span>

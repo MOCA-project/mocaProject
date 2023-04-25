@@ -6,10 +6,10 @@ import PopUpCadastro from "../../components/PopupCadastro";
 import Meses from "../../components/PaginacaoMeses";
 import { useEffect } from "react";
 import LinhaTabela from "../../components/Tabela";
-
+import { FaSpinner } from 'react-icons/fa';
 function Receitas() {
 
-
+    const [loading, setLoading] = useState(false);
     // Constants para recuperar dados do localStorage
     const nomeUsuario = localStorage.getItem("nome");
     const idUsuario = localStorage.getItem("id");
@@ -33,6 +33,7 @@ function Receitas() {
         // verificarAutenticacao();
         requisicao(mesAtual);
         requisicaoListaReceita(mesAtual);
+        setLoading(true);
     }, []);
 
 
@@ -42,6 +43,7 @@ function Receitas() {
         axios.get(`//localhost:8080/api/home/${idUsuario}/${props + 1}/${ano}`).then((response) => {
             console.log(response);
             setReceita(response.data.receita);
+            setLoading(true);
         });
     }
 
@@ -84,7 +86,8 @@ function Receitas() {
                             <div className="card-single-receita">
                                 <div>
                                     <span>Receita</span>
-                                    <h2>R${receita}</h2>
+                                    <h2>R${receita === undefined ? <FaSpinner className="spinner" /> : receita}</h2>
+
                                 </div>
                                 <span id="up" className="material-symbols-outlined">arrow_upward</span>
                             </div>

@@ -5,9 +5,9 @@ import Meses from "../../components/PaginacaoMeses";
 import { useState } from "react";
 import { useEffect } from "react";
 import LinhaExtrato from "../../components/TabelaExtrato";
-
+import { FaSpinner } from 'react-icons/fa';
 function Extrato() {
-
+    const [loading, setLoading] = useState(false);
 
     // Constants para recuperar dados do localStorage
     const nomeUsuario = localStorage.getItem("nome");
@@ -31,6 +31,7 @@ function Extrato() {
 
     useEffect(() => {
         verificarAutenticacao();
+        setLoading(true);
         requisicao(mesAtual);
     }, []);
 
@@ -44,13 +45,15 @@ function Extrato() {
             setSaldo(response.data.saldo);
             setReceita(response.data.receita);
             setDespesa(response.data.despesas);
+            setLoading(false);
         });
         // console.log(props);
     }
 
     function download() {
-
-        axios.get(`//localhost:8080/api/extrato/arquivo/75/04/2023`, {
+        const data = new Date();
+        const ano = data.getFullYear();
+        axios.get(`//localhost:8080/api/extrato/arquivo/${idUsuario}/${mesAtual + 1}/${ano}`, {
             responseType: 'arraybuffer'
         }).then(response => {
             // Cria um blob a partir dos dados recebidos
@@ -105,7 +108,7 @@ function Extrato() {
                         <div className="card-single">
                             <div>
                                 <span>Saldo</span>
-                                <h2>R${saldo}</h2>
+                                <h2>R${saldo === undefined ? <FaSpinner className="spinner" /> : saldo}</h2>
                             </div>
                             <div>
                                 <span id="money" className="material-symbols-outlined">attach_money</span>
@@ -114,14 +117,14 @@ function Extrato() {
                         <div className="card-single">
                             <div>
                                 <span>Receita</span>
-                                <h2>R${receita}</h2>
+                                <h2>R${receita === undefined ? <FaSpinner className="spinner" /> : receita}</h2>
                             </div>
                             <span id="up" className="material-symbols-outlined">arrow_upward</span>
                         </div>
                         <div className="card-single">
                             <div>
                                 <span>Despesa</span>
-                                <h2>R${despesa}</h2>
+                                <h2>R${despesa === undefined ? <FaSpinner className="spinner" /> : saldo}</h2>
                             </div>
                             <div>
                                 <span id="down" className="material-symbols-outlined">arrow_downward</span>

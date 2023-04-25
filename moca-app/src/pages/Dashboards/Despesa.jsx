@@ -4,9 +4,10 @@ import Meses from "../../components/PaginacaoMeses";
 import Sidebar from "../../components/Sidebar";
 import LinhaTabela from "../../components/Tabela";
 import axios from "axios";
+import { FaSpinner } from 'react-icons/fa';
 
 function Despesas() {
-
+    const [loading, setLoading] = useState(false);
     // Constants para recuperar dados do localStorage
     const nomeUsuario = localStorage.getItem("nome");
     const idUsuario = localStorage.getItem("id");
@@ -28,6 +29,7 @@ function Despesas() {
         // verificarAutenticacao();
         requisicao(mesAtual);
         requisicaoListaDespesa(mesAtual);
+        setLoading(true);
     }, []);
 
 
@@ -40,6 +42,7 @@ function Despesas() {
         axios.get(`//localhost:8080/api/home/${idUsuario}/${props + 1}/${ano}`).then((response) => {
             console.log(response);
             setDespesa(response.data.despesas);
+            setLoading(false);
         });
         // console.log(props);
     }
@@ -85,7 +88,8 @@ function Despesas() {
                             <div className="card-single-despesa">
                                 <div>
                                     <span>Despesa</span>
-                                    <h2>R${despesa}</h2>
+                                    <h2>R${despesa === undefined ? <FaSpinner className="spinner" /> : despesa}</h2>
+
                                 </div>
                                 <span id="down" className="material-symbols-outlined">
                                     arrow_downward
