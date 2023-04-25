@@ -64,18 +64,20 @@ function Receitas() {
                     </div>
                 </header>
                 <main className="main">
-                    <div className="cards-receitas">
-                        <div className="card-single-receita">
-                            <div>
-                                <span>Receita</span>
-                                <h2>R${receita}</h2>
+                    <div className="container-cards">
+                        <div className="cards-receitas">
+                            <div className="card-single-receita">
+                                <div>
+                                    <span>Receita</span>
+                                    <h2>R${receita}</h2>
+                                </div>
+                                <span id="up" className="material-symbols-outlined">arrow_upward</span>
                             </div>
-                            <span id="up" className="material-symbols-outlined">arrow_upward</span>
-                        </div>
-                        <div className="card-receita" onClick={() => { setShowModal(true) }}>
-                            <div>
-                                <span>Nova Receita</span> <br />
-                                <h2 className="material-symbols-outlined">add</h2>
+                            <div className="card-receita" onClick={() => { setShowModal(true) }}>
+                                <div>
+                                    <span>Nova Receita</span> <br />
+                                    <h2 className="material-symbols-outlined">add</h2>
+                                </div>
                             </div>
                         </div>
                     </div>

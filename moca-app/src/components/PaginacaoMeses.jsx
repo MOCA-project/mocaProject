@@ -40,9 +40,9 @@ function Meses() {
   return (
     <div>
       <h2 className='heading'>
-        <button onClick={voltar}><span className="material-symbols-outlined">chevron_left</span></button>
+        <button className='setaPagination' onClick={voltar}><span className="material-symbols-outlined">chevron_left</span></button>
         <p>{exibirMes()}</p>
-        <button onClick={avancar}><span className="material-symbols-outlined">chevron_right</span></button>
+        <button className='setaPagination' onClick={avancar}><span className="material-symbols-outlined">chevron_right</span></button>
       </h2>
     </div>
   );

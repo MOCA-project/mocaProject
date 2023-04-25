@@ -159,17 +159,20 @@
 
 .search-wrapper {
   border: 1px solid #ccc;
-  border-radius: 30px;
-  height: 50px;
+  border-radius: 10px;
+  height: 40px;
   display: flex;
   align-items: center;
   overflow-x: hidden;
+  background-color: var(--sidebar);
 }
 
-.search-wrapper input {
+.search-wrapper select {
   height: 100%;
-  padding: 0.5rem;
+  padding: 0 1em;
   border: none;
+  font-size: 1em;
+  font-weight: 700;
   outline: none;
 }
 
@@ -177,6 +180,7 @@
   display: inline-block;
   padding: 0rem 1rem;
   font-size: 1.5rem;
+  color: var(--cor-fundo);
 }
 
 .user-wrapper {
@@ -288,7 +292,10 @@
 
 
 /*==================TELA DE RECEITAS===================*/
-
+.container-cards {
+  display: flex;
+  justify-content: center;
+}
 .cards-receitas {
   display: grid;
   grid-template-columns: repeat(2, 1fr);

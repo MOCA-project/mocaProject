@@ -44,7 +44,7 @@ function HomeDashboard() {
         const meses = [];
         for (let i = 0; i < 12; i++) {
           const data = new Date(dataAtual.getFullYear(), dataAtual.getMonth() + i, 1);
-          const mes = data.toLocaleString('pt-br', { month: 'long' });
+          const mes = data.toLocaleString('pt-br', { month: 'long' }).toUpperCase();
           meses.push({ value: `${1 + data.getMonth()}`, label: `${mes}` });
        }
         setOpcoes(meses);
@@ -80,7 +80,7 @@ function HomeDashboard() {
                     </h2>
 
                     <div className="search-wrapper">
-                        <span className="material-symbols-outlined">playlist_add_check</span>
+                    <span class="material-symbols-outlined">calendar_month</span>
                         <select onChange={(event) => {requisicao(event.target.value)}}>
                             {opcoes.map((opcao) => (
                                 <option key={opcao.value} value={opcao.value}>

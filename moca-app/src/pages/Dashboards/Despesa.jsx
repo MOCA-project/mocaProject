@@ -63,20 +63,22 @@ function Despesas() {
                 </header>
 
                 <main className="main">
-                    <div className="cards-despesas">
-                        <div className="card-single-despesa">
-                            <div>
-                                <span>Despesa</span>
-                                <h2>R${despesa}</h2>
+                    <div className="container-cards">
+                        <div className="cards-despesas">
+                            <div className="card-single-despesa">
+                                <div>
+                                    <span>Despesa</span>
+                                    <h2>R${despesa}</h2>
+                                </div>
+                                <span id="down" className="material-symbols-outlined">
+                                    arrow_downward
+                                </span>
                             </div>
-                            <span id="down" className="material-symbols-outlined">
-                                arrow_downward
-                            </span>
-                        </div>
-                        <div className="card-despesa" onClick={() => { setShowModal(true) }}>
-                            <div>
-                                <span>Nova Despesa</span> <br />
-                                <h2 className="material-symbols-outlined">add</h2>
+                            <div className="card-despesa" onClick={() => { setShowModal(true) }}>
+                                <div>
+                                    <span>Nova Despesa</span> <br />
+                                    <h2 className="material-symbols-outlined">add</h2>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -100,9 +102,7 @@ function Despesas() {
                     </div>
                 </main>
             </div>
-            <PopUpCadastro isOpen={showModal} setModalOpen={() => { setShowModal(!showModal) }}>
-
-            </PopUpCadastro>
+            <PopUpCadastro isOpen={showModal} setModalOpen={() => { setShowModal(!showModal) }} />
         </div>
     );
 }

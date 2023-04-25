@@ -43,10 +43,10 @@ function LinhaTabela(props) {
                 <tr key={window.location.pathname === '/dashboard/despesa' ? valor.idDespesa : valor.idReceita}>
                     <td data-label="Situação">
                         <span id="positivo" className="material-symbols-outlined">
-                            close
+                            done
                         </span>
                         <span id="negativo" className="material-symbols-outlined">
-                            done
+                            close
                         </span>
                     </td>
                     <td data-label="Data">{valor.data}</td>
