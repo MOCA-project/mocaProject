@@ -56,7 +56,7 @@ function PopUpCadastro({ isOpen, setModalOpen, children }) {
 
 
     function adicionarDespesa() {
-
+        setClicou(true);
         // Valor
         const valor = document.getElementById("valor");
         const valorValue = valor.value;
@@ -82,10 +82,7 @@ function PopUpCadastro({ isOpen, setModalOpen, children }) {
             idTipoDespesa: categoria,
         }).then((response) => {
             console.log(response.data);
-            setClicou(true);
-            setTimeout(() => {
-                window.location.href = '/dashboard/despesa'
-            }, 3000);
+            window.location.href = '/dashboard/despesa'
         }).catch((err) => {
             if (err.response.status() === 404) {
                 alert("Página não encontrada!");
@@ -105,7 +102,7 @@ function PopUpCadastro({ isOpen, setModalOpen, children }) {
     }
 
     function adicionarReceita() {
-
+        setClicou(true);
         // Valor
         const valor = document.getElementById("valor");
         const valorValue = valor.value;
@@ -130,10 +127,7 @@ function PopUpCadastro({ isOpen, setModalOpen, children }) {
         })
             .then((response) => {
                 console.log(response.data);
-                setClicou(true);
-                setTimeout(() => {
-                    window.location.href = '/dashboard/receita'
-                }, 3000);
+                window.location.href = '/dashboard/receita'
             })
             .catch((err) => {
                 if (err.response.status() === 404) {
