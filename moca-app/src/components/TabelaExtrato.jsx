@@ -33,7 +33,7 @@ function LinhaExtrato(props) {
                     <td data-label="Data">{valor.data}</td>
                     <td data-label="Descrição">{valor.descricao}</td>
                     <td data-label="Categoria">{valor.categoria}</td>
-                    <td data-label="Valor">{valor.valor}</td>
+                    <td data-label="Valor">R$ {valor.valor}</td>
                 </tr>
             ))}
         </tbody>

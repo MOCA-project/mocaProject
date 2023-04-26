@@ -122,7 +122,7 @@ function HomeDashboard() {
                         <div className="card-single">
                             <div>
                                 <span>Despesa</span>
-                                <h2>R${receita === undefined ? <FaSpinner className="spinner" /> : receita}</h2>
+                                <h2>R${despesa === undefined ? <FaSpinner className="spinner" /> : despesa}</h2>
                             </div>
                             <div>
                                 <span id="down" className="material-symbols-outlined">arrow_downward</span>
