@@ -113,6 +113,8 @@
 .modal__footer {
   margin-top: 2rem;
   text-align: right;
+  display: flex;
+  justify-content: end;
 }
 
 .modal__footer button {

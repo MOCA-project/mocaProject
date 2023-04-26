@@ -1,6 +1,7 @@
 import axios from "axios";
 import "../assets/css/popup.css";
 import { useState } from "react";
+import { FaSpinner } from "react-icons/fa";
 
 function PopUpCadastro({ isOpen, setModalOpen, children }) {
 
@@ -8,6 +9,15 @@ function PopUpCadastro({ isOpen, setModalOpen, children }) {
     // const nomeUsuario = localStorage.getItem("nome");
     const idUsuario = localStorage.getItem("id");
     // const tokenUsuario = localStorage.getItem("token");
+
+    const styles = {
+        esconder: {
+            display: 'none'
+        },
+        mostrar: {
+            display: 'block'
+        }
+    };
 
     const opcoesDespesa = [
         { id: 1, opcao: "Moradia" },
@@ -41,6 +51,7 @@ function PopUpCadastro({ isOpen, setModalOpen, children }) {
 
     // Categoria
     const [categoria, setCategoria] = useState();
+    const [clicou, setClicou] = useState(false);
 
 
 
@@ -71,6 +82,10 @@ function PopUpCadastro({ isOpen, setModalOpen, children }) {
             idTipoDespesa: categoria,
         }).then((response) => {
             console.log(response.data);
+            setClicou(true);
+            setTimeout(() => {
+                window.location.href = '/dashboard/despesa'
+            }, 3000);
         }).catch((err) => {
             if (err.response.status() === 404) {
                 alert("Página não encontrada!");
@@ -115,6 +130,10 @@ function PopUpCadastro({ isOpen, setModalOpen, children }) {
         })
             .then((response) => {
                 console.log(response.data);
+                setClicou(true);
+                setTimeout(() => {
+                    window.location.href = '/dashboard/receita'
+                }, 3000);
             })
             .catch((err) => {
                 if (err.response.status() === 404) {
@@ -180,7 +199,9 @@ function PopUpCadastro({ isOpen, setModalOpen, children }) {
                     </div>
 
                     <div className={window.location.pathname === '/dashboard/despesa' ? "modal__footer modal_footer_depesa" : "modal__footer modal_footer_receita"}>
-                        <button onClick={window.location.pathname === '/dashboard/despesa' ? () => adicionarDespesa() : () => adicionarReceita()}>Adicionar</button>
+                        <div><FaSpinner className="spinner" style={clicou ? styles.mostrar : styles.esconder} /></div>
+                        <button style={clicou ? styles.esconder : styles.mostrar}
+                            onClick={window.location.pathname === '/dashboard/despesa' ? () => adicionarDespesa() : () => adicionarReceita()}>Adicionar</button>
                     </div>
 
                     <span onClick={setModalOpen} className="modal__close">&times;</span>

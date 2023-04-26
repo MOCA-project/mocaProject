@@ -3,6 +3,8 @@ import Sidebar from "../../components/Sidebar";
 import { useEffect, useState } from "react";
 import "../../assets/css/style2.css";
 import { FaSpinner } from 'react-icons/fa';
+import ChartBarra from "../../components/ChartBarra";
+import ChartPizza from "../../components/ChartPizza";
 
 
 function HomeDashboard() {
@@ -15,8 +17,8 @@ function HomeDashboard() {
 
 
     // Validar se o usuario efetuou login antes de acessar a dashboard
-    function verificarAutenticacao(){
-        if(idUsuario === ""){
+    function verificarAutenticacao() {
+        if (idUsuario === "") {
             window.location.href = "/login";
         }
     }
@@ -45,28 +47,28 @@ function HomeDashboard() {
         const dataAtual = new Date();
         const meses = [];
         for (let i = 0; i < 12; i++) {
-          const data = new Date(dataAtual.getFullYear(), dataAtual.getMonth() + i, 1);
-          const mes = data.toLocaleString('pt-br', { month: 'long' }).toUpperCase();
-          meses.push({ value: `${1 + data.getMonth()}`, label: `${mes}` });
-       }
+            const data = new Date(dataAtual.getFullYear(), dataAtual.getMonth() + i, 1);
+            const mes = data.toLocaleString('pt-br', { month: 'long' }).toUpperCase();
+            meses.push({ value: `${1 + data.getMonth()}`, label: `${mes}` });
+        }
         setOpcoes(meses);
-      }, []);
+    }, []);
 
 
 
     // Requisição do endpoint para mostrar as informações do usuário
-    function requisicao(props){
+    function requisicao(props) {
         const data = new Date();
         const ano = data.getFullYear();
         axios.get(`//localhost:8080/api/home/${idUsuario}/${props ? props : data.getMonth() + 1}/${ano}`).then((response) => {
-        console.log(response);
-        setSaldo(response.data.saldo);
-        setReceita(response.data.receita);
-        setDespesa(response.data.despesas);
-        setSaldoCartao(response.data.despesaCartao);
-        setLoading(false);
-    });
-    // console.log(props);
+            console.log(response);
+            setSaldo(response.data.saldo);
+            setReceita(response.data.receita);
+            setDespesa(response.data.despesas);
+            setSaldoCartao(response.data.despesaCartao);
+            setLoading(false);
+        });
+        // console.log(props);
     }
 
 
@@ -83,8 +85,8 @@ function HomeDashboard() {
                     </h2>
 
                     <div className="search-wrapper">
-                    <span className="material-symbols-outlined">calendar_month</span>
-                        <select onChange={(event) => {requisicao(event.target.value)}}>
+                        <span className="material-symbols-outlined">calendar_month</span>
+                        <select onChange={(event) => { requisicao(event.target.value) }}>
                             {opcoes.map((opcao) => (
                                 <option key={opcao.value} value={opcao.value}>
                                     {opcao.label}
@@ -106,7 +108,7 @@ function HomeDashboard() {
                         <div className="card-single">
                             <div>
                                 <span>Saldo</span>
-                                <h2>R${saldo === undefined ? <FaSpinner className="spinner" /> : saldo}</h2>
+                                <h2>R$ {saldo === undefined ? <FaSpinner className="spinner" /> : saldo}</h2>
                             </div>
                             <div>
                                 <span id="money" className="material-symbols-outlined">attach_money</span>
@@ -115,14 +117,14 @@ function HomeDashboard() {
                         <div className="card-single">
                             <div>
                                 <span>Receita</span>
-                                <h2>R${receita === undefined ? <FaSpinner className="spinner" /> : receita}</h2>
+                                <h2>R$ {receita === undefined ? <FaSpinner className="spinner" /> : receita}</h2>
                             </div>
                             <span id="up" className="material-symbols-outlined">arrow_upward</span>
                         </div>
                         <div className="card-single">
                             <div>
                                 <span>Despesa</span>
-                                <h2>R${despesa === undefined ? <FaSpinner className="spinner" /> : despesa}</h2>
+                                <h2>R$ {despesa === undefined ? <FaSpinner className="spinner" /> : despesa}</h2>
                             </div>
                             <div>
                                 <span id="down" className="material-symbols-outlined">arrow_downward</span>
@@ -131,7 +133,7 @@ function HomeDashboard() {
                         <div className="card-single">
                             <div>
                                 <span>Cartões</span>
-                                <h2>R${saldoCartao === undefined ? <FaSpinner className="spinner" /> : saldoCartao}</h2>
+                                <h2>R$ {saldoCartao === undefined ? <FaSpinner className="spinner" /> : saldoCartao}</h2>
                             </div>
                             <div>
                                 <span id="cartao" className="material-symbols-outlined">credit_card</span>
@@ -141,11 +143,52 @@ function HomeDashboard() {
 
                     <div className="cards-dash">
 
-                        <div className="card-pos"></div>
-                        <div className="card-pos"><h2>Receitas por categorias</h2></div>
-                        <div className="card-pos"><h2>Cartões</h2></div>
-                        <div className="card-pos"><h2>Despesa por categoria</h2></div>
-                        <div className="card-pos"><h2>Porquinho</h2></div>
+                        <div className="card-pos">
+
+                            <div style={{ width: "100%", display: "flex" }}>
+                                <ChartBarra saldo={saldo} receita={receita} despesa={despesa} />
+                                <div style={{ width: "250px", margin: "auto", display: "flex", flexDirection: "column", gap: "10px" }}>
+                                    <h3>Receitas: <span style={{ color: "#63B967" }}>R$ {receita}</span></h3>
+                                    <h3>Despesas: <span style={{ color: "#E92121" }}>R$ {despesa}</span></h3>
+                                    <hr />
+                                    <h3>Balanço: <span>R$ {saldo}</span></h3>
+                                </div>
+                            </div>
+                        </div>
+                        <div className="card-pos">
+                            <h2>Receitas por categorias</h2>
+                            <ChartPizza />
+                        </div>
+                        <div className="card-pos">
+                            <h2>Cartões</h2>
+                            <div className="container">
+                                {/* <div className="circles">
+                                    <div className="circle circle-1"></div>
+                                    <div className="circle circle-2"></div>
+                                </div> */}
+
+                                <div className="card">
+                                    <div className="visa_logo">
+                                        <img src="https://raw.githubusercontent.com/muhammederdem/credit-card-form/master/src/assets/images/visa.png" alt="" />
+                                    </div>
+                                    <div className="visa_info">
+                                        <img src="https://raw.githubusercontent.com/muhammederdem/credit-card-form/master/src/assets/images/chip.png" alt="" />
+                                        <p>**** **** **** ****</p>
+                                    </div>
+                                    <div className="visa_crinfo">
+                                        <p>02/12</p>
+                                        <p>{nomeUsuario}</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div className="card-pos">
+                            <h2>Despesa por categoria</h2>
+                            <ChartPizza />
+                        </div>
+                        <div className="card-pos">
+                            <h2>Porquinho</h2>
+                        </div>
                     </div>
                 </main>
             </div>

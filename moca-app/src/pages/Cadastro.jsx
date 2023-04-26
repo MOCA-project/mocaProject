@@ -2,11 +2,9 @@ import axios from "axios";
 import Header from "../components/Header";
 import vetorCadastro1 from "../assets/img/vetorCadastro1.png";
 import vetorCadastro2 from "../assets/img/vetorCadastro2.png";
-import { useState } from "react";
 import "../assets/css/style.css";
 
 function Cadastro() {
-    const [data, setData] = useState(null);
 
     // Função chamada no botão para cadastrar o usuário
     function postCadastro() {
@@ -24,6 +22,10 @@ function Cadastro() {
         const email = document.getElementById('email-cadastro');
         const emailValue = email.value;
 
+        // Valor digitado no input de EMAIL
+        const telefone = document.getElementById('telefone-cadastro');
+        const telefoneValue = telefone.value;
+
         // Valor digitado no input de SENHA
         const senha = document.getElementById('senha-cadastro');
         const senhaValue = senha.value;
@@ -37,8 +39,10 @@ function Cadastro() {
             alert("Informe um nome!");
         } else if (!regexEmail.test(emailValue)) {
             alert("Digite um email válido!");
+        } else if (telefoneValue === "" || telefoneValue === " ") {
+            alert('Telefone inválido!\nEX: (99) 12345-6789 ou 99 1234-5678 ou 12345-6789');
         } else if (!regexSenha.test(senhaValue)) {
-            alert("Senha inválida!\nA senha deve ter entre 6 e 15 caracteres e incluir pelo menos uma letra maiúscula, um número e um caractere especial.")
+            alert("Senha inválida!\nA senha deve ter entre 6 e 15 caracteres e incluir pelo menos uma letra maiúscula, um número e um caractere especial.");
         } else if (senhaValue !== confirmeSenhaValue) {
             alert("Senhas não conferem!");
         } else {
@@ -49,11 +53,12 @@ function Cadastro() {
                 nome: nomeValue,
                 email: emailValue,
                 senha: senhaValue,
+                telefone: telefoneValue,
                 idTipoPerfil: 5,
             }).then((response) => {
                 console.log(response);
                 alert("Usuário cadastrado!")
-                setData(response.data);
+                window.location.href = "/login";
             }).catch((err) => {
                 if (err.response.status() === 409) {
                     alert("Usuário ja cadastrado!");
@@ -64,9 +69,6 @@ function Cadastro() {
             });
         }
 
-        if(data === 200){
-            window.location.href = "/login";
-        }
     }
 
     // Retyornando a estrutura do site de Cadastro
@@ -88,6 +90,9 @@ function Cadastro() {
                         </div>
                         <div className="input-cadastro">
                             <input type="text" id="email-cadastro" placeholder="Email" />
+                        </div>
+                        <div className="input-cadastro">
+                            <input type="text" id="telefone-cadastro" placeholder="Telefone" />
                         </div>
                         <div className="input-cadastro">
                             <input type="password" id="senha-cadastro" placeholder="Senha" />
