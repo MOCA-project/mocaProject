@@ -124,7 +124,7 @@ function Extrato() {
                         <div className="card-single">
                             <div>
                                 <span>Despesa</span>
-                                <h2>R${despesa === undefined ? <FaSpinner className="spinner" /> : saldo}</h2>
+                                <h2>R${despesa === undefined ? <FaSpinner className="spinner" /> : despesa}</h2>
                             </div>
                             <div>
                                 <span id="down" className="material-symbols-outlined">arrow_downward</span>
