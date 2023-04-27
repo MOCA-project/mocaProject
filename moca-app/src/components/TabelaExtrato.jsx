@@ -17,6 +17,8 @@ function LinhaExtrato(props) {
             // console.log('tabela')
         });
     }, [props.props]);
+    
+
     return (
         <tbody>
             {extrato.map((valor) => (

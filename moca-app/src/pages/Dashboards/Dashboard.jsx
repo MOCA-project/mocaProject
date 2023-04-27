@@ -35,6 +35,8 @@ function HomeDashboard() {
     const [receita, setReceita] = useState();
     const [despesa, setDespesa] = useState();
     const [saldoCartao, setSaldoCartao] = useState();
+    const [graficoDespesa, setGraficoDespesa] = useState([]);
+    const [graficoReceitas, setGraficoReceitas] = useState([]);
     const [ativo, setAtivo] = useState(true);
 
 
@@ -61,8 +63,10 @@ function HomeDashboard() {
         const data = new Date();
         const ano = data.getFullYear();
         axios.get(`//localhost:8080/api/home/${idUsuario}/${props ? props : data.getMonth() + 1}/${ano}`).then((response) => {
-            console.log(response);
+            // console.log(response);
             setSaldo(response.data.saldo);
+            setGraficoReceitas(response.data.graficoReceitas.indices);
+            setGraficoDespesa(response.data.graficoDespesas.indices);
             setReceita(response.data.receita);
             setDespesa(response.data.despesas);
             setSaldoCartao(response.data.despesaCartao);
@@ -146,7 +150,7 @@ function HomeDashboard() {
                         <div className="card-pos">
 
                             <div style={{ width: "100%", display: "flex" }}>
-                                <ChartBarra saldo={saldo} receita={receita} despesa={despesa} />
+                                <ChartBarra receita={receita} despesa={despesa} />
                                 <div style={{ width: "250px", margin: "auto", display: "flex", flexDirection: "column", gap: "10px" }}>
                                     <h3>Receitas: <span style={{ color: "#63B967" }}>R$ {receita}</span></h3>
                                     <h3>Despesas: <span style={{ color: "#E92121" }}>R$ {despesa}</span></h3>
@@ -157,34 +161,16 @@ function HomeDashboard() {
                         </div>
                         <div className="card-pos">
                             <h2>Receitas por categorias</h2>
-                            <ChartPizza />
+                            <br />
+                            <ChartPizza props={graficoReceitas} mensagem="receita" />
                         </div>
                         <div className="card-pos">
                             <h2>Cartões</h2>
-                            <div className="container">
-                                {/* <div className="circles">
-                                    <div className="circle circle-1"></div>
-                                    <div className="circle circle-2"></div>
-                                </div> */}
-
-                                <div className="card">
-                                    <div className="visa_logo">
-                                        <img src="https://raw.githubusercontent.com/muhammederdem/credit-card-form/master/src/assets/images/visa.png" alt="" />
-                                    </div>
-                                    <div className="visa_info">
-                                        <img src="https://raw.githubusercontent.com/muhammederdem/credit-card-form/master/src/assets/images/chip.png" alt="" />
-                                        <p>**** **** **** ****</p>
-                                    </div>
-                                    <div className="visa_crinfo">
-                                        <p>02/12</p>
-                                        <p>{nomeUsuario}</p>
-                                    </div>
-                                </div>
-                            </div>
                         </div>
                         <div className="card-pos">
                             <h2>Despesa por categoria</h2>
-                            <ChartPizza />
+                            <br />
+                            <ChartPizza props={graficoDespesa} mensagem="despesa" />
                         </div>
                         <div className="card-pos">
                             <h2>Porquinho</h2>

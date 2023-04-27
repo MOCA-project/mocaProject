@@ -14,9 +14,9 @@ function LinhaTabela(props) {
     const [isEditando, setIsEditando] = useState(false);
 
     function pagarDespesa() {
-        axios.patch(`//localhost:8080/api/despesas/pagar/${props.despesa.idDespesa}`).then((response) => {
-            console.log(response.status);
-        })
+        // axios.patch(`//localhost:8080/api/despesas/pagar/${props.despesa.idDespesa}`).then((response) => {
+        //     console.log(response.status);
+        // })
     }
 
     return (

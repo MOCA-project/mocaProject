@@ -1043,3 +1043,26 @@ footer .contato .rede-social img{
     color: #ffffff;
   }
   
+
+
+
+
+  .botaoGrafico {
+    font-size: 1em;
+    padding: 0.5em 2em;
+    border: transparent;
+    box-shadow: 2px 2px 4px rgba(0,0,0,0.4);
+    background: var(--azul-escuro);
+    color: white;
+    border-radius: 6px;
+   }
+   
+   .botaoGrafico:hover {
+    background: rgb(2,0,36);
+    background: var(--azul-claro);
+    cursor: pointer;
+   }
+   
+   .botaoGrafico:active {
+    transform: translate(0em, 0.2em);
+   }

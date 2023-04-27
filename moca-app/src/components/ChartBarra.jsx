@@ -2,34 +2,48 @@ import { useState } from "react";
 import { useEffect } from "react";
 import { Bar, BarChart, CartesianGrid, Legend, Tooltip, XAxis, YAxis } from "recharts";
 
-function ChartBarra({ saldo: propsSaldo, receita: propsReceita, despesa: propsDespesa }) {
+function ChartBarra(props) {
 
-    const [saldo, setSaldo] = useState();
     const [receita, setReceita] = useState();
     const [despesa, setDespesa] = useState();
+    console.log(props)
 
     useEffect(() => {
-        if (propsSaldo && propsReceita && propsDespesa) {
-            setSaldo(propsSaldo);
-            setReceita(propsReceita);
-            setDespesa(propsDespesa);
-        }
-    }, [propsSaldo, propsReceita, propsDespesa]);
+        setReceita(props.receita);
+        setDespesa(props.despesa);
+    }, [props]); // Adicionando props como dependências
+
 
     const data = [
         { name: 'Receita', valor: receita, fill: "#63B967" },
         { name: 'Despesa', valor: despesa, fill: "#E92121" },
-    ]
+    ];
+
+    if (props.receita === 0 && props.despesa === 0) {
+        return (
+            <div>
+                <h4>Ops, parece que você não possui nada cadastrado!</h4>
+                <button className="botaoGrafico" style={{margin: "20px 0"}}
+                    onClick={() => window.location.href = '/dashboard/receita'}>
+                    Adicionar Receita
+                </button>
+                <button className="botaoGrafico"
+                    onClick={() => window.location.href = '/dashboard/despesa'}>
+                    Adicionar Despesa
+                </button>
+            </div>
+        );
+    }
 
     return (
         <BarChart
-            width={200}
-            height={250}
+            width={300}
+            height={200}
             data={data}
             margin={{
                 top: 5,
-                right: 20,
-                left: 20,
+                right: 40,
+                left: 40,
                 bottom: 5,
             }}
         >
@@ -38,7 +52,7 @@ function ChartBarra({ saldo: propsSaldo, receita: propsReceita, despesa: propsDe
             {/* <YAxis /> */}
             <Tooltip />
             {/* <Legend /> */}
-            <Bar dataKey="valor" fill="#8884d8"/>
+            <Bar dataKey="valor" fill="#8884d8" />
             {/* <Bar dataKey="valor" fill="#82ca9d" /> */}
         </BarChart>
     );
