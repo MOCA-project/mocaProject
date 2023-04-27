@@ -21,9 +21,9 @@ function ChartBarra(props) {
 
     if (props.receita === 0 && props.despesa === 0) {
         return (
-            <div>
+            <div style={{display: "flex", flexDirection: "column", alignItems: "center"}}>
                 <h4>Ops, parece que você não possui nada cadastrado!</h4>
-                <button className="botaoGrafico" style={{margin: "20px 0"}}
+                <button className="botaoGrafico" style={{margin: "10px 0"}}
                     onClick={() => window.location.href = '/dashboard/receita'}>
                     Adicionar Receita
                 </button>

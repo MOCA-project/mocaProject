@@ -13,9 +13,7 @@ import "../assets/css/style.css";
 
 function Home() {
 
-    if (!localStorage.getItem("id", "")) {
-
-    } else {
+    if (localStorage.getItem("id") === null) {
         localStorage.setItem("id", "");
         localStorage.setItem("nome", "");
         localStorage.setItem("token", "");

@@ -1051,6 +1051,7 @@ footer .contato .rede-social img{
     font-size: 1em;
     padding: 0.5em 2em;
     border: transparent;
+    max-width: 300px;
     box-shadow: 2px 2px 4px rgba(0,0,0,0.4);
     background: var(--azul-escuro);
     color: white;
