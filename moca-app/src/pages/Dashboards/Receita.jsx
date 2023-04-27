@@ -70,7 +70,7 @@ function Receitas() {
                 <header className="header">
                     <h2>
                         <label style={{ cursor: "pointer" }} htmlFor="nav-toggle">
-                            <span className="material-symbols-outlined">menu</span>
+                            {/* <span className="material-symbols-outlined">menu</span> */}
                         </label>
                     </h2>
                     <div className="user-wrapper">

@@ -4,8 +4,22 @@ import bolaAzul from "../assets/img/Vector (5).png";
 import bolaPreta from "../assets/img/Vector (4).png";
 import { armazenar } from "../LocalStorages";
 import "../assets/css/style.css";
+import { FaSpinner } from "react-icons/fa";
+import { useState } from "react";
 
 function Login() {
+
+    const [clicou, setClicou] = useState(false);
+
+    const styles = {
+        esconder: {
+            display: 'none'
+        },
+        mostrar: {
+            display: 'block'
+        }
+    };
+
     function postLogin() {
 
         // Valor digitado no input de EMAIL
@@ -60,7 +74,11 @@ function Login() {
                             <input type="password" id="senha-login" placeholder="Senha" />
                         </div>
                         <div className="input-login">
-                            <button type="button" className="btn-login" onClick={postLogin}>Login</button>
+                            <div><FaSpinner className="spinner" style={clicou ? styles.mostrar : styles.esconder} /></div>
+                            <button type="button" 
+                            style={clicou ? styles.esconder : styles.mostrar}
+                            className="btn-login"
+                             onClick={() => {postLogin(); setClicou(true);}}>Login</button>
                         </div>
                     </form>
                 </div>

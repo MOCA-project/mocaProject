@@ -91,7 +91,7 @@ function Extrato() {
                 <header className="header">
                     <h2>
                         <label style={{ cursor: 'pointer' }} htmlFor="nav-toggle" onClick={() => ativo ? setAtivo(false) : setAtivo(true)}>
-                            <span className="material-symbols-outlined">menu</span>
+                            {/* <span className="material-symbols-outlined">menu</span> */}
                         </label>
                     </h2>
 
