@@ -66,12 +66,13 @@
 
 .sidebar-menu a {
   padding-left: 1rem;
-  display: block;
+  display: flex;
+  align-items: center;
   color: #fff;
   font-size: 1.1rem;
   transition: all 300ms;
-  padding-top: 0.5rem;
-  padding-bottom: 0.5rem;
+  padding-top: 0.8rem;
+  padding-bottom: 0.8rem;
 }
 
 .sidebar-menu a:hover {
