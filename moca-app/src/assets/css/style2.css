@@ -54,9 +54,9 @@
   font-size: 2em;
 }
 
-.sidebar-menu {
-  /* margin-top: 1rem; */
-}
+/* .sidebar-menu {
+  margin-top: 1rem;
+} */
 
 .sidebar-menu li {
   width: 100%;
@@ -76,7 +76,7 @@
 }
 
 .sidebar-menu a:hover {
-  background: #ffffff67;
+  background: #4962B2A6;
   padding-top: 0.8rem;
   padding-bottom: 0.8rem;
   color: white;
@@ -85,10 +85,10 @@
 }
 
 .sidebar-menu a.active {
-  background: #fff;
+  background: #4962B2A6;
   padding-top: 0.8rem;
   padding-bottom: 0.8rem;
-  color: black;
+  color: #fff;
   border-radius: 15px 15px 15px 15px;
   margin-right: 10%;
 }
@@ -516,8 +516,8 @@
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   grid-gap: 2rem;
-  margin-top: 3rem; 
-  width: 100%;
+  margin: 3rem auto; 
+  width: 80%;
 }
 
 .card-credit {
@@ -528,7 +528,7 @@
   padding: 1rem;
   border-radius: 0.4rem;
   box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
-  /* width: 500px; */
+  /* width: 600px; */
 }
 
 .cartao {
@@ -564,7 +564,7 @@
   display: flex;
   flex-direction: column;
   justify-content: center;
-  width: 200px;
+  width: 240px;
   height: 180px;
 }
 

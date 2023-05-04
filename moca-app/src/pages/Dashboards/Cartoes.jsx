@@ -2,6 +2,7 @@ import { FaSpinner } from "react-icons/fa";
 import Sidebar from "../../components/Sidebar";
 import { useState } from "react";
 import CartoesCard from "../../components/CardCartao";
+import PopUpCartao from "../../components/PopUpCartao";
 
 function Cartoes() {
     const nomeUsuario = localStorage.getItem("nome");
@@ -53,6 +54,7 @@ function Cartoes() {
                     </div>
                 </main>
             </div>
+            <PopUpCartao isOpen={showModal} setModalOpen={() => { setShowModal(!showModal) }}/>
         </div>
     );
 }
