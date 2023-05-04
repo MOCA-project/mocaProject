@@ -10,6 +10,7 @@ import Despesas from "./pages/Dashboards/Despesa";
 // CSS
 import "./assets/css/style.css";
 import "./assets/css/header.css";
+import Cartoes from "./pages/Dashboards/Cartoes";
 
 
 function App() {
@@ -23,6 +24,7 @@ function App() {
         <Route path="/dashboard/extrato" element={<Extrato/>}/>
         <Route path="/dashboard/receita" element={<Receitas />}/>
         <Route path="/dashboard/despesa" element={<Despesas/>}/>
+        <Route path="/dashboard/cartoes" element={<Cartoes />}/>
       </Routes>
     </Router>
   );

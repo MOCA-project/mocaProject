@@ -20,7 +20,7 @@
 /* ===================SIDEBAR=================== */
 
 .sidebar {
-  width: 345px;
+  width: 300px;
   position: fixed;
   left: 0;
   top: 0;
@@ -33,7 +33,7 @@
 
 .sidebar-brand {
   height: 150px;
-  padding: 2rem 0rem 0rem 0rem;
+  /* padding: 2rem 0rem 0rem 0rem; */
   color: #fff;
   display: flex;
   align-items: center;
@@ -42,25 +42,25 @@
 }
 
 .sidebar-brand img {
-  display: inline-block;
-  width: 80px;
-  height: 80px;
+  /* display: inline-block; */
+  width: 70px;
+  height: 60px;
   border-radius: 50%;
   margin-right: 1rem;
 }
 
 .sidebar-brand span {
   font-weight: 700;
-  font-size: 3em;
+  font-size: 2em;
 }
 
 .sidebar-menu {
-  margin-top: 3rem;
+  /* margin-top: 1rem; */
 }
 
 .sidebar-menu li {
   width: 100%;
-  margin-bottom: 1em;
+  margin-bottom: 0.5em;
   padding-left: 1rem;
 }
 
@@ -102,35 +102,35 @@
 /* ===================HEADER=================== */
 
 .main-content {
-  margin-left: 345px;
+  margin-left: 300px;
   transition: margin-left 300ms;
 }
 
-#nav-toggle:checked + .sidebar {
+#nav-toggle:checked+.sidebar {
   width: 70px;
 }
 
-#nav-toggle:checked + .sidebar .sidebar-brand,
-#nav-toggle:checked + .sidebar li {
+#nav-toggle:checked+.sidebar .sidebar-brand,
+#nav-toggle:checked+.sidebar li {
   padding-left: 1rem;
   text-align: center;
 }
 
-#nav-toggle:checked + .sidebar li a {
+#nav-toggle:checked+.sidebar li a {
   padding-left: 0rem;
 }
 
 
-#nav-toggle:checked + .sidebar .sidebar-brand h2 span:last-child,
-#nav-toggle:checked + .sidebar li a span:last-child {
+#nav-toggle:checked+.sidebar .sidebar-brand h2 span:last-child,
+#nav-toggle:checked+.sidebar li a span:last-child {
   display: none;
 }
 
-#nav-toggle:checked ~ .main-content {
+#nav-toggle:checked~.main-content {
   margin-left: 70px;
 }
 
-#nav-toggle:checked ~ .main-content header {
+#nav-toggle:checked~.main-content header {
   width: calc(100% - 70px);
   left: 70px;
 }
@@ -141,8 +141,8 @@
   padding: 1rem 1.5rem;
   box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
   position: fixed;
-  left: 345px;
-  width: calc(100% - 345px);
+  left: 300px;
+  width: calc(100% - 300px);
   top: 0;
   background: var(--cor-fundo);
   z-index: 100;
@@ -209,7 +209,7 @@
   margin-top: 8vh;
   padding: 2rem 1.5rem;
   background: var(--cor-fundo);
-  min-height: calc(100vh - 90px);
+  min-height: calc(100vh - 8vh);
 }
 
 .cards {
@@ -235,32 +235,32 @@
   align-items: center;
 }
 
-.card-single span{
-     color: #fff;
+.card-single span {
+  color: #fff;
 }
 
-.card-single #money{
-    font-size: 2rem;
-    background: linear-gradient(#577DDD, #3B6CE9);
-    border-radius: 20%;
+.card-single #money {
+  font-size: 2rem;
+  background: linear-gradient(#577DDD, #3B6CE9);
+  border-radius: 20%;
 }
 
-.card-single #up{
-    font-size: 2rem;
-    background: linear-gradient(#63B967, #4BA64F);
-    border-radius: 20%;
+.card-single #up {
+  font-size: 2rem;
+  background: linear-gradient(#63B967, #4BA64F);
+  border-radius: 20%;
 }
 
-.card-single #down{
-    font-size: 2rem;
-    background: linear-gradient(#E92121, #EC5959);
-    border-radius: 20%;
+.card-single #down {
+  font-size: 2rem;
+  background: linear-gradient(#E92121, #EC5959);
+  border-radius: 20%;
 }
 
-.card-single #cartao{
-    font-size: 2rem;
-    background: linear-gradient(#A921E9, #9A59EC);
-    border-radius: 20%;
+.card-single #cartao {
+  font-size: 2rem;
+  background: linear-gradient(#A921E9, #9A59EC);
+  border-radius: 20%;
 }
 
 /* .card-single div:last-child span {
@@ -282,23 +282,23 @@
   color: #fff;
 } */
 
-.cards-dash{
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    grid-gap: 2rem;
-    margin-top: 1rem;
+.cards-dash {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  grid-gap: 2rem;
+  margin-top: 1rem;
 }
 
-.card-pos{
-    display: flex;
-    flex-direction: column;
-    justify-content: space-around;
-    background: #fff;
-    padding: 1rem;
-    border-radius: 0.4rem;
-    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
-    text-align: center;
-    align-items: center;
+.card-pos {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  background: #fff;
+  padding: 1rem;
+  border-radius: 0.4rem;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+  text-align: center;
+  align-items: center;
 }
 
 
@@ -308,6 +308,7 @@
   display: flex;
   justify-content: center;
 }
+
 .cards-receitas {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
@@ -326,7 +327,7 @@
   box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
 }
 
-.card-receita{
+.card-receita {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -339,18 +340,18 @@
   cursor: pointer;
 }
 
-.card-single-receita #up{
+.card-single-receita #up {
   font-size: 2rem;
   background: linear-gradient(#63B967, #4BA64F);
   border-radius: 20%;
   color: #fff;
 }
 
-.card-receita span{
+.card-receita span {
   color: #fff;
 }
 
-.card-receita h2{
+.card-receita h2 {
   color: #fff;
 }
 
@@ -361,7 +362,7 @@
   margin: 40px auto 0;
 } */
 
-.heading{
+.heading {
   font-size: 20px;
   text-align: center;
   color: black;
@@ -373,18 +374,19 @@
   margin: 2em 0;
 }
 
-.table{
+.table {
   width: 100%;
   border-collapse: collapse;
-  box-shadow: 0px 4px 4px 3px rgba(0, 0, 0, 0.25);;
+  box-shadow: 0px 4px 4px 3px rgba(0, 0, 0, 0.25);
+  ;
 }
 
-.table thead{
+.table thead {
   background-color: #FFFFFF;
   border-radius: 50px;
 }
 
-.table thead tr th{
+.table thead tr th {
   font-size: 14px;
   font-weight: 600;
   letter-spacing: 0.35px;
@@ -395,7 +397,7 @@
   border: 1px solid #CCCCCC;
 }
 
-.table tbody tr td{
+.table tbody tr td {
   font-size: 14px;
   letter-spacing: 0.35px;
   font-weight: normal;
@@ -406,7 +408,7 @@
   border: 1px solid #CCCCCC;
 }
 
-.table tbody tr td button{
+.table tbody tr td button {
   text-decoration: none;
   line-height: 35px;
   display: inline-block;
@@ -422,13 +424,14 @@
   cursor: pointer;
 }
 
-.table tbody tr td #positivo{
+.table tbody tr td #positivo {
   background-color: #63B967;
   color: #fff;
   border-radius: 50%;
   cursor: pointer;
 }
-.table tbody tr td #negativo{
+
+.table tbody tr td #negativo {
   background-color: #E92121;
   color: #fff;
   border-radius: 50%;
@@ -455,7 +458,7 @@
   box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
 }
 
-.card-despesa{
+.card-despesa {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -468,21 +471,133 @@
   cursor: pointer;
 }
 
-.card-single-despesa #down{
+.card-single-despesa #down {
   font-size: 2rem;
   background: linear-gradient(#E92121, #EC5959);
   border-radius: 20%;
   color: #fff;
 }
 
-.card-despesa span{
+.card-despesa span {
   color: #fff;
 }
 
-.card-despesa h2{
+.card-despesa h2 {
   color: #fff;
 }
 
+/* ===================CARTOES=================== */
+
+.card-cartao {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  padding: 2rem;
+  border-radius: 0.4rem;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+  background: linear-gradient(180deg, #A921E9 0%, #9A59EC 100%);
+  color: #fff;
+  width: 65%;
+  cursor: pointer;
+}
+
+#cartao-card {
+  font-size: 2rem;
+  padding: 5px;
+  background: linear-gradient(#A921E9, #9A59EC);
+  border-radius: 20%;
+  color: #fff;
+  position: relative;
+  top: -50px;
+}
+
+.cartoes-usuario {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  grid-gap: 2rem;
+  margin-top: 3rem; 
+  width: 100%;
+}
+
+.card-credit {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: #fff;
+  padding: 1rem;
+  border-radius: 0.4rem;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+  /* width: 500px; */
+}
+
+.cartao {
+  width: 300px;
+  height: 180px;
+}
+
+.tipo-cartao {
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, #A921E9, #9A59EC);
+  border-radius: 20px;
+  padding: 1em;
+  color: #fff;
+}
+
+.bandeira {
+  position: relative;
+  right: -200px;
+}
+
+.bandeira img {
+  width: 50px;
+}
+
+.nome-usuario {
+  position: relative;
+  bottom: -60px;
+  right: -10px;
+}
+
+.informacoes-cartao {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  width: 200px;
+  height: 180px;
+}
+
+.informacoes-cartao h2 {
+  margin: 0.5em 0;
+}
+
+.informacoes-cartao .informacoes {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.informacoes-cartao .informacoes div {
+  margin: 5px 0;
+}
+
+.informacoes-cartao .informacoes div span {
+  margin: 0 15px;
+}
+
+.progresso {
+  width: 100%;
+  height: 10px;
+  background-color: #ccc;
+  border-radius: 20px;
+}
+
+.barra-progresso {
+  background: linear-gradient(135deg, #21D4FD 0%, #2152FF 100%);
+  height: 10px;
+  border-radius: 20px;
+}
 
 /* ===================RESPONSIVIDADE=================== */
 
@@ -490,7 +605,7 @@
   .sidebar {
     width: 70px;
   }
-  
+
   .sidebar .sidebar-brand,
   .sidebar li {
     padding-left: 1rem;
@@ -515,201 +630,206 @@
     left: 70px;
   }
 
-  .card-receita{
+  .card-receita {
     width: 90%;
   }
 
-  .card-despesa{
+  .card-despesa {
     width: 90%;
   }
 
-  
-}
-
-@media only screen and (max-width: 960px){
-    .cards{
-        grid-template-columns: repeat(3, 1fr);
-    }
-
-    .cards-dash{
-        grid-template-columns: repeat(1, 1fr);
-    }
-
-    .card-receita{
-      width: 100%;
-      justify-items: center;
-    }
-
-    .card-despesa{
-      width: 100%;
-      justify-items: center;
-    }
-
 
 }
 
-@media only screen and (max-width: 768px){
-    .cards{
-        grid-template-columns: repeat(2, 1fr);
-    }
+@media only screen and (max-width: 960px) {
+  .cards {
+    grid-template-columns: repeat(3, 1fr);
+  }
 
-    .cards-dash{
-        grid-template-columns: repeat(1, 1fr);
-    }
+  .cards-dash {
+    grid-template-columns: repeat(1, 1fr);
+  }
 
-    .cards-receitas{
-        grid-template-columns: repeat(2, 1fr);
-    }
+  .card-receita {
+    width: 100%;
+    justify-items: center;
+  }
 
-    .cards-despesas{
-        grid-template-columns: repeat(2, 1fr);
-    }
+  .card-despesa {
+    width: 100%;
+    justify-items: center;
+  }
 
-    .user-wrapper{
-        display: none;
-    }
 
-    .sidebar{
-        left: -100% !important;
-    }
-
-    .header h2{
-        display: flex;
-        align-items: center;
-    }
-
-    .header h2 label{
-        display: inline-block;
-        background: var(--sidebar);
-        padding-right: 1rem;
-        margin-right: 1rem;
-        height: 40px;
-        width: 40px;
-        border-radius: 50%;
-        color: #fff;
-        display: flex;
-        align-items: center;
-        justify-content: center !important;
-    }
-
-    .header h2 span{
-        text-align: center;
-        padding-right: 0rem;
-    }
-
-    .header h2{
-        font-size: 1.1rem;
-    }
-
-    .main-content{
-        width: 100%;
-        margin-left: 0rem;
-    }
-
-    .header{
-        width: 100% !important;; 
-        left: 0 !important;
-    }
-
-    #nav-toggle:checked + .sidebar{
-        left: 0 !important;
-        z-index: 100;
-        width: 410px;
-    }
-    
-    #nav-toggle:checked + .sidebar .sidebar-brand,
-    #nav-toggle:checked + .sidebar li {
-        padding-left: 2rem;
-        text-align: left;
-      }
-    
-      #nav-toggle:checked + .sidebar li a {
-        padding-left: 1rem;
-      }
-    
-      #nav-toggle:checked + .sidebar .sidebar-brand h2 span:last-child,
-      #nav-toggle:checked + .sidebar li a span:last-child {
-        display: inline;
-      }
-
-      #nav-toggle:checked ~ .main-content {
-        margin-left: 0rem !important;
-      }
-
-      .cards-receitas{
-        width: 100%;
-      }
-
-      .cards-despesas{
-        width: 100%;
-      }
-
-      .table thead{
-        display: none;
-      }
-
-      .table, .table tbody, .table tr, .table td{
-        display: block;
-        width: 100%;
-      }
-
-      .table tr{
-        margin-bottom: 15px;
-      }
-
-      .table tbody tr td{
-        text-align: right;
-        padding-left: 50% ;
-        position: relative;
-      }
-
-      .table td:before{
-        content: attr(data-label);
-        position: absolute;
-        left: 0;
-        width: 50%;
-        padding-left: 15px;
-        font-weight: 600;
-        text-align: left;
-      }
-    
 }
 
-@media  only screen and (max-width: 560px)  {
-    .cards{
-        grid-template-columns: 100%;
-    }
+@media only screen and (max-width: 768px) {
+  .cards {
+    grid-template-columns: repeat(2, 1fr);
+  }
 
-    .cards-dash{
-        grid-template-columns: 100%;
-    }
-    
-    .cards-receitas{
-        grid-template-columns: 100%;
-    }
+  .cards-dash {
+    grid-template-columns: repeat(1, 1fr);
+  }
 
-    .user-wrapper{
-        display: none;
-    }
+  .cards-receitas {
+    grid-template-columns: repeat(2, 1fr);
+  }
 
-    .card-single-receita{
-      grid-template-columns: 100%;
-    }
-    .card-receita{
-      grid-template-columns: 100%;
-    }
+  .cards-despesas {
+    grid-template-columns: repeat(2, 1fr);
+  }
 
-    .cards-despesas{
-        grid-template-columns: 100%;
-    }
+  .user-wrapper {
+    display: none;
+  }
 
-    .card-single-despesa{
-      grid-template-columns: 100%;
-    }
+  .sidebar {
+    left: -100% !important;
+  }
 
-    .card-despesa{
-      grid-template-columns: 100%;
-    }
+  .header h2 {
+    display: flex;
+    align-items: center;
+  }
+
+  .header h2 label {
+    display: inline-block;
+    background: var(--sidebar);
+    padding-right: 1rem;
+    margin-right: 1rem;
+    height: 40px;
+    width: 40px;
+    border-radius: 50%;
+    color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center !important;
+  }
+
+  .header h2 span {
+    text-align: center;
+    padding-right: 0rem;
+  }
+
+  .header h2 {
+    font-size: 1.1rem;
+  }
+
+  .main-content {
+    width: 100%;
+    margin-left: 0rem;
+  }
+
+  .header {
+    width: 100% !important;
+    ;
+    left: 0 !important;
+  }
+
+  #nav-toggle:checked+.sidebar {
+    left: 0 !important;
+    z-index: 100;
+    width: 410px;
+  }
+
+  #nav-toggle:checked+.sidebar .sidebar-brand,
+  #nav-toggle:checked+.sidebar li {
+    padding-left: 2rem;
+    text-align: left;
+  }
+
+  #nav-toggle:checked+.sidebar li a {
+    padding-left: 1rem;
+  }
+
+  #nav-toggle:checked+.sidebar .sidebar-brand h2 span:last-child,
+  #nav-toggle:checked+.sidebar li a span:last-child {
+    display: inline;
+  }
+
+  #nav-toggle:checked~.main-content {
+    margin-left: 0rem !important;
+  }
+
+  .cards-receitas {
+    width: 100%;
+  }
+
+  .cards-despesas {
+    width: 100%;
+  }
+
+  .table thead {
+    display: none;
+  }
+
+  .table,
+  .table tbody,
+  .table tr,
+  .table td {
+    display: block;
+    width: 100%;
+  }
+
+  .table tr {
+    margin-bottom: 15px;
+  }
+
+  .table tbody tr td {
+    text-align: right;
+    padding-left: 50%;
+    position: relative;
+  }
+
+  .table td:before {
+    content: attr(data-label);
+    position: absolute;
+    left: 0;
+    width: 50%;
+    padding-left: 15px;
+    font-weight: 600;
+    text-align: left;
+  }
+
+}
+
+@media only screen and (max-width: 560px) {
+  .cards {
+    grid-template-columns: 100%;
+  }
+
+  .cards-dash {
+    grid-template-columns: 100%;
+  }
+
+  .cards-receitas {
+    grid-template-columns: 100%;
+  }
+
+  .user-wrapper {
+    display: none;
+  }
+
+  .card-single-receita {
+    grid-template-columns: 100%;
+  }
+
+  .card-receita {
+    grid-template-columns: 100%;
+  }
+
+  .cards-despesas {
+    grid-template-columns: 100%;
+  }
+
+  .card-single-despesa {
+    grid-template-columns: 100%;
+  }
+
+  .card-despesa {
+    grid-template-columns: 100%;
+  }
 
 
 }
@@ -722,6 +842,11 @@
 }
 
 @keyframes spin {
-  from { transform: rotate(0deg); }
-  to { transform: rotate(360deg); }
+  from {
+    transform: rotate(0deg);
+  }
+
+  to {
+    transform: rotate(360deg);
+  }
 }
