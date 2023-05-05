@@ -517,7 +517,8 @@
   grid-template-columns: repeat(2, 1fr);
   grid-gap: 2rem;
   margin: 3rem auto; 
-  width: 80%;
+  justify-items: center;
+  width: 100%;
 }
 
 .card-credit {
@@ -528,7 +529,7 @@
   padding: 1rem;
   border-radius: 0.4rem;
   box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
-  /* width: 600px; */
+  /* max-width: 700px; */
 }
 
 .cartao {
@@ -565,6 +566,7 @@
   flex-direction: column;
   justify-content: center;
   width: 240px;
+  padding-left: 20px;
   height: 180px;
 }
 

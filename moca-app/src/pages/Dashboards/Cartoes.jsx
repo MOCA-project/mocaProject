@@ -3,11 +3,39 @@ import Sidebar from "../../components/Sidebar";
 import { useState } from "react";
 import CartoesCard from "../../components/CardCartao";
 import PopUpCartao from "../../components/PopUpCartao";
+import axios from "axios";
+import { useEffect } from "react";
 
 function Cartoes() {
     const nomeUsuario = localStorage.getItem("nome");
     const idUsuario = localStorage.getItem("id");
     const [showModal, setShowModal] = useState(false);
+    const [saldoCartao, setSaldoCartao] = useState();
+    const [loading, setLoading] = useState(false);
+    const data = new Date();
+    const ano = data.getFullYear();
+
+    function requisicao() {
+        // Constants para mes e ano que serão passadas na url
+        // Requisição para buscar as receitas do usuario
+        axios.get(`//localhost:8080/api/home/${idUsuario}/${data.getMonth() + 1}/${ano}`).then((response) => {
+            // console.log(response);
+            setSaldoCartao(response.data.despesaCartao);
+            setLoading(true);
+        });
+    }
+
+    // Validar se o usuario efetuou login antes de acessar a dashboard
+    function verificarAutenticacao() {
+        if (idUsuario === "") {
+            window.location.href = "/login";
+        }
+    }
+    useEffect(() => {
+        verificarAutenticacao();
+        requisicao();
+        setLoading(true);
+    }, []);
 
     return (
         <div>
@@ -32,11 +60,7 @@ function Cartoes() {
                             <div className="card-single-receita">
                                 <div>
                                     <span>Seus Cartões</span>
-                                    <h2>
-                                        {/* R${receita === undefined ?  */}
-                                        <FaSpinner className="spinner" />
-                                        {/* : receita} */}
-                                    </h2>
+                                    <h2>R$ {saldoCartao === undefined ? <FaSpinner className="spinner" /> : saldoCartao}</h2>
 
                                 </div>
                                 <span id="cartao-card" className="material-symbols-outlined">credit_card</span>
@@ -50,11 +74,11 @@ function Cartoes() {
                         </div>
                     </div>
                     <div className="cartoes-usuario">
-                        <CartoesCard idUsuario={idUsuario} nomeUsuario={nomeUsuario} />
+                        <CartoesCard idUsuario={idUsuario} nomeUsuario={nomeUsuario}/>
                     </div>
                 </main>
             </div>
-            <PopUpCartao isOpen={showModal} setModalOpen={() => { setShowModal(!showModal) }}/>
+            <PopUpCartao isOpen={showModal} setModalOpen={() => { setShowModal(!showModal) }} />
         </div>
     );
 }

@@ -1,8 +1,15 @@
+import axios from "axios";
 import { useState } from "react";
 import { FaSpinner } from "react-icons/fa";
 
 function PopUpCartao({ isOpen, setModalOpen }) {
+    const idUsuario = localStorage.getItem("id");
     const [clicou, setClicou] = useState(false);
+    const limite = document.getElementById("limite");
+    const ano = document.getElementById("ano");
+    const mes = document.getElementById("mes");
+    const [tipo, setTipo] = useState();
+    const [apelido, setApelido] = useState();
     const [banco, setBanco] = useState();
     const [bandeira, setBandeira] = useState();
     const [cor, setCor] = useState();
@@ -16,23 +23,23 @@ function PopUpCartao({ isOpen, setModalOpen }) {
         { id: 7, opcao: "Cinza Prata", codigo: "#C0C0C0" },
     ];
     const bancosTipos = [
-        {id: 1, opcao: "Santander"},
-        {id: 2, opcao: "Itau"},
-        {id: 3, opcao: "Banco do Brasil"},
-        {id: 4, opcao: "C6 Bank"},
-        {id: 5, opcao: "NuBank"},
-        {id: 6, opcao: "Inter"},
-        {id: 7, opcao: "Banco Pan"},
-        {id: 8, opcao: "Caixa Econômica"},
-        {id: 9, opcao: "Bradesco"},
-        {id: 10, opcao: "Outros"},
+        { id: 1, opcao: "Santander" },
+        { id: 2, opcao: "Itau" },
+        { id: 3, opcao: "Banco do Brasil" },
+        { id: 4, opcao: "C6 Bank" },
+        { id: 5, opcao: "NuBank" },
+        { id: 6, opcao: "Inter" },
+        { id: 7, opcao: "Banco Pan" },
+        { id: 8, opcao: "Caixa Econômica" },
+        { id: 9, opcao: "Bradesco" },
+        { id: 10, opcao: "Outros" },
     ];
     const bandeirasTipos = [
-        {id: 1, opcao: "Visa"},
-        {id: 2, opcao: "Elo"},
-        {id: 3, opcao: "Mastercard"},
-        {id: 4, opcao: "Hipercard"},
-        {id: 5, opcao: "American Express"},
+        { id: 1, opcao: "Visa" },
+        { id: 2, opcao: "Elo" },
+        { id: 3, opcao: "Mastercard" },
+        { id: 4, opcao: "Hipercard" },
+        { id: 5, opcao: "American Express" },
     ];
 
     const styles = {
@@ -43,6 +50,24 @@ function PopUpCartao({ isOpen, setModalOpen }) {
             display: 'block'
         }
     };
+
+
+    function requisicao() {
+        axios.post(`//localhost:8080/api/cartoes/`, {
+            limite: limite.value,
+            idCliente: idUsuario,
+            idTipo: tipo,
+            idCor: cor,
+            bandeira: bandeira,
+            vencimento: `${mes.value}/${ano.value}`,
+            apelido: apelido
+        }).then((response) => {
+            console.log(response);
+            window.location.href = '/dashboard/cartoes';
+        })
+        
+        setClicou(true);
+    }
 
     if (isOpen) {
         return (
@@ -56,10 +81,19 @@ function PopUpCartao({ isOpen, setModalOpen }) {
                     </div>
 
                     <div className="input-box">
+                        <label className="input-label">Tipo</label>
+                        <select id="tipo" className="selecao" onChange={(event) => setTipo(event.target.value)}>
+                            <option value="0">--Selecione--</option>
+                            <option value="1">Débito</option>
+                            <option value="2">Crédito</option>
+                        </select>
+                    </div>
+
+                    <div className="input-box">
                         <label className="input-label">Banco</label>
                         <select id="banco" className="selecao" onChange={(event) => { setBanco(event.target.value) }}>
                             <option value="0">-- Selecione --</option>
-                            {bancosTipos.map( opcao => (
+                            {bancosTipos.map(opcao => (
                                 <option key={opcao.id} value={opcao.opcao}>{opcao.opcao}</option>
                             ))}
                         </select>
@@ -95,10 +129,15 @@ function PopUpCartao({ isOpen, setModalOpen }) {
                         </select>
                     </div>
 
+                    <div className="input-box">
+                        <label className="input-label">Apelido</label>
+                        <input type="text" className="input" onChange={(event) => setApelido(event.target.value)}/>
+                    </div>
+
                     <div className="modal__footer modal_footer_cartao">
                         <div><FaSpinner className="spinner" style={clicou ? styles.mostrar : styles.esconder} /></div>
                         <button style={clicou ? styles.esconder : styles.mostrar}
-                        >Adicionar</button>
+                            onClick={() => requisicao()}>Adicionar</button>
                     </div>
 
                     <span onClick={setModalOpen} className="modal__close">&times;</span>
