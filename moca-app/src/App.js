@@ -11,6 +11,10 @@ import Despesas from "./pages/Dashboards/Despesa";
 import "./assets/css/style.css";
 import "./assets/css/header.css";
 import Cartoes from "./pages/Dashboards/Cartoes";
+import Porquinho from "./pages/Dashboards/Porquinho";
+import Calculadora from "./pages/Dashboards/Calculadora";
+import Configuracoes from "./pages/Dashboards/Configuracoes";
+import PorquinhoExtrato from "./pages/Dashboards/PorquinhoExtrato";
 
 
 function App() {
@@ -25,6 +29,10 @@ function App() {
         <Route path="/dashboard/receita" element={<Receitas />}/>
         <Route path="/dashboard/despesa" element={<Despesas/>}/>
         <Route path="/dashboard/cartoes" element={<Cartoes />}/>
+        <Route path="/dashboard/porquinho" element={<Porquinho />}/>
+        <Route path="/dashboard/porquinho/extrato" element={<PorquinhoExtrato />}/>
+        <Route path="/dashboard/calculadora" element={<Calculadora />}/>
+        <Route path="/dashboard/configuracoes" element={<Configuracoes />}/>
       </Routes>
     </Router>
   );

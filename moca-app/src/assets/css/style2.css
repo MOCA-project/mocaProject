@@ -374,6 +374,13 @@
   margin: 2em 0;
 }
 
+.table-container-porquinho {
+  margin-top: 1em;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
 .table {
   width: 100%;
   border-collapse: collapse;
@@ -381,12 +388,17 @@
   ;
 }
 
-.table thead {
-  background-color: #FFFFFF;
-  border-radius: 50px;
+.table-porquinho{
+  width: 70%;
+
 }
 
-.table thead tr th {
+.table thead, .table-porquinho thead{
+  background-color: #FFFFFF;
+  /* border-radius: 50px; */
+}
+
+.table thead tr th, .table-porquinho thead tr th {
   font-size: 14px;
   font-weight: 600;
   letter-spacing: 0.35px;
@@ -397,7 +409,7 @@
   border: 1px solid #CCCCCC;
 }
 
-.table tbody tr td {
+.table tbody tr td, .table-porquinho tbody tr td {
   font-size: 14px;
   letter-spacing: 0.35px;
   font-weight: normal;
@@ -408,7 +420,7 @@
   border: 1px solid #CCCCCC;
 }
 
-.table tbody tr td button {
+.table tbody tr td button, .table-porquinho tbody tr td button {
   text-decoration: none;
   line-height: 35px;
   display: inline-block;
@@ -424,14 +436,14 @@
   cursor: pointer;
 }
 
-.table tbody tr td #positivo {
+.table tbody tr td #positivo, .table-porquinho tbody tr td #positivo {
   background-color: #63B967;
   color: #fff;
   border-radius: 50%;
   cursor: pointer;
 }
 
-.table tbody tr td #negativo {
+.table tbody tr td #negativo, .table-porquinho tbody tr td, #negativo {
   background-color: #E92121;
   color: #fff;
   border-radius: 50%;
@@ -540,7 +552,7 @@
 .tipo-cartao {
   width: 100%;
   height: 100%;
-  background: linear-gradient(90deg, #A921E9, #9A59EC);
+  /* background: linear-gradient(90deg, #A921E9, #9A59EC); */
   border-radius: 20px;
   padding: 1em;
   color: #fff;
@@ -599,6 +611,126 @@
   background: linear-gradient(135deg, #21D4FD 0%, #2152FF 100%);
   height: 10px;
   border-radius: 20px;
+}
+
+/* ===================PORQUINHO=================== */
+
+.card-porquinho {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: #fff;
+  padding: 1rem;
+  border-radius: 0.5rem;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+}
+
+.card-porquinho .icone {
+  width: 200px;
+  height: 180px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  color: #414141;
+}
+
+.card-porquinho .icone span{
+  font-size: 6em;
+}
+
+.card-porquinho .linha{
+  width: 2px;
+  height: 80%;
+  background: #414141;
+}
+
+.card-porquinho .grafico{
+  width: 300px;
+}
+
+.frase {
+  font-size: 2em;
+  text-align: center;
+  margin: 4em 0;
+  padding: 0 2em;
+}
+
+.cards-porquinho {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-gap: 2rem;
+  margin-top: 1rem;
+  width: 70%;
+}
+
+.container-estado-extrato {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.barra-estado {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  background: #fff;
+  padding: 1.5rem;
+  border-radius: 0.4rem;
+  width: 70%;
+  margin: 2em 0;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+}
+
+.barra-estado span {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+
+.barra-estado .barra-inteira {
+  width: 100%;
+  height: 20px;
+  background: #ccc;
+  margin-top: 0.5em;
+  border-radius: 6px;
+}
+
+.barra-estado .barra-porcentagem {  
+  height: 20px;
+  background: linear-gradient(135deg, #21D4FD 0%, #2152FF 100%);
+  border-radius: 6px;
+}
+
+.container-btns {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.container-btns div {
+  display: flex;
+  border-radius: 0.4rem;
+  width: 70%; 
+  gap: 1em;
+}
+
+.container-btns div button {
+  height: 40px;
+  width: 150px;
+  color: #fff;
+  font-size: 1em;
+  font-weight: 600;
+  border: none;
+  border-radius: 6px;
+}
+
+.container-btns div .btn-adicionar {
+  background: linear-gradient(180deg, #63B967 0%, #4BA64F 100%);
+}
+
+.container-btns div .btn-retirar{
+  background: linear-gradient(180deg, #E92121 0%, #EC5959 100%);
 }
 
 /* ===================RESPONSIVIDADE=================== */

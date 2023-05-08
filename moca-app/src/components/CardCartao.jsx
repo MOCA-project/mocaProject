@@ -1,43 +1,40 @@
-import axios from "axios";
+
 import Mastercard from "../assets/img/Mastercard-Logo.png";
-import { useState } from "react";
-import { useEffect } from "react";
 
 function CartoesCard(props) {
-    const [dadosCartao, setDadosCartao] = useState([]);
-    const [loading, setLoading] = useState(false);
-    const data = new Date();
-    const ano = data.getFullYear();
+    const nomeUsuario = localStorage.getItem("nome");
+    // const [loading, setLoading] = useState(false);
+    const corCartao = [
+        { id: 1, opcao: "Azul Royal", codigo: "#0071C5" },
+        { id: 2, opcao: "Verde Esmeralda", codigo: "#50C878" },
+        { id: 3, opcao: "Amarelo Sol", codigo: "#FFD700" },
+        { id: 4, opcao: "Vermelho Cereja", codigo: "#DC143C" },
+        { id: 5, opcao: "Roxo Violeta", codigo: "#8A2BE2" },
+        { id: 6, opcao: "Laranja Coral", codigo: "#FF7F50" },
+        { id: 7, opcao: "Cinza Prata", codigo: "#C0C0C0" },
+    ];
 
-    function requisicao() {
-        axios.get(`//localhost:8080/api/cartoes/${props.idUsuario}/${data.getMonth() + 1}/${ano}`).then((response) => {
-            console.log(response.data.cartoes);
-            setDadosCartao(response.data.cartoes);
-        })
-    }
-    useEffect(() => {
-        requisicao();
-        setLoading(true);
-    }, []);
+    // Encontra o objeto de cor correspondente ao idCor
+    const corSelecionada = corCartao.find(cor => cor.id === props.props.idCor);
 
     return (
         <div className="card-credit">
-            <div className="cartao">
+            <div className="cartao" style={{ backgroundColor: corSelecionada.codigo, borderRadius: "20px"}}>
                 <div className="tipo-cartao">
                     <div className="tipo">Crédito</div>
                     <div className="bandeira"><img src={Mastercard} alt="" /></div>
-                    <div className="nome-usuario">{props.nomeUsuario}</div>
+                    <div className="nome-usuario">{nomeUsuario}</div>
                 </div>
             </div>
             <div className="informacoes-cartao">
-                <h2>Nubank</h2>
+                <h2>{props.props.apelido}</h2>
                 <div className="informacoes">
-                    <div>Limite:<span>R$ {dadosCartao.limite}</span></div>
-                    <div>Venci.: <span>{dadosCartao.vencimento}</span></div>
+                    <div>Limite:<span>R$ {props.props.limite}</span></div>
+                    <div>Venci.: <span>{props.props.vencimento}</span></div>
                     <div>
-                        <h5>{dadosCartao.porcentagemUtilizado}% utilizado</h5>
+                        <h5>{props.props.porcentagemUtilizado}% utilizado</h5>
                         <div className="progresso">
-                            <div className="barra-progresso" style={{ width: `${dadosCartao.porcentagemUtilizado}%` }}></div>
+                            <div className="barra-progresso" style={{ width: `${props.props.porcentagemUtilizado}%` }}></div>
                         </div>
                     </div>
                 </div>

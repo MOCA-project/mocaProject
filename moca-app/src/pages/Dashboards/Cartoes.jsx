@@ -12,6 +12,7 @@ function Cartoes() {
     const [showModal, setShowModal] = useState(false);
     const [saldoCartao, setSaldoCartao] = useState();
     const [loading, setLoading] = useState(false);
+    const [dadosCartao, setDadosCartao] = useState([]);
     const data = new Date();
     const ano = data.getFullYear();
 
@@ -23,6 +24,11 @@ function Cartoes() {
             setSaldoCartao(response.data.despesaCartao);
             setLoading(true);
         });
+
+        axios.get(`//localhost:8080/api/cartoes/${idUsuario}/${data.getMonth() + 1}/${ano}`).then((response) => {
+            console.log(response.data.cartoes);
+            setDadosCartao(response.data.cartoes);
+        })
     }
 
     // Validar se o usuario efetuou login antes de acessar a dashboard
@@ -74,7 +80,9 @@ function Cartoes() {
                         </div>
                     </div>
                     <div className="cartoes-usuario">
-                        <CartoesCard idUsuario={idUsuario} nomeUsuario={nomeUsuario}/>
+                        {dadosCartao.map((opcao) => (
+                            <CartoesCard props={opcao} key={opcao.idCartao}/>
+                        ))}
                     </div>
                 </main>
             </div>

@@ -9,8 +9,9 @@ function PopUpCartao({ isOpen, setModalOpen }) {
     const ano = document.getElementById("ano");
     const mes = document.getElementById("mes");
     const [tipo, setTipo] = useState();
-    const [apelido, setApelido] = useState();
+    const [apelido, setApelido] = useState('');
     const [banco, setBanco] = useState();
+    const [vencimento, setVencimento] = useState('')
     const [bandeira, setBandeira] = useState();
     const [cor, setCor] = useState();
     const corCartao = [
@@ -59,15 +60,27 @@ function PopUpCartao({ isOpen, setModalOpen }) {
             idTipo: tipo,
             idCor: cor,
             bandeira: bandeira,
-            vencimento: `${mes.value}/${ano.value}`,
-            apelido: apelido
+            apelido: apelido,
+            vencimento: "25/11"
         }).then((response) => {
             console.log(response);
             window.location.href = '/dashboard/cartoes';
         })
-        
+        console.log(vencimento);
+
         setClicou(true);
     }
+
+    // function verificarVencimento(props) {
+    //     // Verifica se o valor inserido contém apenas números e a barra "/"
+    //     const regex = /^(0[1-9]|1[0-2])\/(20[2-9][0-9]|2[2-9][0-9]{2}|[3-9][0-9])$|^\d{4}$/;
+    //     if (regex.test(props)) {
+    //         setVencimento(props);
+    //     } 
+    //     else {
+    //         alert("Vencimento inválido\nTipos válidos: '12/23', '03/2024', '0123'");
+    //     }
+    // }
 
     if (isOpen) {
         return (
@@ -111,10 +124,7 @@ function PopUpCartao({ isOpen, setModalOpen }) {
 
                     <div className="input-box">
                         <label className="input-label">Vencimento</label>
-                        <div className="mes-ano">
-                            <input placeholder="Mês" id="vencimento-mes" className="input" type="number" />
-                            <input placeholder="Ano" id="vencimento-ano" className="input" type="number" />
-                        </div>
+                        <input type="text" placeholder="MM/AA" className="input" id="vencimento" onChange={(event) => { setVencimento(event.target.value) }} />
                     </div>
 
                     <div className="input-box">
@@ -131,7 +141,7 @@ function PopUpCartao({ isOpen, setModalOpen }) {
 
                     <div className="input-box">
                         <label className="input-label">Apelido</label>
-                        <input type="text" className="input" onChange={(event) => setApelido(event.target.value)}/>
+                        <input type="text" className="input" onChange={(event) => setApelido(event.target.value)} />
                     </div>
 
                     <div className="modal__footer modal_footer_cartao">
