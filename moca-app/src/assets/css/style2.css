@@ -733,6 +733,51 @@
   background: linear-gradient(180deg, #E92121 0%, #EC5959 100%);
 }
 
+
+/* =================== CALCULADORA =================== */
+
+.input-group {
+  display: flex;
+  align-items: center;
+}
+
+.input-calculadora {
+  min-height: 40px;
+  max-width: 150px;
+  padding: 0 1rem;
+  color: #fff;
+  font-size: 15px;
+  border: 1px solid #1C1C58;
+  border-radius: 6px 0 0 6px;
+  background-color: transparent;
+}
+
+.button--submit {
+  min-height: 40px;
+  width: 90px;
+  padding: .5em 1em;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  border-radius: 0 6px 6px 0;
+  background: linear-gradient(180deg, #040432 0%, #1C1C58 100%);
+  color: #fff;
+  font-size: 15px;
+  cursor: pointer;
+  transition: background-color .3s ease-in-out;
+}
+
+.button--submit:hover {
+  background-color: #000;
+}
+
+.input:focus, .input:focus-visible {
+  border-color: #3898EC;
+  outline: none;
+}
+
+
 /* ===================RESPONSIVIDADE=================== */
 
 @media only screen and (max-width: 1200px) {

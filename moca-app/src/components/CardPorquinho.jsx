@@ -10,7 +10,7 @@ function CardPorquinho(props) {
         { name: "Pago", value: valorAtual, fill: "#F683EB" },
         { name: 'Total', value: valorFinal, fill: "#ccc" },
     ];
-    // const formatPorcentagem = (value) => `${value.toFixed(2)}%`;
+    const formatPorcentagem = (value) => `${value.toFixed(2)}%`;
 
 
     //  Return do HTML
@@ -33,30 +33,30 @@ function CardPorquinho(props) {
                             outerRadius={80}
                             dataKey="value"
                             labelLine={false} // Oculta as linhas de conexão dos rótulos com os segmentos
-                            // label={({
-                            //     cx,
-                            //     cy,
-                            //     midAngle,
-                            //     innerRadius,
-                            //     outerRadius,
-                            //     percent
-                            // }) => {
-                            //     const radius = innerRadius + (outerRadius - innerRadius) * 0.5;
-                            //     const x = cx + radius * Math.cos(-midAngle * Math.PI / 180);
-                            //     const y = cy + radius * Math.sin(-midAngle * Math.PI / 180);
+                            label={({
+                                cx,
+                                cy,
+                                midAngle,
+                                innerRadius,
+                                outerRadius,
+                                percent
+                            }) => {
+                                const radius = innerRadius + (outerRadius - innerRadius) * 0.5;
+                                const x = cx + radius * Math.cos(-midAngle * Math.PI / 180);
+                                const y = cy + radius * Math.sin(-midAngle * Math.PI / 180);
 
-                            //     return (
-                            //         <text
-                            //             x={x}
-                            //             y={y}
-                            //             fill="#000"
-                            //             textAnchor={x > cx ? 'start' : 'end'}
-                            //             dominantBaseline="central"
-                            //         >
-                            //             {`${formatPorcentagem(percent * 100)}`}
-                            //         </text>
-                            //     );
-                            // }}
+                                return (
+                                    <text
+                                        x={x}
+                                        y={y}
+                                        fill="#000"
+                                        textAnchor={x > cx ? 'start' : 'end'}
+                                        dominantBaseline="central"
+                                    >
+                                        {`${formatPorcentagem(percent * 100)}`}
+                                    </text>
+                                );
+                            }}
                         >
                             {data.map((entry, index) => (
                                 <Cell key={`cell-${index}`} fill={entry.fill} />
@@ -65,7 +65,7 @@ function CardPorquinho(props) {
                         <Tooltip>
                             <span>{data.name}</span>
                         </Tooltip>
-                        <Legend />
+                        {/* <Legend /> */}
                     </PieChart>
                 </ResponsiveContainer>
             </div>
