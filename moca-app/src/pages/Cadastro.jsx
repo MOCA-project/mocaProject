@@ -3,48 +3,41 @@ import Header from "../components/Header";
 import vetorCadastro1 from "../assets/img/vetorCadastro1.png";
 import vetorCadastro2 from "../assets/img/vetorCadastro2.png";
 import "../assets/css/style.css";
+import { useState } from "react";
 
 function Cadastro() {
+
+    // Atributos
+    const [nomeValue, setNomeValue] = useState('');
+    const [emailValue, setEmailValue] = useState('');
+    const [telefoneValue, setTelefoneValue] = useState('');
+    const [senhaValue, setSenhaValue] = useState('');
+    const [confirmeSenhaValue, setConfirmeSenhaValue] = useState('');
+    // Consts para exibir frases de alertas
+    const [nomeAlert, setNomeAlert] = useState('');
+    const [emailAlert, setEmailAlert] = useState('');
+    const [telefoneAlert, setTelefoneAlert] = useState('');
+    const [senhaAlert, setSenhaAlert] = useState('');
+    const [confirmeSenhaAlert, setConfirmeSenhaAlert] = useState('');
 
     // Função chamada no botão para cadastrar o usuário
     function postCadastro() {
 
         // Regex
-        let regexSenha =
-            /^(?=.*[a-zA-Z])(?=.*[0-9])(?=.*[!@#$%*()_+^&}{:;?.])(?:([0-9a-zA-Z!@#$%;*(){}_+^&])(?!\1)){6,}$/;
+        let regexSenha = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])[0-9a-zA-Z]{8,}$/;
         let regexEmail = /\S+@\S+\.\S+/;
-
-        // Valor digitado no input de NOME
-        const nome = document.getElementById('nome-cadastro');
-        const nomeValue = nome.value;
-
-        // Valor digitado no input de EMAIL
-        const email = document.getElementById('email-cadastro');
-        const emailValue = email.value;
-
-        // Valor digitado no input de EMAIL
-        const telefone = document.getElementById('telefone-cadastro');
-        const telefoneValue = telefone.value;
-
-        // Valor digitado no input de SENHA
-        const senha = document.getElementById('senha-cadastro');
-        const senhaValue = senha.value;
-
-        // Valor digitado no input de CONFIRME SENHA
-        const confirmeSenha = document.getElementById('confirmeSenha-cadastro');
-        const confirmeSenhaValue = confirmeSenha.value;
 
         // Fazendo as validações dos inputs e cadastrando
         if (nomeValue === "" || nomeValue === " ") {
-            alert("Informe um nome!");
+            setNomeAlert("Informe um nome!");
         } else if (!regexEmail.test(emailValue)) {
-            alert("Digite um email válido!");
+            setEmailAlert("Digite um email válido!");
         } else if (telefoneValue === "" || telefoneValue === " ") {
-            alert('Telefone inválido!\nEX: (99) 12345-6789 ou 99 1234-5678 ou 12345-6789');
+            setTelefoneAlert('Telefone inválido! EX: (99) 12345-6789 ou 99 1234-5678 ou 12345-6789');
         } else if (!regexSenha.test(senhaValue)) {
-            alert("Senha inválida!\nA senha deve ter entre 6 e 15 caracteres e incluir pelo menos uma letra maiúscula, um número e um caractere especial.");
+            setSenhaAlert("Senha inválida! A senha deve ter pelo menos uma letra maiúscula, um número e uma letra minúscula.");
         } else if (senhaValue !== confirmeSenhaValue) {
-            alert("Senhas não conferem!");
+            setConfirmeSenhaAlert("Senhas não conferem!");
         } else {
 
             // Chamando o axios para criar um cliente = usuario
@@ -55,14 +48,11 @@ function Cadastro() {
                 senha: senhaValue,
                 telefone: telefoneValue,
                 idTipoPerfil: 5,
-            }).then((response) => {
-                console.log(response);
-                alert("Usuário cadastrado!")
+            }).then(() => {
                 window.location.href = "/login";
             }).catch((err) => {
                 if (err.response.status() === 409) {
                     alert("Usuário ja cadastrado!");
-                    console.log("email ja existente", err)
                 } else if (err.response.status() === 404) {
                     alert("Página não encontrada!");
                 }
@@ -71,7 +61,8 @@ function Cadastro() {
 
     }
 
-    // Retyornando a estrutura do site de Cadastro
+
+    // Retornando a estrutura do site de Cadastro
     return (
         <div className="cad-log">
             <Header />
@@ -86,22 +77,27 @@ function Cadastro() {
                     <h1>Cadastre-se</h1>
                     <form className="cont-cadastro">
                         <div className="input-cadastro">
-                            <input type="text" id="nome-cadastro" placeholder="Nome completo" />
+                            <input type="text" onChange={(event) => setNomeValue(event.target.value)} placeholder="Nome completo" />
+                            <small>{nomeAlert}</small>
                         </div>
                         <div className="input-cadastro">
-                            <input type="text" id="email-cadastro" placeholder="Email" />
+                            <input type="text" onChange={(event) => setEmailValue(event.target.value)} placeholder="Email" />
+                            <small>{emailAlert}</small>
                         </div>
                         <div className="input-cadastro">
-                            <input type="text" id="telefone-cadastro" placeholder="Telefone" />
+                            <input type="text" onChange={(event) => setTelefoneValue(event.target.value)} placeholder="Telefone" />
+                            <small>{telefoneAlert}</small>
                         </div>
                         <div className="input-cadastro">
-                            <input type="password" id="senha-cadastro" placeholder="Senha" />
+                            <input type="password" onChange={(event) => setSenhaValue(event.target.value)} placeholder="Senha" />
+                            <small>{senhaAlert}</small>
                         </div>
                         <div className="input-cadastro">
-                            <input type="password" id="confirmeSenha-cadastro" placeholder="Confirmar senha" />
+                            <input type="password" onChange={(event) => setConfirmeSenhaValue(event.target.value)} placeholder="Confirmar senha" />
+                            <small>{confirmeSenhaAlert}</small>
                         </div>
                         <div className="input-cadastro">
-                            <button type="button" className="btn-cadastro" onClick={postCadastro}>Cadastrar</button>
+                            <button type="button" className="btn-cadastro" onClick={() => postCadastro()}>Cadastrar</button>
                         </div>
                     </form>
                 </div>

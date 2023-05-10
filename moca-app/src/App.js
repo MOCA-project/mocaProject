@@ -15,6 +15,7 @@ import Porquinho from "./pages/Dashboards/Porquinho";
 import Calculadora from "./pages/Dashboards/Calculadora";
 import Configuracoes from "./pages/Dashboards/Configuracoes";
 import PorquinhoExtrato from "./pages/Dashboards/PorquinhoExtrato";
+import NotFound from "./pages/Dashboards/NotFound";
 
 
 function App() {
@@ -33,6 +34,7 @@ function App() {
         <Route path="/dashboard/porquinho/extrato" element={<PorquinhoExtrato />}/>
         <Route path="/dashboard/calculadora" element={<Calculadora />}/>
         <Route path="/dashboard/configuracoes" element={<Configuracoes />}/>
+        <Route path="*" element={<NotFound />}/>
       </Routes>
     </Router>
   );

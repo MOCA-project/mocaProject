@@ -9,31 +9,24 @@ import { useState } from "react";
 
 function Login() {
 
+    // Atributos
     const [clicou, setClicou] = useState(false);
-
+    const [emailValue, setEmailValue] = useState('');
+    const [senhaValue, setSenhaValue] = useState('');
+    const [emailAlert, setEmailAlert] = useState('');
+    const [senhaAlert, setSenhaAlert] = useState('');
     const styles = {
-        esconder: {
-            display: 'none'
-        },
-        mostrar: {
-            display: 'block'
-        }
+        esconder: { display: 'none' },
+        mostrar: { display: 'block' }
     };
 
+    // Fução para logar o usuário
     function postLogin() {
 
-        // Valor digitado no input de EMAIL
-        const email = document.getElementById('email-login');
-        const emailValue = email.value;
-
-        // Valor digitado no input de SENHA
-        const senha = document.getElementById('senha-login');
-        const senhaValue = senha.value;
-
         if (emailValue === "" || emailValue === " ") {
-            alert("Informe um email!");
+            setEmailAlert("Informe um email!");
         } else if (senhaValue === "" || senhaValue === " ") {
-            alert("Digite a senha!");
+            setSenhaAlert("Digite a senha!");
         } else {
             console.log(emailValue, senhaValue);
             axios.post("http://localhost:8080/api/usuarios/login", {
@@ -49,12 +42,13 @@ function Login() {
                 }
             }).catch((err) => {
                 if (err.response.status === 404) {
-                    console.log("Email do usuário não cadastrado!")
+                    alert("Email do usuário não cadastrado!");
                 }
             });
         }
     }
 
+    // Return do HTML
     return (
         <div>
             <Header />
@@ -68,17 +62,19 @@ function Login() {
                     <h1>Login</h1>
                     <form className="cont-login">
                         <div className="input-login">
-                            <input type="text" id="email-login" placeholder="Email" />
+                            <input type="text" onChange={(event) => setEmailValue(event.target.value)} placeholder="Email" />
+                            <small>{emailAlert}</small>
                         </div>
                         <div className="input-login">
-                            <input type="password" id="senha-login" placeholder="Senha" />
+                            <input type="password" onChange={(event) => setSenhaValue(event.target.value)} placeholder="Senha" />
+                            <small>{senhaAlert}</small>
                         </div>
                         <div className="input-login">
                             <div><FaSpinner className="spinner" style={clicou ? styles.mostrar : styles.esconder} /></div>
-                            <button type="button" 
-                            style={clicou ? styles.esconder : styles.mostrar}
-                            className="btn-login"
-                             onClick={() => {postLogin(); setClicou(true);}}>Login</button>
+                            <button type="button"
+                                style={clicou ? styles.esconder : styles.mostrar}
+                                className="btn-login"
+                                onClick={() => { postLogin(); setClicou(true); }}>Login</button>
                         </div>
                     </form>
                 </div>

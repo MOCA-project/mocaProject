@@ -883,100 +883,74 @@
   border-bottom: 2px solid #67748E;
 }
 
-.toggler {
-  width: 72px;
-  /* margin: 40px auto; */
-}
-
-.toggler input {
-  display: none;
-}
-
-.toggler label {
-  display: block;
+.toggle-switch {
   position: relative;
-  width: 72px;
-  height: 36px;
-  border: 1px solid #d6d6d6;
-  border-radius: 36px;
-  background: #e4e8e8;
+  display: inline-block;
+  width: 80px;
+  height: 40px;
   cursor: pointer;
 }
 
-.toggler label::after {
-  display: block;
-  border-radius: 100%;
-  background-color: #d7062a;
-  content: '';
-  animation-name: toggler-size;
-  animation-duration: 0.15s;
-  animation-timing-function: ease-out;
-  animation-direction: forwards;
-  animation-iteration-count: 1;
-  animation-play-state: running;
+.toggle-switch input[type="checkbox"] {
+  display: none;
 }
 
-.toggler label::after, .toggler label .toggler-on, .toggler label .toggler-off {
+.toggle-switch-background {
   position: absolute;
-  top: 50%;
-  left: 25%;
-  width: 26px;
-  height: 26px;
-  transform: translateY(-50%) translateX(-50%);
-  transition: left 0.15s ease-in-out, background-color 0.2s ease-out, width 0.15s ease-in-out, height 0.15s ease-in-out, opacity 0.15s ease-in-out;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: #ddd;
+  border-radius: 20px;
+  box-shadow: inset 0 0 0 2px #ccc;
+  transition: background-color 0.3s ease-in-out;
 }
 
-.toggler input:checked + label::after, .toggler input:checked + label .toggler-on, .toggler input:checked + label .toggler-off {
-  left: 75%;
+.toggle-switch-handle {
+  position: absolute;
+  top: 5px;
+  left: 5px;
+  width: 30px;
+  height: 30px;
+  background-color: #fff;
+  border-radius: 50%;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+  transition: transform 0.3s ease-in-out;
 }
 
-.toggler input:checked + label::after {
-  background-color: #50ac5d;
-  animation-name: toggler-size2;
+.toggle-switch::before {
+  content: "";
+  position: absolute;
+  top: -25px;
+  right: -35px;
+  font-size: 12px;
+  font-weight: bold;
+  color: #aaa;
+  text-shadow: 1px 1px #fff;
+  transition: color 0.3s ease-in-out;
 }
 
-.toggler .toggler-on, .toggler .toggler-off {
-  opacity: 1;
-  z-index: 2;
+.toggle-switch input[type="checkbox"]:checked + .toggle-switch-handle {
+  transform: translateX(45px);
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2), 0 0 0 3px #05c46b;
 }
 
-.toggler input:checked + label .toggler-off, .toggler input:not(:checked) + label .toggler-on {
-  width: 0;
-  height: 0;
-  opacity: 0;
+.toggle-switch input[type="checkbox"]:checked + .toggle-switch-background {
+  background-color: #05c46b;
+  box-shadow: inset 0 0 0 2px #04b360;
 }
 
-.toggler .path {
-  fill: none;
-  stroke: #fefefe;
-  stroke-width: 7px;
-  stroke-linecap: round;
-  stroke-miterlimit: 10;
+.toggle-switch input[type="checkbox"]:checked + .toggle-switch:before {
+  content: "On";
+  color: #05c46b;
+  right: -15px;
 }
 
-@keyframes toggler-size {
-  0%, 100% {
-    width: 26px;
-    height: 26px;
-  }
-
-  50% {
-    width: 20px;
-    height: 20px;
-  }
+.toggle-switch input[type="checkbox"]:checked + .toggle-switch-background .toggle-switch-handle {
+  transform: translateX(40px);
 }
 
-@keyframes toggler-size2 {
-  0%, 100% {
-    width: 26px;
-    height: 26px;
-  }
-
-  50% {
-    width: 20px;
-    height: 20px;
-  }
-}
 
 .input-text-config {
   border: 1px solid #396DD3;
@@ -987,6 +961,22 @@
   padding: 0.5em;
   font-size: 1em;
   border-radius: 10px;
+}
+
+/* =================== NOT FOUND =================== */
+
+.container-not-found {
+  width: 100%;
+  height: 60vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.container-not-found h1 {
+  font-size: 10em;
+  color: #3B6CE9;
 }
  
 
