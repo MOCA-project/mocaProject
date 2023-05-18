@@ -5,6 +5,7 @@ import Sidebar from "../../components/Sidebar";
 import LinhaTabela from "../../components/Tabela";
 import axios from "axios";
 import { FaSpinner } from 'react-icons/fa';
+import api from "../../api";
 
 function Despesas() {
     const [loading, setLoading] = useState(false);
@@ -39,7 +40,7 @@ function Despesas() {
 
     // Requisição do endpoint para mostrar as informações do usuário
     function requisicao(props) {
-        axios.get(`//localhost:8080/api/home/${idUsuario}/${props + 1}/${ano}`).then((response) => {
+        api.get(`home/${idUsuario}/${props + 1}/${ano}`).then((response) => {
             console.log(response);
             setDespesa(response.data.despesas);
             setLoading(false);
@@ -49,7 +50,7 @@ function Despesas() {
 
     function requisicaoListaDespesa(props) {
 
-        axios.get(`//localhost:8080/api/despesas/${idUsuario}/${props + 1}/${ano}`).then((response) => {
+        api.get(`despesas/${idUsuario}/${props + 1}/${ano}`).then((response) => {
             setListaDespesa([...response.data]);
             console.log(response.data)
         });
@@ -88,7 +89,7 @@ function Despesas() {
                             <div className="card-single-despesa">
                                 <div>
                                     <span>Despesa</span>
-                                    <h2>R${despesa === undefined ? <FaSpinner className="spinner" /> : despesa}</h2>
+                                    <h2>R$ {despesa === undefined ? <FaSpinner className="spinner" /> : despesa.toFixed(2).replace('.', ',')}</h2>
 
                                 </div>
                                 <span id="down" className="material-symbols-outlined">
@@ -120,7 +121,7 @@ function Despesas() {
                             </thead>
                             {listaDespesa.map((despesa) => {
                                 return (
-                                    <LinhaTabela despesa={despesa} key={despesa.idDespesa} />
+                                    <LinhaTabela despesa={despesa} key={despesa.idDespesa} idDespesa={despesa} />
                                 )
                             })}
                         </table>

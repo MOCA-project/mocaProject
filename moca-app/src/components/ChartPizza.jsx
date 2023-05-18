@@ -1,16 +1,12 @@
 import { useState } from "react";
 import { useEffect } from "react";
-import { Cell, Legend, Pie, PieChart, Tooltip } from "recharts";
+import { Cell, Pie, PieChart, Tooltip } from "recharts";
 
 function ChartPizza(props) {
 
+    // Atributos
     const [graficoDespesa, setGraficoDespesa] = useState([props.props]);
-
-    useEffect(() => {
-        setGraficoDespesa(props.props);
-    }, [props]);
-
-    const colors = ["#0D2535", "#5388D8", "#98A8DF", "#00D1FF", "#63B967", "#A921E9"]; // Array de cores\
+    const colors = ["#0D2535", "#5388D8", "#98A8DF", "#00D1FF", "#63B967", "#A921E9"]; // Array de cores
     const styleBotao = {
         display: "flex",
         justifyContent: "center",
@@ -19,6 +15,16 @@ function ChartPizza(props) {
         height: "100px"
     }
 
+
+    // useEffect que executa quando o valor do props muda
+    useEffect(() => {
+        setGraficoDespesa(props.props);
+    }, [props]);
+
+
+
+    // Caso nao tenha nenhuma receita ou despesa com o mes escolhido
+    // ele retorna para o usuario um botão para adicionar
     if (graficoDespesa.length === 0) {
         return <div style={styleBotao}>
             <button className="botaoGrafico"
@@ -29,9 +35,11 @@ function ChartPizza(props) {
         </div>;
     }
 
-    console.log(graficoDespesa);
+
+
+    // Return do gráfico de pizza para o card
     return (
-        <PieChart width={600} height={280}>
+        <PieChart width={500} height={280}>
             {graficoDespesa && graficoDespesa.length > 0 ? (
                 <Pie
                     dataKey="porcentagem"

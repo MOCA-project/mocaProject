@@ -31,7 +31,7 @@ function App() {
         <Route path="/dashboard/despesa" element={<Despesas/>}/>
         <Route path="/dashboard/cartoes" element={<Cartoes />}/>
         <Route path="/dashboard/porquinho" element={<Porquinho />}/>
-        <Route path="/dashboard/porquinho/extrato" element={<PorquinhoExtrato />}/>
+        <Route path="/dashboard/porquinho/extrato/:idPorquinho" element={<PorquinhoExtrato />}/>
         <Route path="/dashboard/calculadora" element={<Calculadora />}/>
         <Route path="/dashboard/configuracoes" element={<Configuracoes />}/>
         <Route path="*" element={<NotFound />}/>

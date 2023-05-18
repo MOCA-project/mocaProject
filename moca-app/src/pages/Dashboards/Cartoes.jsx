@@ -66,7 +66,7 @@ function Cartoes() {
                             <div className="card-single-receita">
                                 <div>
                                     <span>Seus Cartões</span>
-                                    <h2>R$ {saldoCartao === undefined ? <FaSpinner className="spinner" /> : saldoCartao}</h2>
+                                    <h2>R$ {saldoCartao === undefined ? <FaSpinner className="spinner" /> : saldoCartao.toFixed(2).replace('.', ',')}</h2>
 
                                 </div>
                                 <span id="cartao-card" className="material-symbols-outlined">credit_card</span>

@@ -108,7 +108,7 @@ function Extrato() {
                         <div className="card-single">
                             <div>
                                 <span>Saldo</span>
-                                <h2>R${saldo === undefined ? <FaSpinner className="spinner" /> : saldo}</h2>
+                                <h2>R$ {saldo === undefined ? <FaSpinner className="spinner" /> : saldo.toFixed(2).replace('.', ',')}</h2>
                             </div>
                             <div>
                                 <span id="money" className="material-symbols-outlined">attach_money</span>
@@ -117,14 +117,14 @@ function Extrato() {
                         <div className="card-single">
                             <div>
                                 <span>Receita</span>
-                                <h2>R${receita === undefined ? <FaSpinner className="spinner" /> : receita}</h2>
+                                <h2>R$ {receita === undefined ? <FaSpinner className="spinner" /> : receita.toFixed(2).replace('.', ',')}</h2>
                             </div>
                             <span id="up" className="material-symbols-outlined">arrow_upward</span>
                         </div>
                         <div className="card-single">
                             <div>
                                 <span>Despesa</span>
-                                <h2>R${despesa === undefined ? <FaSpinner className="spinner" /> : despesa}</h2>
+                                <h2>R$ {despesa === undefined ? <FaSpinner className="spinner" /> : despesa.toFixed(2).replace('.', ',')}</h2>
                             </div>
                             <div>
                                 <span id="down" className="material-symbols-outlined">arrow_downward</span>

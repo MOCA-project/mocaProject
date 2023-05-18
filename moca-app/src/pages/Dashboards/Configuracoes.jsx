@@ -29,20 +29,20 @@ function Configuracoes() {
                         <div className="config">
                             <div className="section-config">
                                 <span>Ativar lembretes (Notificações do APP)</span>
-                                <label class="toggle-switch">
+                                <label className="toggle-switch">
                                     <input type="checkbox" />
-                                    <div class="toggle-switch-background">
-                                        <div class="toggle-switch-handle"></div>
+                                    <div className="toggle-switch-background">
+                                        <div className="toggle-switch-handle"></div>
                                     </div>
                                 </label>
 
                             </div>
                             <div className="section-config">
                                 <span>Ativar notificações SMS</span>
-                                <label class="toggle-switch">
+                                <label className="toggle-switch">
                                     <input type="checkbox" />
-                                    <div class="toggle-switch-background">
-                                        <div class="toggle-switch-handle"></div>
+                                    <div className="toggle-switch-background">
+                                        <div className="toggle-switch-handle"></div>
                                     </div>
                                 </label>
 

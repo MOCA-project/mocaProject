@@ -6,11 +6,8 @@ function PopUpCartao({ isOpen, setModalOpen }) {
     const idUsuario = localStorage.getItem("id");
     const [clicou, setClicou] = useState(false);
     const limite = document.getElementById("limite");
-    const ano = document.getElementById("ano");
-    const mes = document.getElementById("mes");
     const [tipo, setTipo] = useState();
     const [apelido, setApelido] = useState('');
-    const [banco, setBanco] = useState();
     const [vencimento, setVencimento] = useState('')
     const [bandeira, setBandeira] = useState();
     const [cor, setCor] = useState();
@@ -23,26 +20,12 @@ function PopUpCartao({ isOpen, setModalOpen }) {
         { id: 6, opcao: "Laranja Coral", codigo: "#FF7F50" },
         { id: 7, opcao: "Cinza Prata", codigo: "#C0C0C0" },
     ];
-    const bancosTipos = [
-        { id: 1, opcao: "Santander" },
-        { id: 2, opcao: "Itau" },
-        { id: 3, opcao: "Banco do Brasil" },
-        { id: 4, opcao: "C6 Bank" },
-        { id: 5, opcao: "NuBank" },
-        { id: 6, opcao: "Inter" },
-        { id: 7, opcao: "Banco Pan" },
-        { id: 8, opcao: "Caixa Econômica" },
-        { id: 9, opcao: "Bradesco" },
-        { id: 10, opcao: "Outros" },
-    ];
     const bandeirasTipos = [
         { id: 1, opcao: "Visa" },
         { id: 2, opcao: "Elo" },
         { id: 3, opcao: "Mastercard" },
         { id: 4, opcao: "Hipercard" },
-        { id: 5, opcao: "American Express" },
     ];
-
     const styles = {
         esconder: {
             display: 'none'
@@ -61,7 +44,7 @@ function PopUpCartao({ isOpen, setModalOpen }) {
             idCor: cor,
             bandeira: bandeira,
             apelido: apelido,
-            vencimento: "25/11"
+            vencimento: vencimento
         }).then((response) => {
             console.log(response);
             window.location.href = '/dashboard/cartoes';
@@ -71,17 +54,8 @@ function PopUpCartao({ isOpen, setModalOpen }) {
         setClicou(true);
     }
 
-    // function verificarVencimento(props) {
-    //     // Verifica se o valor inserido contém apenas números e a barra "/"
-    //     const regex = /^(0[1-9]|1[0-2])\/(20[2-9][0-9]|2[2-9][0-9]{2}|[3-9][0-9])$|^\d{4}$/;
-    //     if (regex.test(props)) {
-    //         setVencimento(props);
-    //     } 
-    //     else {
-    //         alert("Vencimento inválido\nTipos válidos: '12/23', '03/2024', '0123'");
-    //     }
-    // }
 
+    // Se true ele vai abrir este POP UP
     if (isOpen) {
         return (
             <div id="demo-modal" className="modal">
@@ -99,16 +73,6 @@ function PopUpCartao({ isOpen, setModalOpen }) {
                             <option value="0">--Selecione--</option>
                             <option value="1">Débito</option>
                             <option value="2">Crédito</option>
-                        </select>
-                    </div>
-
-                    <div className="input-box">
-                        <label className="input-label">Banco</label>
-                        <select id="banco" className="selecao" onChange={(event) => { setBanco(event.target.value) }}>
-                            <option value="0">-- Selecione --</option>
-                            {bancosTipos.map(opcao => (
-                                <option key={opcao.id} value={opcao.opcao}>{opcao.opcao}</option>
-                            ))}
                         </select>
                     </div>
 

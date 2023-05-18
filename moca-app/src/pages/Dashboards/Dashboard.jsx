@@ -5,31 +5,17 @@ import "../../assets/css/style2.css";
 import { FaSpinner } from 'react-icons/fa';
 import ChartBarra from "../../components/ChartBarra";
 import ChartPizza from "../../components/ChartPizza";
-
+import Mastercard from "../../assets/img/Mastercard-Logo.png";
+import Visa from "../../assets/img/logo-visa.png";
+import Elo from "../../assets/img/logo-elo.png";
+import Hipercard from "../../assets/img/hipercard.png";
 
 function HomeDashboard() {
-    const [loading, setLoading] = useState(false);
 
+    // Atributos
     // Constants para recuperar dados do localStorage
     const nomeUsuario = localStorage.getItem("nome");
     const idUsuario = localStorage.getItem("id");
-    // const tokenUsuario = localStorage.getItem("token");
-
-
-    // Validar se o usuario efetuou login antes de acessar a dashboard
-    function verificarAutenticacao() {
-        if (idUsuario === "") {
-            window.location.href = "/login";
-        }
-    }
-    useEffect(() => {
-        verificarAutenticacao();
-        requisicao();
-        setLoading(true);
-    }, []);
-
-
-
     // useStates para salvar os dados e exibir na tela
     const [saldo, setSaldo] = useState();
     const [receita, setReceita] = useState();
@@ -37,13 +23,41 @@ function HomeDashboard() {
     const [saldoCartao, setSaldoCartao] = useState();
     const [graficoDespesa, setGraficoDespesa] = useState([]);
     const [graficoReceitas, setGraficoReceitas] = useState([]);
-    const [ativo, setAtivo] = useState(true);
-
-
-
-    // Constants para mes e ano que serão passadas no endpoint
     const [opcoes, setOpcoes] = useState([]);
-    // const anoAtual = dataAtual.getFullYear();
+    const [cartoesUsuario, setCartoesUsuario] = useState([]);
+    const limitarCartoes = cartoesUsuario.slice(0, 5);
+    const corCartao = [
+        { id: 1, opcao: "Azul Royal", codigo: "#0071C5" },
+        { id: 2, opcao: "Verde Esmeralda", codigo: "#50C878" },
+        { id: 3, opcao: "Amarelo Sol", codigo: "#FFD700" },
+        { id: 4, opcao: "Vermelho Cereja", codigo: "#DC143C" },
+        { id: 5, opcao: "Roxo Violeta", codigo: "#8A2BE2" },
+        { id: 6, opcao: "Laranja Coral", codigo: "#FF7F50" },
+        { id: 7, opcao: "Cinza Prata", codigo: "#C0C0C0" },
+    ];
+    const bandeiraCartao = [
+        { id: 1, opcao: "Mastercard", codigo: Mastercard },
+        { id: 2, opcao: "Visa", codigo: Visa },
+        { id: 3, opcao: "Elo", codigo: Elo },
+        { id: 4, opcao: "Hipercard", codigo: Hipercard },
+    ];
+
+
+
+
+    // Funções
+    // Validar se o usuario efetuou login antes de acessar a dashboard
+    function verificarAutenticacao() {
+        if (idUsuario === "") {
+            window.location.href = "/login";
+        }
+    }
+
+    //Quando carregar a página executara este useEffect
+    useEffect(() => {
+        verificarAutenticacao();
+        requisicao();
+    }, []);
 
     useEffect(() => {
         const dataAtual = new Date();
@@ -63,27 +77,27 @@ function HomeDashboard() {
         const data = new Date();
         const ano = data.getFullYear();
         axios.get(`//localhost:8080/api/home/${idUsuario}/${props ? props : data.getMonth() + 1}/${ano}`).then((response) => {
-            // console.log(response);
+            console.log(response);
             setSaldo(response.data.saldo);
             setGraficoReceitas(response.data.graficoReceitas.indices);
             setGraficoDespesa(response.data.graficoDespesas.indices);
             setReceita(response.data.receita);
             setDespesa(response.data.despesas);
             setSaldoCartao(response.data.despesaCartao);
-            setLoading(false);
+            setCartoesUsuario(response.data.cartoes);
         });
-        // console.log(props);
     }
 
 
+    // Return do HTML
     return (
         <div>
             <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0" />
-            {ativo && <Sidebar />}
+            <Sidebar />
             <div className="main-content">
                 <header className="header">
                     <h2>
-                        <label style={{ cursor: 'pointer' }} htmlFor="nav-toggle" onClick={() => ativo ? setAtivo(false) : setAtivo(true)}>
+                        <label style={{ cursor: 'pointer' }} htmlFor="nav-toggle">
                             {/* <span className="material-symbols-outlined">menu</span> */}
                         </label>
                     </h2>
@@ -112,7 +126,7 @@ function HomeDashboard() {
                         <div className="card-single">
                             <div>
                                 <span>Saldo</span>
-                                <h2>R$ {saldo === undefined ? <FaSpinner className="spinner" /> : saldo}</h2>
+                                <h2>R$ {saldo === undefined ? <FaSpinner className="spinner" /> : saldo.toFixed(2).replace('.', ',')}</h2>
                             </div>
                             <div>
                                 <span id="money" className="material-symbols-outlined">attach_money</span>
@@ -121,14 +135,14 @@ function HomeDashboard() {
                         <div className="card-single">
                             <div>
                                 <span>Receita</span>
-                                <h2>R$ {receita === undefined ? <FaSpinner className="spinner" /> : receita}</h2>
+                                <h2>R$ {receita === undefined ? <FaSpinner className="spinner" /> : receita.toFixed(2).replace('.', ',')}</h2>
                             </div>
                             <span id="up" className="material-symbols-outlined">arrow_upward</span>
                         </div>
                         <div className="card-single">
                             <div>
                                 <span>Despesa</span>
-                                <h2>R$ {despesa === undefined ? <FaSpinner className="spinner" /> : despesa}</h2>
+                                <h2>R$ {despesa === undefined ? <FaSpinner className="spinner" /> : despesa.toFixed(2).replace('.', ',')}</h2>
                             </div>
                             <div>
                                 <span id="down" className="material-symbols-outlined">arrow_downward</span>
@@ -137,7 +151,7 @@ function HomeDashboard() {
                         <div className="card-single">
                             <div>
                                 <span>Cartões</span>
-                                <h2>R$ {saldoCartao === undefined ? <FaSpinner className="spinner" /> : saldoCartao}</h2>
+                                <h2>R$ {saldoCartao === undefined ? <FaSpinner className="spinner" /> : saldoCartao.toFixed(2).replace('.', ',')}</h2>
                             </div>
                             <div>
                                 <span id="cartao" className="material-symbols-outlined">credit_card</span>
@@ -152,10 +166,10 @@ function HomeDashboard() {
                             <div style={{ width: "100%", display: "flex" }}>
                                 <ChartBarra receita={receita} despesa={despesa} />
                                 <div style={{ width: "250px", margin: "auto", display: "flex", flexDirection: "column", gap: "10px" }}>
-                                    <h3>Receitas: <span style={{ color: "#63B967" }}>R$ {receita}</span></h3>
-                                    <h3>Despesas: <span style={{ color: "#E92121" }}>R$ {despesa}</span></h3>
+                                    <h3>Receitas: <span style={{ color: "#63B967" }}>R$ {receita === undefined ? <FaSpinner className="spinner" /> : receita.toFixed(2).replace('.', ',')}</span></h3>
+                                    <h3>Despesas: <span style={{ color: "#E92121" }}>R$ {despesa === undefined ? <FaSpinner className="spinner" /> : despesa.toFixed(2).replace('.', ',')}</span></h3>
                                     <hr />
-                                    <h3>Balanço: <span>R$ {saldo}</span></h3>
+                                    <h3>Balanço: <span>R$ {saldo === undefined ? <FaSpinner className="spinner" /> : saldo.toFixed(2).replace('.', ',')}</span></h3>
                                 </div>
                             </div>
                         </div>
@@ -166,6 +180,26 @@ function HomeDashboard() {
                         </div>
                         <div className="card-pos">
                             <h2>Cartões</h2>
+                            <div className="container-card-cartao-dash">
+                                {limitarCartoes.map((cartao) => {
+                                    const corSelecionada = corCartao.find(cor => cor.id === cartao.idCor);
+                                    const bandeiraSelecionada = bandeiraCartao.find(bandeira => bandeira.opcao === cartao.bandeira);
+                                    return (
+                                        <div key={cartao.idCor} className="card-cartao-dash">
+                                            <div className="cartao-dash" style={{ backgroundColor: `${corSelecionada.codigo}` }}>
+                                                <div className="imagem-cartao-dash">
+                                                    <img src={bandeiraSelecionada.codigo} alt="" />
+                                                </div>
+                                            </div>
+                                            <div className="nome-cartao-dash">{cartao.nome}</div>
+                                        </div>
+                                    )
+                                })}
+                                <div className="saber-mais-cartao" onClick={() => window.location.href = 'dashboard/cartoes'}>
+                                    <span className="material-symbols-outlined">chevron_right</span>
+                                    <span>Saber mais</span>
+                                </div>
+                            </div>
                         </div>
                         <div className="card-pos">
                             <h2>Despesa por categoria</h2>

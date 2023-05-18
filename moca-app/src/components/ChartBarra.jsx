@@ -1,24 +1,28 @@
 import { useState } from "react";
 import { useEffect } from "react";
-import { Bar, BarChart, CartesianGrid, Legend, Tooltip, XAxis, YAxis } from "recharts";
+import { Bar, BarChart, Tooltip, XAxis } from "recharts";
 
 function ChartBarra(props) {
 
+    // Atributos
     const [receita, setReceita] = useState();
     const [despesa, setDespesa] = useState();
-    console.log(props)
+    const data = [
+        { name: 'Receita', valor: receita, fill: "#63B967" },
+        { name: 'Despesa', valor: despesa, fill: "#E92121" },
+    ];
 
+
+    // useEffect que executa quando o valor do props muda
     useEffect(() => {
         setReceita(props.receita);
         setDespesa(props.despesa);
     }, [props]); // Adicionando props como dependências
 
 
-    const data = [
-        { name: 'Receita', valor: receita, fill: "#63B967" },
-        { name: 'Despesa', valor: despesa, fill: "#E92121" },
-    ];
 
+    // Caso nao tenha nenhuma receita ou despesa com o mes escolhido
+    // ele retorna para o usuario um botão para adicionar
     if (props.receita === 0 && props.despesa === 0) {
         return (
             <div style={{display: "flex", flexDirection: "column", alignItems: "center"}}>
@@ -35,9 +39,13 @@ function ChartBarra(props) {
         );
     }
 
+
+
+    // Return do gráfico de despesa e receita
+    // gráfico de barra na vertical
     return (
         <BarChart
-            width={300}
+            width={230}
             height={200}
             data={data}
             margin={{

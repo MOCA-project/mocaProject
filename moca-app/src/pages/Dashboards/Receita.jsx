@@ -1,68 +1,75 @@
 import { useState } from "react";
-import axios from "axios";
+import api from "../../api.js";
 import Sidebar from "../../components/Sidebar";
 import "../../assets/css/style2.css";
 import PopUpCadastro from "../../components/PopupCadastro";
-import Meses from "../../components/PaginacaoMeses";
+// import Meses from "../../components/PaginacaoMeses";
 import { useEffect } from "react";
 import LinhaTabela from "../../components/Tabela";
 import { FaSpinner } from 'react-icons/fa';
+import PaginacaoMesesInput from "../../components/PaginacaoMesesInput.jsx";
+
+
 function Receitas() {
 
+    // Atributos
     const [loading, setLoading] = useState(false);
     // Constants para recuperar dados do localStorage
     const nomeUsuario = localStorage.getItem("nome");
     const idUsuario = localStorage.getItem("id");
     const [receita, setReceita] = useState();
     const [mesAtual, setMesAtual] = useState(new Date().getMonth());
+    const [anoAtual, setAnoAtual] = useState(new Date().getFullYear());
     const [showModal, setShowModal] = useState(false);
     const [listaReceitas, setListaReceitas] = useState([]);
     const data = new Date();
     const ano = data.getFullYear();
 
 
+    // Funções
     // Validar se o usuario efetuou login antes de acessar a dashboard
     function verificarAutenticacao() {
         if (idUsuario === "") {
             window.location.href = "/login";
         }
     }
-    verificarAutenticacao();
-
     useEffect(() => {
         // verificarAutenticacao();
-        requisicao(mesAtual);
+        requisicao(new Date().getMonth(), new Date().getFullYear());
         requisicaoListaReceita(mesAtual);
         setLoading(true);
+        verificarAutenticacao();
     }, []);
 
-
-    function requisicao(props) {
+    function requisicao(novoMes, novoAno) {
         // Constants para mes e ano que serão passadas na url
         // Requisição para buscar as receitas do usuario
-        axios.get(`//localhost:8080/api/home/${idUsuario}/${props + 1}/${ano}`).then((response) => {
+        api.get(`//localhost:8080/api/home/${idUsuario}/${novoMes + 1}/${novoAno}`).then((response) => {
+            console.log(novoAno);
+            console.log(novoMes);
             console.log(response);
             setReceita(response.data.receita);
             setLoading(true);
         });
     }
 
-    function requisicaoListaReceita(props) {
-
-        axios.get(`//localhost:8080/api/receitas/${idUsuario}/${props + 1}/${ano}`).then((response) => {
+    function requisicaoListaReceita(novoMes) {
+        api.get(`//localhost:8080/api/receitas/${idUsuario}/${novoMes + 1}/${anoAtual}`).then((response) => {
             setListaReceitas([...response.data]);
             console.log(response.data)
         });
-
     }
 
     // Extrato por mes 
-    const atualizarMesSelecionado = (novoMes) => {
+    const atualizarMesSelecionado = (novoMes, novoAno) => {
         setMesAtual(novoMes);
-        requisicao(novoMes);
-        requisicaoListaReceita(novoMes);
+        setAnoAtual(novoAno)
+        requisicao(novoMes, novoAno);
+        requisicaoListaReceita(novoMes, novoAno);
     }
 
+
+    // Return do HTML
     return (
         <div>
             <Sidebar />
@@ -86,7 +93,7 @@ function Receitas() {
                             <div className="card-single-receita">
                                 <div>
                                     <span>Receita</span>
-                                    <h2>R${receita === undefined ? <FaSpinner className="spinner" /> : receita}</h2>
+                                    <h2>R$ {receita === undefined ? <FaSpinner className="spinner" /> : receita.toFixed(2).replace('.', ',')}</h2>
 
                                 </div>
                                 <span id="up" className="material-symbols-outlined">arrow_upward</span>
@@ -99,7 +106,7 @@ function Receitas() {
                             </div>
                         </div>
                     </div>
-                    <Meses setMesAtual={atualizarMesSelecionado} />
+                    <PaginacaoMesesInput setMesAno={atualizarMesSelecionado} />
                     <div className="table-container">
                         <h2 className="heading">
                         </h2>

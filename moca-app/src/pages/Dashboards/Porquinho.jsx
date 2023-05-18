@@ -28,7 +28,7 @@ function Porquinho() {
 
     function handleClick(idPorquinho) {
         console.log(`Clicou no porquinho ${idPorquinho}`);
-        window.location.href = '/dashboard/porquinho/extrato';
+        window.location.href = `/dashboard/porquinho/extrato/${idPorquinho}`;
     }
 
 

@@ -1,5 +1,8 @@
 
 import Mastercard from "../assets/img/Mastercard-Logo.png";
+import Visa from "../assets/img/logo-visa.png";
+import Elo from "../assets/img/logo-elo.png";
+import Hipercard from "../assets/img/hipercard.png";
 
 function CartoesCard(props) {
     const nomeUsuario = localStorage.getItem("nome");
@@ -13,16 +16,23 @@ function CartoesCard(props) {
         { id: 6, opcao: "Laranja Coral", codigo: "#FF7F50" },
         { id: 7, opcao: "Cinza Prata", codigo: "#C0C0C0" },
     ];
+    const bandeiraCartao = [
+        { id: 1, opcao: "Mastercard", codigo: Mastercard },
+        { id: 2, opcao: "Visa", codigo: Visa },
+        { id: 3, opcao: "Elo", codigo: Elo },
+        { id: 4, opcao: "Hipercard", codigo: Hipercard },
+    ];
 
     // Encontra o objeto de cor correspondente ao idCor
     const corSelecionada = corCartao.find(cor => cor.id === props.props.idCor);
+    const bandeiraSelecionada = bandeiraCartao.find(bandeira => bandeira.opcao === props.props.bandeira);
 
     return (
         <div className="card-credit">
             <div className="cartao" style={{ backgroundColor: corSelecionada.codigo, borderRadius: "20px"}}>
                 <div className="tipo-cartao">
                     <div className="tipo">Crédito</div>
-                    <div className="bandeira"><img src={Mastercard} alt="" /></div>
+                    <div className="bandeira"><img src={bandeiraSelecionada.codigo} alt="" /></div>
                     <div className="nome-usuario">{nomeUsuario}</div>
                 </div>
             </div>
@@ -32,9 +42,9 @@ function CartoesCard(props) {
                     <div>Limite:<span>R$ {props.props.limite}</span></div>
                     <div>Venci.: <span>{props.props.vencimento}</span></div>
                     <div>
-                        <h5>{props.props.porcentagemUtilizado}% utilizado</h5>
+                        <h5>{props.props.porcentagemUtilizado > 100 ? "100" : props.props.porcentagemUtilizado}% utilizado</h5>
                         <div className="progresso">
-                            <div className="barra-progresso" style={{ width: `${props.props.porcentagemUtilizado}%` }}></div>
+                            <div className="barra-progresso" style={{ width: `${props.props.porcentagemUtilizado > 100 ? "100%" : props.props.porcentagemUtilizado}%` }}></div>
                         </div>
                     </div>
                 </div>

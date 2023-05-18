@@ -1,14 +1,40 @@
 import { FaSpinner } from "react-icons/fa";
 import Sidebar from "../../components/Sidebar";
+import { useParams } from "react-router";
+import api from "../../api.js";
+import { useEffect } from "react";
+import { useState } from "react";
+import PopUpValorPorquinho from "../../components/PopUpValorPorquinho";
 
 function PorquinhoExtrato() {
 
     // Atributos
+    const idUsuario = localStorage.getItem("id");
     const nomeUsuario = localStorage.getItem("nome");
+    const { idPorquinho } = useParams();
+    const [dadosPorquinho, setDadosPorquinho] = useState([]);
+    const [porcentagem, setPorcentagem] = useState();
+    const [showModal, setShowModal] = useState(false);
+    const [opcao, setOpcao] = useState('');
 
     function voltar() {
         window.location.href = "/dashboard/porquinho";
     }
+
+    function requisicao() {
+        api.get(`porquinhos/${idUsuario}/${idPorquinho}`).then((response) => {
+            setDadosPorquinho(response.data);
+            console.log(response.data)
+        })
+
+        api.get(`porquinhos/mostrarPorcentagem/${idUsuario}/${idPorquinho}`).then((response) => {
+            setPorcentagem(response.data);
+        })
+    }
+
+    useEffect(() => {
+        requisicao();
+    }, [])
 
     // Return do HTML
     return (
@@ -18,7 +44,7 @@ function PorquinhoExtrato() {
                 <header className="header">
                     <h2>
                         <label style={{ cursor: "pointer" }} htmlFor="nav-toggle" onClick={() => voltar()}>
-                            <span class="material-symbols-outlined">arrow_back_ios</span>
+                            <span className="material-symbols-outlined">arrow_back_ios</span>
                         </label>
                     </h2>
                     <div className="user-wrapper">
@@ -33,21 +59,21 @@ function PorquinhoExtrato() {
                         <div className="cards-porquinho">
                             <div className="card-single-receita">
                                 <div>
-                                    <h2>Viagem</h2>
+                                    <span>Porquinho</span>
+                                    <h2>{dadosPorquinho.nome}</h2>
                                 </div>
                             </div>
                             <div className="card-single-receita">
                                 <div>
                                     <span>Valor Guardado</span>
-                                    <h2>{0 === undefined ? <FaSpinner className="spinner" /> : 0}</h2>
-
+                                    <h2>{dadosPorquinho.valorAtual === undefined ? <FaSpinner className="spinner" /> : dadosPorquinho.valorAtual}</h2>
                                 </div>
                                 <span id="cartao-card" className="material-symbols-outlined">savings</span>
                             </div>
                             <div className="card-single-receita">
                                 <div>
                                     <span>Meta</span>
-                                    <h2>{0 === undefined ? <FaSpinner className="spinner" /> : 0}</h2>
+                                    <h2>{dadosPorquinho.valorFinal === undefined ? <FaSpinner className="spinner" /> : dadosPorquinho.valorFinal}</h2>
 
                                 </div>
                                 <span id="cartao-card" className="material-symbols-outlined">savings</span>
@@ -57,18 +83,18 @@ function PorquinhoExtrato() {
                     <div className="container-estado-extrato">
                         <div className="barra-estado">
                             <span>
-                                <h3>70%</h3>
+                                <h3>{Math.floor(porcentagem)}%</h3>
                                 <span>Guardado</span>
                             </span>
                             <div className="barra-inteira">
-                                <div className="barra-porcentagem" style={{width: "70%"}}></div>
+                                <div className="barra-porcentagem" style={{ width: `${porcentagem}%` }}></div>
                             </div>
                         </div>
                     </div>
                     <div className="container-btns">
                         <div>
-                            <button className="btn-adicionar">Adicionar</button>
-                            <button className="btn-retirar">Retirar</button>
+                            <button className="btn-adicionar" onClick={() => { setShowModal(true); setOpcao("adicionar") }}>Adicionar</button>
+                            <button className="btn-retirar" onClick={() => { setShowModal(true); setOpcao("retirar") }}>Retirar</button>
                         </div>
                     </div>
                     <div className="table-container-porquinho">
@@ -92,6 +118,7 @@ function PorquinhoExtrato() {
                     </div>
                 </main>
             </div>
+            <PopUpValorPorquinho isOpen={showModal} setModalOpen={() => { setShowModal(!showModal) }} mensagem={opcao} idPorquinho={idPorquinho} valorPorquinho={dadosPorquinho.valorAtual} />
         </div>
     );
 }
