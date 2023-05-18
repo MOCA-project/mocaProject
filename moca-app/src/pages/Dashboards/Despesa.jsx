@@ -1,11 +1,10 @@
 import { useEffect, useState } from "react";
 import PopUpCadastro from "../../components/PopupCadastro";
-import Meses from "../../components/PaginacaoMeses";
 import Sidebar from "../../components/Sidebar";
 import LinhaTabela from "../../components/Tabela";
-import axios from "axios";
 import { FaSpinner } from 'react-icons/fa';
 import api from "../../api";
+import PaginacaoMesesInput from "../../components/PaginacaoMesesInput";
 
 function Despesas() {
     const [loading, setLoading] = useState(false);
@@ -16,9 +15,8 @@ function Despesas() {
     const [ativo, setAtivo] = useState(true);
     const [despesa, setDespesa] = useState();
     const [mesAtual, setMesAtual] = useState(new Date().getMonth());
+    const [anoAtual, setAnoAtual] = useState(new Date().getFullYear());
     const [listaDespesa, setListaDespesa] = useState([]);
-    const data = new Date();
-    const ano = data.getFullYear();
 
     // Validar se o usuario efetuou login antes de acessar a dashboard
     // function verificarAutenticacao() {
@@ -39,8 +37,8 @@ function Despesas() {
 
 
     // Requisição do endpoint para mostrar as informações do usuário
-    function requisicao(props) {
-        api.get(`home/${idUsuario}/${props + 1}/${ano}`).then((response) => {
+    function requisicao(novoMes, novoAno) {
+        api.get(`home/${idUsuario}/${novoMes + 1}/${novoAno}`).then((response) => {
             console.log(response);
             setDespesa(response.data.despesas);
             setLoading(false);
@@ -48,9 +46,9 @@ function Despesas() {
         // console.log(props);
     }
 
-    function requisicaoListaDespesa(props) {
+    function requisicaoListaDespesa(novoMes, novoAno) {
 
-        api.get(`despesas/${idUsuario}/${props + 1}/${ano}`).then((response) => {
+        api.get(`despesas/${idUsuario}/${novoMes + 1}/${novoAno}`).then((response) => {
             setListaDespesa([...response.data]);
             console.log(response.data)
         });
@@ -58,11 +56,12 @@ function Despesas() {
     }
 
     // Extrato por mes 
-    const atualizarMesSelecionado = (novoMes) => {
+    const atualizarMesSelecionado = (novoMes, novoAno) => {
         setMesAtual(novoMes);
-        requisicao(novoMes);
+        setAnoAtual(novoAno);
+        requisicao(novoMes, novoAno);
         requisicaoListaDespesa(novoMes);
-    }
+      };
 
     return (
         <div>
@@ -104,7 +103,7 @@ function Despesas() {
                             </div>
                         </div>
                     </div>
-                    <Meses setMesAtual={atualizarMesSelecionado} />
+                    <PaginacaoMesesInput setMesAno={atualizarMesSelecionado} />
                     <div className="table-container">
                         <h2 className="heading">
                         </h2>

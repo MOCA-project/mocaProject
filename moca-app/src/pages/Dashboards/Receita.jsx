@@ -53,8 +53,8 @@ function Receitas() {
         });
     }
 
-    function requisicaoListaReceita(novoMes) {
-        api.get(`//localhost:8080/api/receitas/${idUsuario}/${novoMes + 1}/${anoAtual}`).then((response) => {
+    function requisicaoListaReceita(novoMes, novoAno) {
+        api.get(`//localhost:8080/api/receitas/${idUsuario}/${novoMes + 1}/${novoAno}`).then((response) => {
             setListaReceitas([...response.data]);
             console.log(response.data)
         });
@@ -63,11 +63,10 @@ function Receitas() {
     // Extrato por mes 
     const atualizarMesSelecionado = (novoMes, novoAno) => {
         setMesAtual(novoMes);
-        setAnoAtual(novoAno)
+        setAnoAtual(novoAno);
         requisicao(novoMes, novoAno);
-        requisicaoListaReceita(novoMes, novoAno);
-    }
-
+        requisicaoListaReceita(novoMes, novoAno); // Passar ambos os valores aqui
+      };
 
     // Return do HTML
     return (

@@ -6,6 +6,8 @@ import { useState } from "react";
 import { useEffect } from "react";
 import LinhaExtrato from "../../components/TabelaExtrato";
 import { FaSpinner } from 'react-icons/fa';
+
+
 function Extrato() {
     const [loading, setLoading] = useState(false);
 
