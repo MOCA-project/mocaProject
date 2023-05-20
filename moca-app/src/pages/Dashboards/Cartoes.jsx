@@ -3,8 +3,9 @@ import Sidebar from "../../components/Sidebar";
 import { useState } from "react";
 import CartoesCard from "../../components/CardCartao";
 import PopUpCartao from "../../components/PopUpCartao";
-import axios from "axios";
+import api from "../../api.js";
 import { useEffect } from "react";
+import { useNavigate } from "react-router";
 
 function Cartoes() {
     const nomeUsuario = localStorage.getItem("nome");
@@ -13,19 +14,20 @@ function Cartoes() {
     const [saldoCartao, setSaldoCartao] = useState();
     const [loading, setLoading] = useState(false);
     const [dadosCartao, setDadosCartao] = useState([]);
+    const navigate = useNavigate();
     const data = new Date();
     const ano = data.getFullYear();
 
     function requisicao() {
         // Constants para mes e ano que serão passadas na url
         // Requisição para buscar as receitas do usuario
-        axios.get(`//localhost:8080/api/home/${idUsuario}/${data.getMonth() + 1}/${ano}`).then((response) => {
+        api.get(`home/${idUsuario}/${data.getMonth() + 1}/${ano}`).then((response) => {
             // console.log(response);
             setSaldoCartao(response.data.despesaCartao);
             setLoading(true);
         });
 
-        axios.get(`//localhost:8080/api/cartoes/${idUsuario}/${data.getMonth() + 1}/${ano}`).then((response) => {
+        api.get(`cartoes/${idUsuario}/${data.getMonth() + 1}/${ano}`).then((response) => {
             console.log(response.data.cartoes);
             setDadosCartao(response.data.cartoes);
         })
@@ -34,7 +36,7 @@ function Cartoes() {
     // Validar se o usuario efetuou login antes de acessar a dashboard
     function verificarAutenticacao() {
         if (idUsuario === "") {
-            window.location.href = "/login";
+            navigate("/login");
         }
     }
     useEffect(() => {
@@ -81,7 +83,7 @@ function Cartoes() {
                     </div>
                     <div className="cartoes-usuario">
                         {dadosCartao.map((opcao) => (
-                            <CartoesCard props={opcao} key={opcao.idCartao}/>
+                            <CartoesCard props={opcao} key={opcao.idCartao} atualizar={requisicao} />
                         ))}
                     </div>
                 </main>

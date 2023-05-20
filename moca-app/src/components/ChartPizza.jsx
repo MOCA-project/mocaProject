@@ -1,11 +1,13 @@
 import { useState } from "react";
 import { useEffect } from "react";
+import { useNavigate } from "react-router";
 import { Cell, Pie, PieChart, Tooltip } from "recharts";
 
 function ChartPizza(props) {
 
     // Atributos
     const [graficoDespesa, setGraficoDespesa] = useState([props.props]);
+    const navigate = useNavigate();
     const colors = ["#0D2535", "#5388D8", "#98A8DF", "#00D1FF", "#63B967", "#A921E9"]; // Array de cores
     const styleBotao = {
         display: "flex",
@@ -29,7 +31,7 @@ function ChartPizza(props) {
         return <div style={styleBotao}>
             <button className="botaoGrafico"
                 onClick={() => props.mensagem === "receita" ?
-                    window.location.href = '/dashboard/receita' : window.location.href = '/dashboard/despesa'}>
+                    navigate('/dashboard/receita') : navigate('/dashboard/despesa')}>
                 Adicionar {props.mensagem}
             </button>
         </div>;

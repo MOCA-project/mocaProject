@@ -1,4 +1,4 @@
-import axios from "axios";
+import api from "../../api.js";
 import Sidebar from "../../components/Sidebar";
 import { useEffect, useState } from "react";
 import "../../assets/css/style2.css";
@@ -9,6 +9,7 @@ import Mastercard from "../../assets/img/Mastercard-Logo.png";
 import Visa from "../../assets/img/logo-visa.png";
 import Elo from "../../assets/img/logo-elo.png";
 import Hipercard from "../../assets/img/hipercard.png";
+import { useNavigate } from "react-router";
 
 function HomeDashboard() {
 
@@ -16,6 +17,7 @@ function HomeDashboard() {
     // Constants para recuperar dados do localStorage
     const nomeUsuario = localStorage.getItem("nome");
     const idUsuario = localStorage.getItem("id");
+    const navigate =useNavigate();
     // useStates para salvar os dados e exibir na tela
     const [saldo, setSaldo] = useState();
     const [receita, setReceita] = useState();
@@ -25,7 +27,7 @@ function HomeDashboard() {
     const [graficoReceitas, setGraficoReceitas] = useState([]);
     const [opcoes, setOpcoes] = useState([]);
     const [cartoesUsuario, setCartoesUsuario] = useState([]);
-    const limitarCartoes = cartoesUsuario.slice(0, 5);
+    const limitarCartoes = cartoesUsuario.slice(0, 4);
     const corCartao = [
         { id: 1, opcao: "Azul Royal", codigo: "#0071C5" },
         { id: 2, opcao: "Verde Esmeralda", codigo: "#50C878" },
@@ -49,7 +51,7 @@ function HomeDashboard() {
     // Validar se o usuario efetuou login antes de acessar a dashboard
     function verificarAutenticacao() {
         if (idUsuario === "") {
-            window.location.href = "/login";
+            navigate("/login");
         }
     }
 
@@ -76,7 +78,7 @@ function HomeDashboard() {
     function requisicao(props) {
         const data = new Date();
         const ano = data.getFullYear();
-        axios.get(`//localhost:8080/api/home/${idUsuario}/${props ? props : data.getMonth() + 1}/${ano}`).then((response) => {
+        api.get(`home/${idUsuario}/${props ? props : data.getMonth() + 1}/${ano}`).then((response) => {
             console.log(response);
             setSaldo(response.data.saldo);
             setGraficoReceitas(response.data.graficoReceitas.indices);
@@ -195,7 +197,7 @@ function HomeDashboard() {
                                         </div>
                                     )
                                 })}
-                                <div className="saber-mais-cartao" onClick={() => window.location.href = 'dashboard/cartoes'}>
+                                <div className="saber-mais-cartao" onClick={() => navigate('dashboard/cartoes')}>
                                     <span className="material-symbols-outlined">chevron_right</span>
                                     <span>Saber mais</span>
                                 </div>

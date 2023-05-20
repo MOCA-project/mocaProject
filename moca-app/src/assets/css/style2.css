@@ -702,12 +702,31 @@
 
 .informacoes-cartao h2 {
   margin: 0.5em 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 20px;
 }
 
 .informacoes-cartao .informacoes {
   display: flex;
   flex-direction: column;
   justify-content: center;
+}
+
+.informacoes-cartao button {
+  background-color: transparent;
+  border: none;
+  color: #EC5959;
+  padding: 4px;
+}
+.informacoes-cartao button:hover {
+  background-color: #EC5959;
+  color: #fff;
+  border-radius: 5px;
+  display: flex;
+  align-items: center;
+  cursor: pointer;
 }
 
 .informacoes-cartao .informacoes div {
@@ -964,6 +983,8 @@
   background: #FFFFFF;
   border-radius: 6px;
   padding: 1.5em 1em;
+  display: flex;
+  align-items: center;
 }
 
 /* =================== CONFIGURAÇÕES =================== */

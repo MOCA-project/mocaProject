@@ -1,11 +1,13 @@
 import { useState } from "react";
 import { FaSpinner } from "react-icons/fa";
 import api from "../api";
+import { useNavigate } from "react-router";
 
 function PopUpValorPorquinho({ isOpen, setModalOpen, mensagem, idPorquinho, valorPorquinho }) {
 
     // Atributos
     const idUsuario = localStorage.getItem("id");
+    const navigate = useNavigate();
     const [clicou, setClicou] = useState(false);
     const [valor, setValor] = useState();
     const [data, setData] = useState();
@@ -23,7 +25,7 @@ function PopUpValorPorquinho({ isOpen, setModalOpen, mensagem, idPorquinho, valo
         if(mensagem === "adicionar") {
             api.put(`porquinhos/adicionarValor/${idUsuario}/${idPorquinho}/${valor}`).then((response) => {
                 console.log(response);
-                window.location.href = `/dashboard/porquinho/extrato/${idPorquinho}`;
+                navigate(`/dashboard/porquinho/extrato/${idPorquinho}`);
             }).catch((err) => {
                 console.log(err);
             });
@@ -31,7 +33,7 @@ function PopUpValorPorquinho({ isOpen, setModalOpen, mensagem, idPorquinho, valo
             if (valorPorquinho > valor) {
                 api.put(`porquinhos/retirarValor/${idUsuario}/${idPorquinho}/${valor}`).then((response) => {
                     console.log(response);
-                    window.location.href = `/dashboard/porquinho/extrato/${idPorquinho}`;
+                    navigate(`/dashboard/porquinho/extrato/${idPorquinho}`);
                 }).catch((err) => {
                     console.log(err);
                 });

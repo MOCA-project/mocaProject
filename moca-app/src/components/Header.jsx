@@ -1,6 +1,9 @@
+import { useNavigate } from "react-router";
 import logo from "../assets/img/logoMoca.png";
 
 function Header() {
+  
+  const navigate = useNavigate();
 
   // Função para o menu hamburguer funcionar
   function getMenu() {
@@ -31,8 +34,8 @@ function Header() {
         </ul>
       </nav>
       <div id="btns">
-        <button className="entrar" onClick={() => window.location.href = '/login'}>LOGIN</button>
-        <button className="cadastrar" onClick={() => window.location.href = '/cadastro'}>CADASTRAR</button>
+        <button className="entrar" onClick={() => navigate('/login')}>LOGIN</button>
+        <button className="cadastrar" onClick={() => navigate('/cadastro')}>CADASTRAR</button>
         <div className="mobile-menu">
           <span className="material-symbols-outlined" onClick={getMenu}>menu</span>
         </div>
@@ -43,8 +46,8 @@ function Header() {
         <li><a href="/#dica">Dicas</a></li>
         <li><a href="/#funcionalidade-sistema">Funcionalidades</a></li>
         <li><a href="/#footer">Contato</a></li>
-        <li><button onClick={() => window.location.href = '/login'}>LOGIN</button></li>
-        <li><button onClick={() => window.location.href = '/cadastro'}>CADASTRAR</button></li>
+        <li><button onClick={() => navigate('/login')}>LOGIN</button></li>
+        <li><button onClick={() => navigate('/cadastro')}>CADASTRAR</button></li>
       </div>
     </header>
   );

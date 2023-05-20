@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useEffect } from "react";
+import { useNavigate } from "react-router";
 import { Bar, BarChart, Tooltip, XAxis } from "recharts";
 
 function ChartBarra(props) {
@@ -7,6 +8,7 @@ function ChartBarra(props) {
     // Atributos
     const [receita, setReceita] = useState();
     const [despesa, setDespesa] = useState();
+    const navigate = useNavigate();
     const data = [
         { name: 'Receita', valor: receita, fill: "#63B967" },
         { name: 'Despesa', valor: despesa, fill: "#E92121" },
@@ -28,11 +30,11 @@ function ChartBarra(props) {
             <div style={{display: "flex", flexDirection: "column", alignItems: "center"}}>
                 <h4>Ops, parece que você não possui nada cadastrado!</h4>
                 <button className="botaoGrafico" style={{margin: "10px 0"}}
-                    onClick={() => window.location.href = '/dashboard/receita'}>
+                    onClick={() => navigate('/dashboard/receita')}>
                     Adicionar Receita
                 </button>
                 <button className="botaoGrafico"
-                    onClick={() => window.location.href = '/dashboard/despesa'}>
+                    onClick={() => navigate('/dashboard/despesa')}>
                     Adicionar Despesa
                 </button>
             </div>

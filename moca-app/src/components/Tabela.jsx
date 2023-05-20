@@ -1,5 +1,6 @@
 import { useState } from "react";
 import api from "../api";
+import { useNavigate } from "react-router";
 
 
 function LinhaTabela(props) {
@@ -10,15 +11,17 @@ function LinhaTabela(props) {
     const [data, setData] = useState();
     const [descricao, setDescricao] = useState();
     const [valor, setValor] = useState();
+    const navigate = useNavigate();
 
     function pagarDespesa() {
         api.patch(`despesas/pagar/${props.despesa.idDespesa}`).then((response) => {
             console.log(response.status);
-            window.location.href = '/dashboard/despesa';
+            navigate('/dashboard/despesa');
         });
     }
 
     function salvarEdicao() {
+
         if (window.location.pathname === '/dashboard/despesa') {
             api.patch(`despesas/${props.despesa.idDespesa}`, {
                 descricao: descricao,
@@ -27,7 +30,7 @@ function LinhaTabela(props) {
             })
                 .then((response) => {
                     console.log(response);
-                    window.location.href = '/dashboard/despesa';
+                    navigate('/dashboard/despesa');
                 })
                 .catch((err) => {
                     console.log(err);
@@ -39,7 +42,7 @@ function LinhaTabela(props) {
                 data: data
             }).then((response) => {
                 console.log(response);
-                window.location.href = '/dashboard/receita';
+                navigate('/dashboard/receita');
             }).catch((err) => {
                 console.log(err);
             })
@@ -51,12 +54,12 @@ function LinhaTabela(props) {
         if (window.location.pathname === '/dashboard/despesa') {
             api.delete(`despesas/${props.despesa.idDespesa}`).then((response) => {
                 console.log(response);
-                window.location.href = '/dashboard/despesa';
+                navigate('/dashboard/despesa');
             });
         } else if (window.location.pathname === '/dashboard/receita'){
             api.delete(`receitas/${props.receita.idReceita}`).then((response) => {
                 console.log(response);
-                window.location.href = '/dashboard/receita';
+                navigate('/dashboard/receita');
             })
         }
     }

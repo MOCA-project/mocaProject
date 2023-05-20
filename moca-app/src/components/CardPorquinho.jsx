@@ -1,19 +1,33 @@
-import { Tooltip } from "@mui/material";
-import { Cell, Legend, Pie, PieChart, ResponsiveContainer } from "recharts";
+
+import { useState } from "react";
+import { useEffect } from "react";
+import { Cell, Legend, Pie, PieChart, ResponsiveContainer, Tooltip } from "recharts";
+import api from "../api";
 
 function CardPorquinho(props) {
+    const [porcentagem, setPorcentagem] = useState(0);
+    const idUsuario = localStorage.getItem("id");
 
-    // Atributos
-    const valorAtual = props.opcao.valorAtual;
-    const valorFinal = props.opcao.valorFinal;
+    useEffect(() => {
+        const fetchPorcentagem = async () => {
+            try {
+                const response = await api.get(`porquinhos/mostrarPorcentagem/${idUsuario}/${props.opcao.idPorquinho}`);
+                setPorcentagem(response.data);
+            } catch (error) {
+                console.error(error);
+            }
+        };
+
+        fetchPorcentagem();
+    }, [idUsuario, props.opcao.idPorquinho]);
+
     const data = [
-        { name: "Pago", value: valorAtual, fill: "#F683EB" },
-        { name: 'Total', value: valorFinal, fill: "#ccc" },
+        { name: "Pago", value: porcentagem, fill: "#F683EB" },
+        { name: 'Restante', value: 100 - porcentagem, fill: "#ccc" },
     ];
-    const formatPorcentagem = (value) => `${value.toFixed(2)}%`;
 
+    const formatPorcentagem = (value) => `${value.toFixed(0)}%`;
 
-    //  Return do HTML
     return (
         <div className="card-porquinho" onClick={props.onClick}>
             <div className="icone">
@@ -32,15 +46,8 @@ function CardPorquinho(props) {
                             innerRadius={60}
                             outerRadius={80}
                             dataKey="value"
-                            labelLine={false} // Oculta as linhas de conexão dos rótulos com os segmentos
-                            label={({
-                                cx,
-                                cy,
-                                midAngle,
-                                innerRadius,
-                                outerRadius,
-                                percent
-                            }) => {
+                            labelLine={false}
+                            label={({ cx, cy, midAngle, innerRadius, outerRadius, percent }) => {
                                 const radius = innerRadius + (outerRadius - innerRadius) * 0.5;
                                 const x = cx + radius * Math.cos(-midAngle * Math.PI / 180);
                                 const y = cy + radius * Math.sin(-midAngle * Math.PI / 180);
@@ -62,10 +69,7 @@ function CardPorquinho(props) {
                                 <Cell key={`cell-${index}`} fill={entry.fill} />
                             ))}
                         </Pie>
-                        <Tooltip>
-                            <span>{data.name}</span>
-                        </Tooltip>
-                        {/* <Legend /> */}
+                        <Tooltip />
                     </PieChart>
                 </ResponsiveContainer>
             </div>

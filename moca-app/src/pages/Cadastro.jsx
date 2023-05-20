@@ -1,9 +1,10 @@
-import axios from "axios";
+import api from "../api.js";
 import Header from "../components/Header";
 import vetorCadastro1 from "../assets/img/vetorCadastro1.png";
 import vetorCadastro2 from "../assets/img/vetorCadastro2.png";
 import "../assets/css/style.css";
 import { useState } from "react";
+import { useNavigate } from "react-router";
 
 function Cadastro() {
 
@@ -13,6 +14,7 @@ function Cadastro() {
     const [telefoneValue, setTelefoneValue] = useState('');
     const [senhaValue, setSenhaValue] = useState('');
     const [confirmeSenhaValue, setConfirmeSenhaValue] = useState('');
+    const navigate = useNavigate();
     // Consts para exibir frases de alertas
     const [nomeAlert, setNomeAlert] = useState('');
     const [emailAlert, setEmailAlert] = useState('');
@@ -24,7 +26,6 @@ function Cadastro() {
     function postCadastro() {
 
         // Regex
-        let regexSenha = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])[0-9a-zA-Z]{8,}$/;
         let regexEmail = /\S+@\S+\.\S+/;
 
         // Fazendo as validações dos inputs e cadastrando
@@ -33,23 +34,23 @@ function Cadastro() {
         } else if (!regexEmail.test(emailValue)) {
             setEmailAlert("Digite um email válido!");
         } else if (telefoneValue === "" || telefoneValue === " ") {
-            setTelefoneAlert('Telefone inválido! EX: (99) 12345-6789 ou 99 1234-5678 ou 12345-6789');
-        } else if (!regexSenha.test(senhaValue)) {
-            setSenhaAlert("Senha inválida! A senha deve ter pelo menos uma letra maiúscula, um número e uma letra minúscula.");
+            setTelefoneAlert('Telefone inválido! EX: (99) 12345-6789 ou 99 1234-5678');
+        } else if (senhaValue === "" || senhaValue === " " || senhaValue.length < 6) {
+            setSenhaAlert("Senha inválida! Mínimo de 6 caracteres.");
         } else if (senhaValue !== confirmeSenhaValue) {
             setConfirmeSenhaAlert("Senhas não conferem!");
         } else {
 
             // Chamando o axios para criar um cliente = usuario
             // e passando um json com o valor dos inputs
-            axios.post("//localhost:8080/api/usuarios/cadastrar/", {
+            api.post("usuarios/cadastrar/", {
                 nome: nomeValue,
                 email: emailValue,
                 senha: senhaValue,
                 telefone: telefoneValue,
                 idTipoPerfil: 5,
             }).then(() => {
-                window.location.href = "/login";
+                navigate('/login');
             }).catch((err) => {
                 if (err.response.status() === 409) {
                     alert("Usuário ja cadastrado!");

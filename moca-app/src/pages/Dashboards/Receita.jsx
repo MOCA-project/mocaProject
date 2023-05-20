@@ -3,11 +3,11 @@ import api from "../../api.js";
 import Sidebar from "../../components/Sidebar";
 import "../../assets/css/style2.css";
 import PopUpCadastro from "../../components/PopupCadastro";
-// import Meses from "../../components/PaginacaoMeses";
 import { useEffect } from "react";
 import LinhaTabela from "../../components/Tabela";
 import { FaSpinner } from 'react-icons/fa';
 import PaginacaoMesesInput from "../../components/PaginacaoMesesInput.jsx";
+import { useNavigate } from "react-router";
 
 
 function Receitas() {
@@ -24,13 +24,14 @@ function Receitas() {
     const [listaReceitas, setListaReceitas] = useState([]);
     const data = new Date();
     const ano = data.getFullYear();
+    const navigate = useNavigate();
 
 
     // Funções
     // Validar se o usuario efetuou login antes de acessar a dashboard
     function verificarAutenticacao() {
         if (idUsuario === "") {
-            window.location.href = "/login";
+            navigate("/login");
         }
     }
     useEffect(() => {

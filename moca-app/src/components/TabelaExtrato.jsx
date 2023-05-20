@@ -1,10 +1,11 @@
-import axios from "axios";
-import { useEffect } from "react";
-import { useState } from "react";
+import { format } from "date-fns";
 
 function LinhaExtrato(props) {
 
+    // Atributos
+    const dataFormatada = format(new Date(props.props.data), 'dd/MM/yyyy');
 
+    // Return do HTML
     return (
         <tr>
             <td data-label="Situação">
@@ -16,10 +17,10 @@ function LinhaExtrato(props) {
                         close
                     </span>}
             </td>
-            <td data-label="Data">{props.props.data}</td>
+            <td data-label="Data">{dataFormatada}</td>
             <td data-label="Descrição">{props.props.descricao}</td>
             <td data-label="Categoria">{props.props.categoria}</td>
-            <td data-label="Valor">R$ {props.props.valor}</td>
+            <td data-label="Valor">R$ {props.props.valor.toFixed(2)}</td>
         </tr>
     );
 }

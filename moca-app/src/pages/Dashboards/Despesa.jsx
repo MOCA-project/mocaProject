@@ -5,6 +5,7 @@ import LinhaTabela from "../../components/Tabela";
 import { FaSpinner } from 'react-icons/fa';
 import api from "../../api";
 import PaginacaoMesesInput from "../../components/PaginacaoMesesInput";
+import { useNavigate } from "react-router";
 
 function Despesas() {
     const [loading, setLoading] = useState(false);
@@ -17,11 +18,12 @@ function Despesas() {
     const [mesAtual, setMesAtual] = useState(new Date().getMonth() + 1);
     const [anoAtual, setAnoAtual] = useState(new Date().getFullYear());
     const [listaDespesa, setListaDespesa] = useState([]);
+    // const navigate = useNavigate();
 
     // Validar se o usuario efetuou login antes de acessar a dashboard
     // function verificarAutenticacao() {
     //     if (idUsuario === "") {
-    //         window.location.href = "/login";
+    //         navigate("/login");
     //     }
     // }
     useEffect(() => {

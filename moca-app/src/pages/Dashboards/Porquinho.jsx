@@ -2,22 +2,25 @@ import { useState } from "react";
 import Sidebar from "../../components/Sidebar";
 import { FaSpinner } from "react-icons/fa";
 import PopUpPorquinho from "../../components/PopUpPorquinho"
-import axios from "axios";
 import { useEffect } from "react";
 import CardPorquinho from "../../components/CardPorquinho";
+import api from "../../api.js";
+import { useNavigate } from "react-router";
 
 function Porquinho() {
 
     // Atributos
     const nomeUsuario = localStorage.getItem("nome");
-    // const idUsuario = localStorage.getItem("id");
+    const idUsuario = localStorage.getItem("id");
     const [porquinhosUsuario, setPorquinhosUsuario] = useState([]);
     const [showModal, setShowModal] = useState(false);
+    const [porcentagem, setPorcentagem] = useState();
+    const navigate = useNavigate();
 
     
     // Funções
     function requisicao() {
-        axios.get(`//localhost:8080/api/porquinhos/`).then((response) => {
+        api.get(`porquinhos/`).then((response) => {
             console.log(response.data);
             setPorquinhosUsuario(response.data);
         });
@@ -28,7 +31,10 @@ function Porquinho() {
 
     function handleClick(idPorquinho) {
         console.log(`Clicou no porquinho ${idPorquinho}`);
-        window.location.href = `/dashboard/porquinho/extrato/${idPorquinho}`;
+        navigate(`/dashboard/porquinho/extrato/${idPorquinho}`);
+        api.get(`porquinhos/mostrarPorcentagem/${idUsuario}/${idPorquinho}`).then((response) => {
+            setPorcentagem(response.data);
+        });
     }
 
 
@@ -56,7 +62,7 @@ function Porquinho() {
                             <div className="card-single-receita">
                                 <div>
                                     <span>Seus Porquinhos</span>
-                                    <h2>{0 === undefined ? <FaSpinner className="spinner" /> : 0}</h2>
+                                    <h2>{porquinhosUsuario.length === 0 ? <FaSpinner className="spinner" /> : porquinhosUsuario.length}</h2>
 
                                 </div>
                                 <span id="cartao-card" className="material-symbols-outlined">savings</span>
@@ -70,9 +76,10 @@ function Porquinho() {
                         </div>
                     </div>
                     <div className="cartoes-usuario">
-                        {porquinhosUsuario.map((opcao) => (
-                            <CardPorquinho key={opcao.idPorquinho} opcao={opcao} onClick={() => handleClick(opcao.idPorquinho)} />
-                        ))}
+                        {porquinhosUsuario.map((opcao) => {
+                            return (
+                            <CardPorquinho key={opcao.idPorquinho} porcentagem={porcentagem} opcao={opcao} onClick={() => handleClick(opcao.idPorquinho)} />
+                        )})}
                     </div>
 
                     <div className="frase">Guardando dinheiro consistentemente, você está investindo em seu futuro e transformando seus sonhos em metas alcançáveis</div>

@@ -1,4 +1,4 @@
-import axios from "axios";
+import api from "../api.js";
 import Header from "../components/Header";
 import bolaAzul from "../assets/img/Vector (5).png";
 import bolaPreta from "../assets/img/Vector (4).png";
@@ -6,6 +6,7 @@ import { armazenar } from "../LocalStorages";
 import "../assets/css/style.css";
 import { FaSpinner } from "react-icons/fa";
 import { useState } from "react";
+import { useNavigate } from "react-router";
 
 function Login() {
 
@@ -15,6 +16,7 @@ function Login() {
     const [senhaValue, setSenhaValue] = useState('');
     const [emailAlert, setEmailAlert] = useState('');
     const [senhaAlert, setSenhaAlert] = useState('');
+    const navigate = useNavigate();
     const styles = {
         esconder: { display: 'none' },
         mostrar: { display: 'block' }
@@ -29,7 +31,7 @@ function Login() {
             setSenhaAlert("Digite a senha!");
         } else {
             console.log(emailValue, senhaValue);
-            axios.post("http://localhost:8080/api/usuarios/login", {
+            api.post("usuarios/login", {
                 email: emailValue,
                 senha: senhaValue
             }).then((response) => {
@@ -38,7 +40,7 @@ function Login() {
                     armazenar("nome", response.data.nome);
                     armazenar("id", response.data.id);
                     armazenar("token", response.data.token);
-                    window.location.href = "/dashboard";
+                    navigate("/dashboard");
                 }
             }).catch((err) => {
                 if (err.response.status === 404) {

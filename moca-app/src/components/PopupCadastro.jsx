@@ -1,15 +1,15 @@
-import axios from "axios";
 import "../assets/css/popup.css";
 import { useEffect, useState } from "react";
 import { FaSpinner } from "react-icons/fa";
-import Cartoes from "../pages/Dashboards/Cartoes";
-import api from "../api";
+import api from "../api.js";
+import { useNavigate } from "react-router";
 
 function PopUpCadastro({ isOpen, setModalOpen, children }) {
 
     // Atributos
 
     const idUsuario = localStorage.getItem("id");
+    const navigate = useNavigate();
     const styles = {
         esconder: { display: 'none' },
         mostrar: { display: 'block' }
@@ -89,7 +89,7 @@ function PopUpCadastro({ isOpen, setModalOpen, children }) {
                 idTipoDespesa: categoria,
             }).then((response) => {
                 console.log(response.data);
-                window.location.href = '/dashboard/despesa'
+                navigate('/dashboard/despesa')
             }).catch((err) => {
                 if (err.response.status() === 404) {
                     alert("Página não encontrada!");
@@ -108,7 +108,7 @@ function PopUpCadastro({ isOpen, setModalOpen, children }) {
                 parcela: true
             }).then((response) => {
                 console.log(response);
-                window.location.href = '/dashboard/despesa';
+                navigate('/dashboard/despesa');
             }).catch((err) => {
                 console.log(err)
             });
@@ -123,7 +123,7 @@ function PopUpCadastro({ isOpen, setModalOpen, children }) {
                 idCartao: isCartao !== '0' ? isCartao : null
               }).then((response) => {
                 console.log(response);
-                window.location.href = '/dashboard/despesa';
+                navigate('/dashboard/despesa');
             }).catch((err) => {
                 console.log(err)
             });
@@ -159,7 +159,7 @@ function PopUpCadastro({ isOpen, setModalOpen, children }) {
         })
             .then((response) => {
                 console.log(response.data);
-                window.location.href = '/dashboard/receita'
+                navigate('/dashboard/receita');
             })
             .catch((err) => {
                 if (err.response.status() === 404) {

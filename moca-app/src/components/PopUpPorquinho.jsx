@@ -1,4 +1,4 @@
-import axios from "axios";
+import api from '../api.js';
 import { useState } from "react";
 import { FaSpinner } from "react-icons/fa";
 
@@ -16,7 +16,7 @@ function PopUpPorquinho({ isOpen, setModalOpen }) {
         }
     };
     function requisicao() {
-        axios.post(`//localhost:8080/api/porquinhos/`, {
+        api.post(`porquinhos/`, {
             nome: nomeMeta,
             valorFinal: valorMeta,
             valorAtual: 0,

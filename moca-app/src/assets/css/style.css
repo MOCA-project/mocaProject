@@ -673,6 +673,11 @@ footer .contato .rede-social img{
     .col-es-10 {width: 83.33%;}
     .col-es-11 {width: 91.66%;}
     .col-es-12 {width: 100%;}
+
+    main .banner-app .card-app{
+        border-radius: 15px;
+        height: 40vh;
+    }
 }
 
 /* sm */

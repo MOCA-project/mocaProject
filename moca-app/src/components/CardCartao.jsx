@@ -1,4 +1,4 @@
-
+import api from "../api.js";
 import Mastercard from "../assets/img/Mastercard-Logo.png";
 import Visa from "../assets/img/logo-visa.png";
 import Elo from "../assets/img/logo-elo.png";
@@ -27,9 +27,18 @@ function CartoesCard(props) {
     const corSelecionada = corCartao.find(cor => cor.id === props.props.idCor);
     const bandeiraSelecionada = bandeiraCartao.find(bandeira => bandeira.opcao === props.props.bandeira);
 
+    function deletar() {
+        api.delete(`cartoes/${props.props.idCartao}`).then((response) => {
+            console.log(response);
+            props.atualizar();
+        }).catch((err) => {
+            console.error(err);
+        })
+    }
+
     return (
         <div className="card-credit">
-            <div className="cartao" style={{ backgroundColor: corSelecionada.codigo, borderRadius: "20px"}}>
+            <div className="cartao" style={{ backgroundColor: corSelecionada.codigo, borderRadius: "20px" }}>
                 <div className="tipo-cartao">
                     <div className="tipo">Crédito</div>
                     <div className="bandeira"><img src={bandeiraSelecionada.codigo} alt="" /></div>
@@ -37,7 +46,10 @@ function CartoesCard(props) {
                 </div>
             </div>
             <div className="informacoes-cartao">
-                <h2>{props.props.apelido}</h2>
+                <h2>{props.props.apelido}
+                    <button onClick={deletar}>
+                        <span className="material-symbols-outlined deletar-cartao">delete</span>
+                        </button></h2>
                 <div className="informacoes">
                     <div>Limite:<span>R$ {props.props.limite}</span></div>
                     <div>Venci.: <span>{props.props.vencimento}</span></div>

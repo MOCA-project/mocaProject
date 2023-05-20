@@ -1,4 +1,4 @@
-import axios from "axios";
+import api from "../../api.js";
 import Sidebar from "../../components/Sidebar";
 import "../../assets/css/style2.css";
 import { useState } from "react";
@@ -6,6 +6,7 @@ import { useEffect } from "react";
 import LinhaExtrato from "../../components/TabelaExtrato";
 import { FaSpinner } from 'react-icons/fa';
 import PaginacaoMesesInput from "../../components/PaginacaoMesesInput";
+import { useNavigate } from "react-router";
 
 
 function Extrato() {
@@ -23,12 +24,13 @@ function Extrato() {
     const [mesAtual, setMesAtual] = useState(new Date().getMonth() + 1);
     const [anoAtual, setAnoAtual] = useState(new Date().getFullYear());
     const [extrato, setExtrato] = useState([]);
+    const navigate = useNavigate();
 
 
     // Validar se o usuario efetuou login antes de acessar a dashboard
     function verificarAutenticacao() {
         if (idUsuario === "") {
-            window.location.href = "/login";
+            navigate("/login");
         }
     }
     verificarAutenticacao();
@@ -42,7 +44,7 @@ function Extrato() {
 
     // Requisição do endpoint para mostrar as informações do usuário
     function requisicao(novoMes, novoAno) {
-        axios.get(`//localhost:8080/api/home/${idUsuario}/${novoMes}/${novoAno}`).then((response) => {
+        api.get(`home/${idUsuario}/${novoMes}/${novoAno}`).then((response) => {
             console.log(response);
             setSaldo(response.data.saldo);
             setReceita(response.data.receita);
@@ -50,7 +52,7 @@ function Extrato() {
             setLoading(false);
         });
 
-        axios.get(`//localhost:8080/api/extrato/${idUsuario}/${novoMes}/${novoAno}`).then((response) => {
+        api.get(`extrato/${idUsuario}/${novoMes}/${novoAno}`).then((response) => {
             setExtrato([...response.data.items]);
             console.log(response.data.items);
             // console.log('tabela')
@@ -58,7 +60,7 @@ function Extrato() {
     }
 
     function download() {
-        axios.get(`//localhost:8080/api/extrato/arquivo/${idUsuario}/${mesAtual}/${anoAtual}`, {
+        api.get(`extrato/arquivo/${idUsuario}/${mesAtual}/${anoAtual}`, {
             responseType: 'arraybuffer'
         }).then(response => {
             // Cria um blob a partir dos dados recebidos

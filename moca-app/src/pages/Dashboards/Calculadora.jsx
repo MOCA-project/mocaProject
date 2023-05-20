@@ -1,25 +1,58 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Sidebar from "../../components/Sidebar";
 
 function Calculadora() {
 
     // Atributos
     const nomeUsuario = localStorage.getItem("nome");
-    const [valorInicial, setValorInicial] = useState();
-    const [aporteMensal, setAporteMensal] = useState();
-    const [taxaJuros, setTaxaJuros] = useState();
-    const [periodoMeses, setPeriodoMeses] = useState();
-    const [saldo, setSaldo] = useState()
+    const [valorInicial, setValorInicial] = useState('');
+    const [aporteMensal, setAporteMensal] = useState('');
+    const [taxaJuros, setTaxaJuros] = useState('');
+    const [periodoMeses, setPeriodoMeses] = useState('');
+    const [saldo, setSaldo] = useState(0);
+    const [exibir, setExibir] = useState(0);
+    const [tabelaValores, setTabelaValores] = useState([]);
+    const [limparCampos, setLimparCampos] = useState(false);
 
+
+    // Funcao para calcular e exibir na tabela
     function calcular() {
         const taxaJurosDecimal = taxaJuros / 100;
-        let saldo = valorInicial;
+        let saldoAtual = parseFloat(valorInicial);
+        const tabela = [];
 
         for (let i = 1; i <= periodoMeses; i++) {
-            saldo += aporteMensal;
-            saldo *= 1 + taxaJurosDecimal;
+            saldoAtual += parseFloat(aporteMensal);
+            saldoAtual *= 1 + taxaJurosDecimal;
+
+            tabela.push({
+                mes: i,
+                valor: saldoAtual.toFixed(2).replace('.', ',')
+            });
         }
+
+        setSaldo(saldoAtual);
+        setExibir(saldoAtual);
+        setTabelaValores(tabela);
     }
+
+    function limparCalculadora() {
+        setValorInicial('');
+        setAporteMensal('');
+        setTaxaJuros('');
+        setPeriodoMeses('');
+        setSaldo('');
+        setExibir(0);
+        setLimparCampos(true);
+        setTabelaValores([]);
+    }
+
+    useEffect(() => {
+        if (limparCampos) {
+            setLimparCampos(false);
+        }
+    }, [limparCampos]);
+
 
     // Return do HTML
     return (
@@ -67,13 +100,13 @@ function Calculadora() {
                             </div>
                         </div>
                         <div className="container-botao">
-                            <button className="limpar-calculadora">Limpar</button>
-                            <button className="calcular-calculadora" onClick={() => calcular()}>Calcular</button>
+                            <button className="limpar-calculadora" onClick={limparCalculadora}>Limpar</button>
+                            <button className="calcular-calculadora" onClick={calcular}>Calcular</button>
                         </div>
                         <div className="valor-estimado">
                             <h1>Valor total estimado</h1>
                             <div className="card-valor">
-                                <span></span>
+                                <span>R$ {exibir.toFixed(2).replace('.', ',')}</span>
                             </div>
                         </div>
                         <div className="table-container-calculadora">
@@ -82,13 +115,18 @@ function Calculadora() {
                             <table className="table">
                                 <thead>
                                     <tr>
-                                        <th>Situação</th>
-                                        <th>Data</th>
-                                        <th>Descrição</th>
-                                        <th>Categoria</th>
+                                        <th>Mês</th>
                                         <th>Valor</th>
                                     </tr>
                                 </thead>
+                                <tbody>
+                                    {tabelaValores.map((item) => (
+                                        <tr key={item.mes}>
+                                            <td>{item.mes}</td>
+                                            <td>{item.valor}</td>
+                                        </tr>
+                                    ))}
+                                </tbody>
                             </table>
                         </div>
                     </div>

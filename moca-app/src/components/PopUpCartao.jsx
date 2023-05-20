@@ -1,6 +1,7 @@
-import axios from "axios";
+import api from "../api.js";
 import { useState } from "react";
 import { FaSpinner } from "react-icons/fa";
+import { useNavigate } from "react-router";
 
 function PopUpCartao({ isOpen, setModalOpen }) {
     const idUsuario = localStorage.getItem("id");
@@ -11,6 +12,7 @@ function PopUpCartao({ isOpen, setModalOpen }) {
     const [vencimento, setVencimento] = useState('')
     const [bandeira, setBandeira] = useState();
     const [cor, setCor] = useState();
+    const navigate = useNavigate();
     const corCartao = [
         { id: 1, opcao: "Azul Royal", codigo: "#0071C5" },
         { id: 2, opcao: "Verde Esmeralda", codigo: "#50C878" },
@@ -37,7 +39,7 @@ function PopUpCartao({ isOpen, setModalOpen }) {
 
 
     function requisicao() {
-        axios.post(`//localhost:8080/api/cartoes/`, {
+        api.post(`cartoes/`, {
             limite: limite.value,
             idCliente: idUsuario,
             idTipo: tipo,
@@ -47,7 +49,7 @@ function PopUpCartao({ isOpen, setModalOpen }) {
             vencimento: vencimento
         }).then((response) => {
             console.log(response);
-            window.location.href = '/dashboard/cartoes';
+            navigate('/dashboard/cartoes');
         })
         console.log(vencimento);
 

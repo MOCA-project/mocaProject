@@ -1,6 +1,6 @@
 import { FaSpinner } from "react-icons/fa";
 import Sidebar from "../../components/Sidebar";
-import { useParams } from "react-router";
+import { useNavigate, useParams } from "react-router";
 import api from "../../api.js";
 import { useEffect } from "react";
 import { useState } from "react";
@@ -16,9 +16,10 @@ function PorquinhoExtrato() {
     const [porcentagem, setPorcentagem] = useState();
     const [showModal, setShowModal] = useState(false);
     const [opcao, setOpcao] = useState('');
+    const navigate = useNavigate();
 
     function voltar() {
-        window.location.href = "/dashboard/porquinho";
+        navigate("/dashboard/porquinho");
     }
 
     function requisicao() {
@@ -29,7 +30,7 @@ function PorquinhoExtrato() {
 
         api.get(`porquinhos/mostrarPorcentagem/${idUsuario}/${idPorquinho}`).then((response) => {
             setPorcentagem(response.data);
-        })
+        });
     }
 
     useEffect(() => {
@@ -66,14 +67,14 @@ function PorquinhoExtrato() {
                             <div className="card-single-receita">
                                 <div>
                                     <span>Valor Guardado</span>
-                                    <h2>{dadosPorquinho.valorAtual === undefined ? <FaSpinner className="spinner" /> : dadosPorquinho.valorAtual}</h2>
+                                    <h2>R$ {dadosPorquinho.valorAtual === undefined ? <FaSpinner className="spinner" /> : dadosPorquinho.valorAtual.toFixed(2)}</h2>
                                 </div>
                                 <span id="cartao-card" className="material-symbols-outlined">savings</span>
                             </div>
                             <div className="card-single-receita">
                                 <div>
                                     <span>Meta</span>
-                                    <h2>{dadosPorquinho.valorFinal === undefined ? <FaSpinner className="spinner" /> : dadosPorquinho.valorFinal}</h2>
+                                    <h2>R$ {dadosPorquinho.valorFinal === undefined ? <FaSpinner className="spinner" /> : dadosPorquinho.valorFinal.toFixed(2)}</h2>
 
                                 </div>
                                 <span id="cartao-card" className="material-symbols-outlined">savings</span>

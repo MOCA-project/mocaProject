@@ -11,8 +11,11 @@ import Facebook from "../assets/img/facebook.png";
 import Whatsapp from "../assets/img/whatsapp.png";
 import HomemCartao from "../assets/img/homemCartao.png";
 import "../assets/css/style.css";
+import { useNavigate } from "react-router";
 
 function Home() {
+
+    const navigate = useNavigate();
 
     if (localStorage.getItem("id") === null) {
         localStorage.setItem("id", "");
@@ -138,7 +141,7 @@ function Home() {
                 </svg>
 
                 <section className="banner-app col-xxl-12 col-xl-12 col-lg-12 col-md-12 col-sm-12 intro-scroll">
-                    <div className="card-app col-xxl-7 col-xl-7 col-lg-8 col-md-10 col-sm-12 col-es-12">
+                    <div className="card-app col-xxl-7 col-xl-7 col-lg-8 col-md-10 col-sm-10 col-es-10">
                         <div className="frase-app col-sm-12 col-es-12">
                             <h1>
                                 <b>Baixe agora e não perca mais tempo com planilhas complexas</b>
@@ -165,8 +168,8 @@ function Home() {
                         </ul>
                     </div>
                     <div className="footer-btn">
-                        <button className="entrar" onClick={() => window.location.href = '../html/cadastro.html'}>LOGIN</button>
-                        <button className="cadastrar" onClick={() => window.location.href = '../html/login.html'}>CADASTRAR</button>
+                        <button className="entrar" onClick={() => navigate('../html/cadastro.html')}>LOGIN</button>
+                        <button className="cadastrar" onClick={() => navigate('../html/login.html')}>CADASTRAR</button>
                     </div>
                 </div>
                 <hr />
