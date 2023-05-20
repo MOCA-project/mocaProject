@@ -14,7 +14,7 @@ function Despesas() {
     // const tokenUsuario = localStorage.getItem("token");
     const [ativo, setAtivo] = useState(true);
     const [despesa, setDespesa] = useState();
-    const [mesAtual, setMesAtual] = useState(new Date().getMonth());
+    const [mesAtual, setMesAtual] = useState(new Date().getMonth() + 1);
     const [anoAtual, setAnoAtual] = useState(new Date().getFullYear());
     const [listaDespesa, setListaDespesa] = useState([]);
 
@@ -26,8 +26,8 @@ function Despesas() {
     // }
     useEffect(() => {
         // verificarAutenticacao();
-        requisicao(mesAtual);
-        requisicaoListaDespesa(mesAtual);
+        requisicao(mesAtual, anoAtual);
+        requisicaoListaDespesa(mesAtual, anoAtual);
         setLoading(true);
     }, []);
 
@@ -38,7 +38,8 @@ function Despesas() {
 
     // Requisição do endpoint para mostrar as informações do usuário
     function requisicao(novoMes, novoAno) {
-        api.get(`home/${idUsuario}/${novoMes + 1}/${novoAno}`).then((response) => {
+        console.log(novoMes);
+        api.get(`home/${idUsuario}/${novoMes}/${novoAno}`).then((response) => {
             console.log(response);
             setDespesa(response.data.despesas);
             setLoading(false);
@@ -47,8 +48,9 @@ function Despesas() {
     }
 
     function requisicaoListaDespesa(novoMes, novoAno) {
+        console.log(novoAno)
 
-        api.get(`despesas/${idUsuario}/${novoMes + 1}/${novoAno}`).then((response) => {
+        api.get(`despesas/${idUsuario}/${novoMes}/${novoAno}`).then((response) => {
             setListaDespesa([...response.data]);
             console.log(response.data)
         });
@@ -60,7 +62,7 @@ function Despesas() {
         setMesAtual(novoMes);
         setAnoAtual(novoAno);
         requisicao(novoMes, novoAno);
-        requisicaoListaDespesa(novoMes);
+        requisicaoListaDespesa(novoMes, novoAno);
       };
 
     return (

@@ -9,6 +9,7 @@ import Instagram from "../assets/img/instagram.png";
 import Twitter from "../assets/img/twitter.png";
 import Facebook from "../assets/img/facebook.png";
 import Whatsapp from "../assets/img/whatsapp.png";
+import HomemCartao from "../assets/img/homemCartao.png";
 import "../assets/css/style.css";
 
 function Home() {
@@ -123,7 +124,7 @@ function Home() {
                             </div>
                         </div>
                         <div>
-                            <img src={CelularesDicas} alt="Atingindo Metas" />
+                            <img src={HomemCartao} alt="Atingindo Metas" />
                         </div>
                     </div>
                 </section>

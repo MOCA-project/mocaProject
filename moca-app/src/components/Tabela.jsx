@@ -15,7 +15,7 @@ function LinhaTabela(props) {
         api.patch(`despesas/pagar/${props.despesa.idDespesa}`).then((response) => {
             console.log(response.status);
             window.location.href = '/dashboard/despesa';
-        })
+        });
     }
 
     function salvarEdicao() {

@@ -59,6 +59,11 @@ function Configuracoes() {
                                 <span>Alterar senha</span>
                                 <input type="password" className="input-text-config" />
                             </div>
+                            <div className="section-config">
+                                <span>Confirmar senha</span>
+                                <input type="password" className="input-text-config" />
+                            </div>
+                            <button className="config-btn">Salvar</button>
                         </div>
                     </div>
                 </main>

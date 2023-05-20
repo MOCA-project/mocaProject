@@ -1,11 +1,11 @@
 import axios from "axios";
 import Sidebar from "../../components/Sidebar";
 import "../../assets/css/style2.css";
-import Meses from "../../components/PaginacaoMeses";
 import { useState } from "react";
 import { useEffect } from "react";
 import LinhaExtrato from "../../components/TabelaExtrato";
 import { FaSpinner } from 'react-icons/fa';
+import PaginacaoMesesInput from "../../components/PaginacaoMesesInput";
 
 
 function Extrato() {
@@ -20,7 +20,9 @@ function Extrato() {
     const [receita, setReceita] = useState();
     const [despesa, setDespesa] = useState();
     const [ativo, setAtivo] = useState(true);
-    const [mesAtual, setMesAtual] = useState(new Date().getMonth());
+    const [mesAtual, setMesAtual] = useState(new Date().getMonth() + 1);
+    const [anoAtual, setAnoAtual] = useState(new Date().getFullYear());
+    const [extrato, setExtrato] = useState([]);
 
 
     // Validar se o usuario efetuou login antes de acessar a dashboard
@@ -34,28 +36,29 @@ function Extrato() {
     useEffect(() => {
         verificarAutenticacao();
         setLoading(true);
-        requisicao(mesAtual);
+        requisicao(mesAtual, anoAtual);
     }, []);
 
 
     // Requisição do endpoint para mostrar as informações do usuário
-    function requisicao(props) {
-        const data = new Date();
-        const ano = data.getFullYear();
-        axios.get(`//localhost:8080/api/home/${idUsuario}/${props + 1}/${ano}`).then((response) => {
+    function requisicao(novoMes, novoAno) {
+        axios.get(`//localhost:8080/api/home/${idUsuario}/${novoMes}/${novoAno}`).then((response) => {
             console.log(response);
             setSaldo(response.data.saldo);
             setReceita(response.data.receita);
             setDespesa(response.data.despesas);
             setLoading(false);
         });
-        // console.log(props);
+
+        axios.get(`//localhost:8080/api/extrato/${idUsuario}/${novoMes}/${novoAno}`).then((response) => {
+            setExtrato([...response.data.items]);
+            console.log(response.data.items);
+            // console.log('tabela')
+        });
     }
 
     function download() {
-        const data = new Date();
-        const ano = data.getFullYear();
-        axios.get(`//localhost:8080/api/extrato/arquivo/${idUsuario}/${mesAtual + 1}/${ano}`, {
+        axios.get(`//localhost:8080/api/extrato/arquivo/${idUsuario}/${mesAtual}/${anoAtual}`, {
             responseType: 'arraybuffer'
         }).then(response => {
             // Cria um blob a partir dos dados recebidos
@@ -80,9 +83,9 @@ function Extrato() {
 
 
     // Extrato por mes 
-    const atualizarMesSelecionado = (novoMes) => {
+    const atualizarMesSelecionado = (novoMes, novoAno) => {
         setMesAtual(novoMes);
-        requisicao(novoMes);
+        requisicao(novoMes, novoAno);
     }
 
     return (
@@ -136,7 +139,7 @@ function Extrato() {
                             <button className="buttonDownload" onClick={() => download()}> Download Excel </button>
                         </div>
                     </div>
-                    <Meses setMesAtual={atualizarMesSelecionado} />
+                    <PaginacaoMesesInput setMesAno={atualizarMesSelecionado} />
                     <div className="table-container">
                         <h2 className="heading">
                         </h2>
@@ -150,7 +153,13 @@ function Extrato() {
                                     <th>Valor</th>
                                 </tr>
                             </thead>
-                            <LinhaExtrato props={mesAtual} />
+                            <tbody>
+                                {extrato.map((extrato) => {
+                                    return (
+                                    <LinhaExtrato props={extrato} key={extrato.idReceita === null ? extrato.idDespesa : extrato.idReceita} />
+                                    )
+                                })}
+                            </tbody>
                         </table>
                     </div>
                 </main>

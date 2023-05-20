@@ -226,6 +226,11 @@ main .funcionalidades .card-foto .func .cards-func p {
     font-size: 0.9rem;
 }
 
+main .funcionalidades img {
+    width: 400px;
+    border-radius: 5px;
+}
+
 /* ------------------------ */
 /*        Aplicativo        */
 /* ------------------------ */

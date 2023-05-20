@@ -18,7 +18,7 @@ function Receitas() {
     const nomeUsuario = localStorage.getItem("nome");
     const idUsuario = localStorage.getItem("id");
     const [receita, setReceita] = useState();
-    const [mesAtual, setMesAtual] = useState(new Date().getMonth());
+    const [mesAtual, setMesAtual] = useState(new Date().getMonth() + 1);
     const [anoAtual, setAnoAtual] = useState(new Date().getFullYear());
     const [showModal, setShowModal] = useState(false);
     const [listaReceitas, setListaReceitas] = useState([]);
@@ -35,8 +35,8 @@ function Receitas() {
     }
     useEffect(() => {
         // verificarAutenticacao();
-        requisicao(new Date().getMonth(), new Date().getFullYear());
-        requisicaoListaReceita(mesAtual);
+        requisicao(mesAtual, anoAtual);
+        requisicaoListaReceita(mesAtual, anoAtual);
         setLoading(true);
         verificarAutenticacao();
     }, []);
@@ -44,7 +44,7 @@ function Receitas() {
     function requisicao(novoMes, novoAno) {
         // Constants para mes e ano que serão passadas na url
         // Requisição para buscar as receitas do usuario
-        api.get(`//localhost:8080/api/home/${idUsuario}/${novoMes + 1}/${novoAno}`).then((response) => {
+        api.get(`//localhost:8080/api/home/${idUsuario}/${novoMes}/${novoAno}`).then((response) => {
             console.log(novoAno);
             console.log(novoMes);
             console.log(response);
@@ -54,7 +54,7 @@ function Receitas() {
     }
 
     function requisicaoListaReceita(novoMes, novoAno) {
-        api.get(`//localhost:8080/api/receitas/${idUsuario}/${novoMes + 1}/${novoAno}`).then((response) => {
+        api.get(`//localhost:8080/api/receitas/${idUsuario}/${novoMes}/${novoAno}`).then((response) => {
             setListaReceitas([...response.data]);
             console.log(response.data)
         });
@@ -64,8 +64,8 @@ function Receitas() {
     const atualizarMesSelecionado = (novoMes, novoAno) => {
         setMesAtual(novoMes);
         setAnoAtual(novoAno);
-        requisicao(novoMes, novoAno);
         requisicaoListaReceita(novoMes, novoAno); // Passar ambos os valores aqui
+        requisicao(novoMes, novoAno);
       };
 
     // Return do HTML

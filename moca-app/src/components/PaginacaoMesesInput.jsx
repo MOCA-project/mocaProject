@@ -1,7 +1,6 @@
-import { useEffect } from "react";
 import { useState } from "react";
 
-function PaginacaoMesesInput({ setMesAno }) {
+function PaginacaoMesesInput(props) {
 
     // Atributos
     const dataAtual = new Date();
@@ -17,13 +16,13 @@ function PaginacaoMesesInput({ setMesAno }) {
         const novoAno = value.substring(0, 4);
         setMes(value.substring(5, 7));
         setAno(value.substring(0, 4));
-        setMesAno(novoMes, novoAno);
+        props.setMesAno(novoMes, novoAno);
     };
 
 
     // Return do HTML
     return (
-        <div>
+        <div className="input-paginacao">
             <input type="month" onChange={handleInputChange} defaultValue={`${ano}-${mes}`} />
         </div>
     );
