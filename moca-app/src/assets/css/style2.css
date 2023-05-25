@@ -428,18 +428,17 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  margin: 5em 0;
+  margin: 3em 0 -1em 0;
 }
 
 .input-paginacao input {
   width: 200px;
   text-align: center;
   border: none;
-  border-bottom: 1px solid #2152FF;
   background-color: transparent;
   font-size: 1.1em;
   font-weight: 700;
-  color: #2152FF;
+  color: var(--text-gray);
 }
 
 .heading {
@@ -1012,6 +1011,23 @@
   border-bottom: 2px solid #67748E;
 }
 
+.config-btn-editar {
+  width: 120px;
+  height: 40px;
+  font-size: 1em;
+  font-weight: 700;
+  letter-spacing: 0.050em;
+  border-radius: 6px;
+  border: none;
+  background-color: #1C1C58;
+  color: #fff;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+}
+
 .config-btn {
   width: 120px;
   height: 40px;
@@ -1023,6 +1039,10 @@
   background-color: #05c46b;
   color: #fff;
   cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
 }
 
 .toggle-switch {

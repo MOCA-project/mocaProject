@@ -25,16 +25,25 @@ function PorquinhoExtrato() {
     function requisicao() {
         api.get(`porquinhos/${idUsuario}/${idPorquinho}`).then((response) => {
             setDadosPorquinho(response.data);
-            console.log(response.data)
-        })
+            console.log(response.data);
+        });
 
         api.get(`porquinhos/mostrarPorcentagem/${idUsuario}/${idPorquinho}`).then((response) => {
             setPorcentagem(response.data);
         });
     }
+    
+    function extratoPorquinho(){
+        api.get(`/porquinhos/historico/${idPorquinho}`).then((response) => {
+            console.log(response);
+        }).catch((err) => {
+            console.error(err);
+        });
+    }
 
     useEffect(() => {
         requisicao();
+        extratoPorquinho();
     }, [])
 
     // Return do HTML

@@ -20,8 +20,8 @@ function Porquinho() {
     
     // Funções
     function requisicao() {
-        api.get(`porquinhos/`).then((response) => {
-            console.log(response.data);
+        api.get(`porquinhos/${idUsuario}`).then((response) => {
+            // console.log(response.data);
             setPorquinhosUsuario(response.data);
         });
     }
@@ -30,7 +30,6 @@ function Porquinho() {
     }, []);
 
     function handleClick(idPorquinho) {
-        console.log(`Clicou no porquinho ${idPorquinho}`);
         navigate(`/dashboard/porquinho/extrato/${idPorquinho}`);
         api.get(`porquinhos/mostrarPorcentagem/${idUsuario}/${idPorquinho}`).then((response) => {
             setPorcentagem(response.data);

@@ -29,7 +29,7 @@ function CardPorquinho(props) {
     const formatPorcentagem = (value) => `${value.toFixed(0)}%`;
 
     return (
-        <div className="card-porquinho" onClick={props.onClick}>
+        <div className="card-porquinho" onClick={props.onClick} style={{cursor: "pointer"}}>
             <div className="icone">
                 <h2>{props.opcao.nome}</h2>
                 <br />
