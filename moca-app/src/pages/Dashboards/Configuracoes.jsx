@@ -35,7 +35,6 @@ function Configuracoes() {
                                         <div className="toggle-switch-handle"></div>
                                     </div>
                                 </label>
-
                             </div>
                             <div className="section-config">
                                 <span>Ativar notificações SMS</span>

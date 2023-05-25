@@ -1183,6 +1183,10 @@
     justify-items: center;
   }
 
+  .section-config{
+    display: grid;
+  }
+
 
 }
 
@@ -1353,6 +1357,7 @@
   .card-despesa {
     grid-template-columns: 100%;
   }
+
 
 
 }

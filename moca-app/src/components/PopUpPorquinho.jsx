@@ -33,7 +33,7 @@ function PopUpPorquinho({ isOpen, setModalOpen }) {
         return (
             <div id="demo-modal" className="modal">
                 <div className="modal__content">
-                    <h1>Novo Cartão</h1>
+                    <h1>Novo Porquinho</h1>
 
                     <div className="input-box">
                         <label className="input-label">Nome da meta</label>
