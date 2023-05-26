@@ -49,7 +49,7 @@ function PopUpCartao({ isOpen, setModalOpen }) {
             vencimento: vencimento
         }).then((response) => {
             console.log(response);
-            navigate('/dashboard/cartoes');
+            window.location.href = '/dashboard/cartoes';
         })
         console.log(vencimento);
 

@@ -25,7 +25,7 @@ function PopUpValorPorquinho({ isOpen, setModalOpen, mensagem, idPorquinho, valo
         if(mensagem === "adicionar") {
             api.put(`porquinhos/adicionarValor/${idUsuario}/${idPorquinho}/${valor}`).then((response) => {
                 console.log(response);
-                navigate(`/dashboard/porquinho/extrato/${idPorquinho}`);
+                window.location.href =`/dashboard/porquinho/extrato/${idPorquinho}`;
             }).catch((err) => {
                 console.log(err);
             });
@@ -33,7 +33,7 @@ function PopUpValorPorquinho({ isOpen, setModalOpen, mensagem, idPorquinho, valo
             if (valorPorquinho > valor) {
                 api.put(`porquinhos/retirarValor/${idUsuario}/${idPorquinho}/${valor}`).then((response) => {
                     console.log(response);
-                    navigate(`/dashboard/porquinho/extrato/${idPorquinho}`);
+                    window.location.href = `/dashboard/porquinho/extrato/${idPorquinho}`;
                 }).catch((err) => {
                     console.log(err);
                 });

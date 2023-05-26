@@ -72,6 +72,11 @@
   margin: 0.5em 0;
 }
 
+.input-box small {
+  color: red;
+  margin: 5px 0;
+}
+
 .input-label {
   font-size: 1em;
   margin-left: 1px;
@@ -130,6 +135,11 @@
   color: #fff;
   background: #000;
   cursor: pointer;
+}
+
+.modal_footer_depesa button:disabled{
+  background: #ccc;
+  cursor: not-allowed;
 }
 
 .modal_footer_depesa button {

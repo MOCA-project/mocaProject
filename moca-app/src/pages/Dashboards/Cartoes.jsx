@@ -75,7 +75,7 @@ function Cartoes() {
                             </div>
                             <div className="card-cartao" onClick={() => { setShowModal(true) }}>
                                 <div>
-                                    <span>Nova Despesa</span> <br />
+                                    <span>Novo Cartão</span> <br />
                                     <h2 className="material-symbols-outlined">add</h2>
                                 </div>
                             </div>

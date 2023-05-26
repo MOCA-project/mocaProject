@@ -17,6 +17,7 @@ function PorquinhoExtrato() {
     const [showModal, setShowModal] = useState(false);
     const [opcao, setOpcao] = useState('');
     const navigate = useNavigate();
+    const [extratoDados, setExtratoPorquinho] = useState([]);
 
     function voltar() {
         navigate("/dashboard/porquinho");
@@ -32,10 +33,11 @@ function PorquinhoExtrato() {
             setPorcentagem(response.data);
         });
     }
-    
-    function extratoPorquinho(){
+
+    function extratoPorquinho() {
         api.get(`/porquinhos/historico/${idPorquinho}`).then((response) => {
             console.log(response);
+            setExtratoPorquinho(response.data.items);
         }).catch((err) => {
             console.error(err);
         });
@@ -119,11 +121,16 @@ function PorquinhoExtrato() {
                                     <th>Ações</th>
                                 </tr>
                             </thead>
-                            {/* {listaReceitas.map((receita) => {
-                                return (
-                                    <LinhaTabela receita={receita} key={receita.idReceita} />
-                                )
-                            })} */}
+                            <tbody>
+                                {/* {extratoDados.map((porquinho) => (
+                                    <tr data-label="Situação" key={porquinho.valor}>
+                                        <td>{porquinho.saque}</td>
+                                        <td data-label="Data">{porquinho.data}</td>
+                                        <td>{porquinho.valor}</td>
+                                        <td></td>
+                                    </tr>
+                                ))} */}
+                            </tbody>
                         </table>
                     </div>
                 </main>

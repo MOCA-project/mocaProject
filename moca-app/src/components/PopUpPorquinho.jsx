@@ -1,12 +1,14 @@
 import api from '../api.js';
 import { useState } from "react";
 import { FaSpinner } from "react-icons/fa";
+import { useNavigate } from 'react-router';
 
 function PopUpPorquinho({ isOpen, setModalOpen }) {
     const idUsuario = localStorage.getItem("id");
     const [clicou, setClicou] = useState(false);
     const [nomeMeta, setNomeMeta] = useState();
     const [valorMeta, setValorMeta] = useState();
+    const navigate = useNavigate();
     const styles = {
         esconder: {
             display: 'none'
@@ -25,6 +27,7 @@ function PopUpPorquinho({ isOpen, setModalOpen }) {
             concluido: false
         }).then((response) => {
             console.log(response);
+            window.location.href = '/dashboard/porquinho';
         })
         setClicou(true);
     }

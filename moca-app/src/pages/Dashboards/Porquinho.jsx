@@ -61,7 +61,7 @@ function Porquinho() {
                             <div className="card-single-receita">
                                 <div>
                                     <span>Seus Porquinhos</span>
-                                    <h2>{porquinhosUsuario.length === 0 ? <FaSpinner className="spinner" /> : porquinhosUsuario.length}</h2>
+                                    <h2>{porquinhosUsuario.length === undefined ? <FaSpinner className="spinner" /> : porquinhosUsuario.length}</h2>
 
                                 </div>
                                 <span id="cartao-card" className="material-symbols-outlined">savings</span>

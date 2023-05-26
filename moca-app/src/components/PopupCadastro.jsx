@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import { FaSpinner } from "react-icons/fa";
 import api from "../api.js";
 import { useNavigate } from "react-router";
+import { set } from "date-fns";
 
 function PopUpCadastro({ isOpen, setModalOpen, children }) {
 
@@ -71,7 +72,13 @@ function PopUpCadastro({ isOpen, setModalOpen, children }) {
     const [dadosCartao, setDadosCartao] = useState([]);
     const [idCartao, setIdCartao] = useState();
     const [data, setData] = useState();
-    const [quantidadeParcelas ,setQuantidadeParcelas] = useState();
+    const [quantidadeParcelas, setQuantidadeParcelas] = useState();
+    const [desabilitado, setDesabilitado] = useState(false);
+    const [alertValor, setAlertValor] = useState();
+    const [alertCategoria, setAlertCategoria] = useState('');
+    const [alertDescricao, setAlertDescricao] = useState('');
+    const [alertData, setAlertData] = useState('');
+    const [erroGeral, setErroGeral] = useState('');
 
 
 
@@ -89,7 +96,7 @@ function PopUpCadastro({ isOpen, setModalOpen, children }) {
                 idTipoDespesa: categoria,
             }).then((response) => {
                 console.log(response.data);
-                navigate('/dashboard/despesa')
+                window.location.href = '/dashboard/despesa';
             }).catch((err) => {
                 if (err.response.status() === 404) {
                     alert("Página não encontrada!");
@@ -108,7 +115,7 @@ function PopUpCadastro({ isOpen, setModalOpen, children }) {
                 parcela: true
             }).then((response) => {
                 console.log(response);
-                navigate('/dashboard/despesa');
+                window.location.href = '/dashboard/despesa';
             }).catch((err) => {
                 console.log(err)
             });
@@ -121,65 +128,83 @@ function PopUpCadastro({ isOpen, setModalOpen, children }) {
                 idTipoDespesa: categoria,
                 parcelas: quantidadeParcelas,
                 idCartao: isCartao !== '0' ? isCartao : null
-              }).then((response) => {
+            }).then((response) => {
                 console.log(response);
-                navigate('/dashboard/despesa');
+                window.location.href = '/dashboard/despesa';
             }).catch((err) => {
                 console.log(err)
             });
         }
 
         //SE A PAGINA ESTIVER EM DESPESA IRA EXECUTAR A FUNCAO DESPESA
-        console.log({
-            valor: valorValue,
-            categoria: categoria,
-            descricao: descricaoValue,
-            data: dataConvert,
-        });
+        // console.log({
+        //     valor: valorValue,
+        //     categoria: categoria,
+        //     descricao: descricaoValue,
+        //     data: dataConvert,
+        // });
 
 
     }
 
     function adicionarReceita() {
-        setClicou(true);
 
-        console.log({
-            valor: valorValue,
-            categoria: categoria,
-            descricao: descricaoValue,
-            data: dataConvert,
-        });
-
-        api.post("receitas/", {
-            descricao: descricaoValue,
-            valor: valorValue,
-            data: dataConvert,
-            idCliente: idUsuario,
-            idTipoReceita: categoria,
-        })
-            .then((response) => {
+        // console.log({
+        //     valor: valorValue,
+        //     categoria: categoria,
+        //     descricao: descricaoValue,
+        //     data: dataConvert,
+        // });
+        if (valorValue <= 0 || valorValue === "") {
+            setErroGeral("Erro no preenchimento do formulario!");
+        } else if (categoria === '0') {
+            setErroGeral("Erro no preenchimento do formulario!");
+        } else if (descricaoValue === "") {
+            setErroGeral("Erro no preenchimento do formulario!");
+        } else if (data === '') {
+            setErroGeral("Erro no preenchimento do formulario!");
+        } else {
+            setClicou(true);
+            api.post("receitas/", {
+                descricao: descricaoValue,
+                valor: valorValue,
+                data: dataConvert,
+                idCliente: idUsuario,
+                idTipoReceita: categoria,
+            }).then((response) => {
                 console.log(response.data);
-                navigate('/dashboard/receita');
-            })
-            .catch((err) => {
-                if (err.response.status() === 404) {
-                    alert("Página não encontrada!");
-                }
+                window.location.href = '/dashboard/receita';
+            }).catch((err) => {
+                console.error(err);
+                setClicou(false);
             });
-        // if (valorValue > 0 && categoria !== 0 && descricaoValue !== "" && descricaoValue !== " ") {
-        //     // console
 
-        // } else if (valorValue <= 0) {
-        //     alert("Informe um valor positivo!");
-        // } else if (categoria === 0) {
-        //     alert("Selecione uma categoria!");
-        // } else if (descricaoValue === "" || descricaoValue === " ") {
-        //     alert("Digite uma descrição!");
-        // }
-
-
-
+        }
     }
+
+    useEffect(() => {
+        if (valorValue <= 0 || valorValue === "") {
+            setAlertValor("Informe um valor positivo!");
+            setDesabilitado(true);
+        } else {
+            setAlertValor("");
+        }
+        if (categoria === '0') {
+            setAlertCategoria("Selecione uma categoria!");
+        } else {
+            setAlertCategoria("");
+        }
+        if (descricaoValue === "") {
+            setAlertDescricao("Digite uma descrição!");
+        } else {
+            setAlertDescricao("");
+        }
+        if (data === '') {
+            setAlertData("Informe uma data");
+        } else {
+            setAlertData('');
+        }
+    }, [valorValue, categoria, descricaoValue, data]);
 
     useEffect(() => {
         const data = new Date();
@@ -188,7 +213,7 @@ function PopUpCadastro({ isOpen, setModalOpen, children }) {
             console.log(response.data.cartoes);
             setDadosCartao(response.data.cartoes);
         });
-    }, [])
+    }, []);
 
 
     if (isOpen) {
@@ -196,10 +221,12 @@ function PopUpCadastro({ isOpen, setModalOpen, children }) {
             <div id="demo-modal" className="modal">
                 <div className="modal__content">
                     <h1>{window.location.pathname === '/dashboard/despesa' ? 'Nova Despesa' : 'Nova Receita'}</h1>
+                    <small>{erroGeral}</small>
 
                     <div className="input-box">
                         <label className="input-label">Valor</label>
                         <input placeholder="00,00" onChange={(event) => setValorValue(event.target.value)} className="input" type="number" />
+                        <small>{alertValor}</small>
                     </div>
 
                     <div className="input-box">
@@ -219,16 +246,19 @@ function PopUpCadastro({ isOpen, setModalOpen, children }) {
                                 ))
                             }
                         </select>
+                        <small>{alertCategoria}</small>
                     </div>
 
                     <div className="input-box">
                         <label className="input-label">Descrição</label>
                         <input onChange={(event) => setDescricaoValue(event.target.value)} className="input" type="text" />
+                        <small>{alertDescricao}</small>
                     </div>
 
                     <div className="input-box">
                         <label className="input-label">Data</label>
                         <input className="input" type="date" onChange={(event) => setData(event.target.value)} />
+                        <small>{alertData}</small>
                     </div>
 
                     {/* Mostra as opcoes de despesas para serem cadastradas */}
@@ -238,14 +268,21 @@ function PopUpCadastro({ isOpen, setModalOpen, children }) {
                                 <label className="input-label">Tipo de despesa</label>
                                 <select onChange={(event) => {
                                     setTipoDespesaValue(event.target.value);
-                                    event.target.value === '2' ? setFixa(true) : setFixa(false);
-                                    event.target.value === '3' ? setParcelada(true) : setParcelada(false);
+                                    const selectedOption = parseInt(event.target.value);
+                                    const isParceladaOption = selectedOption === 3;
+                                    const hasCartoes = dadosCartao.length > 0;
+                                    setParcelada(isParceladaOption);
+                                    setDesabilitado(isParceladaOption && !hasCartoes);
                                 }} className="selecao">
                                     <option value="0">--Selecione--</option>
                                     {tipoDespesa.map(tipo => (
                                         <option key={tipo.id} value={tipo.id}>{tipo.opcao}</option>
                                     ))}
                                 </select>
+                                {parcelada && !desabilitado ? null : (
+                                    <small>{desabilitado ? 'Nenhum cartão disponível' : ''}</small>
+                                )}
+                                {/* {parcelada && dadosCartao.length === 0 ? setDesabilitado(true) : setDesabilitado(false)} */}
                             </div>
                         </div>
                         : null}
@@ -255,7 +292,7 @@ function PopUpCadastro({ isOpen, setModalOpen, children }) {
                         <div>
                             <div className="input-box">
                                 <label className="input-label">Cartão</label>
-                                <select id="" className="selecao" onChange={(event) => setIsCartao(event.target.value)}>
+                                <select id="" className="selecao" onChange={(event) => { setIsCartao(event.target.value) }}>
                                     <option value="0">--Selecione--</option>
                                     <option value="0">Nenhum</option>
                                     {dadosCartao.map(dados => (
@@ -266,7 +303,7 @@ function PopUpCadastro({ isOpen, setModalOpen, children }) {
                         </div>
                         : null}
 
-                    {parcelada ?
+                    {parcelada && dadosCartao.length > 0 ?
                         <div>
                             <div className="input-box">
                                 <label className="input-label">Parcelas</label>
@@ -291,7 +328,7 @@ function PopUpCadastro({ isOpen, setModalOpen, children }) {
 
                     <div className={window.location.pathname === '/dashboard/despesa' ? "modal__footer modal_footer_depesa" : "modal__footer modal_footer_receita"}>
                         <div><FaSpinner className="spinner" style={clicou ? styles.mostrar : styles.esconder} /></div>
-                        <button style={clicou ? styles.esconder : styles.mostrar}
+                        <button disabled={desabilitado === true} style={clicou ? styles.esconder : styles.mostrar}
                             onClick={window.location.pathname === '/dashboard/despesa' ? () => adicionarDespesa() : () => adicionarReceita()}>Adicionar</button>
                     </div>
 
