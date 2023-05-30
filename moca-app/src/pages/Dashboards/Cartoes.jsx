@@ -49,12 +49,13 @@ function Cartoes() {
         <div>
             <Sidebar />
             <div className="main-content">
-                <header className="header">
+            <header className="header">
                     <h2>
-                        <label style={{ cursor: "pointer" }} htmlFor="nav-toggle">
+                        <label style={{ cursor: 'pointer' }} htmlFor="nav-toggle" >
                             {/* <span className="material-symbols-outlined">menu</span> */}
                         </label>
                     </h2>
+
                     <div className="user-wrapper">
                         <div>
                             <small>Bem vindo,</small>

@@ -318,7 +318,7 @@ function PopUpCadastro({ isOpen, setModalOpen, children }) {
                                     setParcelada(isParceladaOption);
                                     setFixa(isFixa);
                                     setDesabilitado(isParceladaOption && !hasCartoes);
-                                }} className="selecao">
+                                }} className="selecao" >
                                     <option value="0">--Selecione--</option>
                                     {tipoDespesa.map(tipo => (
                                         <option key={tipo.id} value={tipo.id}>{tipo.opcao}</option>

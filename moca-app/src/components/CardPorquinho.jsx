@@ -16,7 +16,7 @@ function CardPorquinho(props) {
         { id: 6, nome: 'Casamento', valor: 'church' },
         { id: 7, nome: 'Outros', valor: 'more_horiz' },
     ];
-    const porquinho = categoriasPorquinho.find(categoria => categoria.id === props.opcao.idIcone);
+    const porquinho = categoriasPorquinho.find(categoria => categoria.id === parseInt(props.opcao.idIcone));
 
     useEffect(() => {
         const fetchPorcentagem = async () => {
@@ -40,6 +40,7 @@ function CardPorquinho(props) {
 
     return (
         <div className="card-porquinho" onClick={props.onClick} style={{cursor: "pointer"}}>
+            <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0" />
             <div className="icone">
                 <h2>{props.opcao.nome}</h2>
                 <br />

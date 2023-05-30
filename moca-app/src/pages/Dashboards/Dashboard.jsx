@@ -168,9 +168,9 @@ function HomeDashboard() {
 
                         <div className="card-pos">
 
-                            <div style={{ width: "100%", display: "flex" }}>
+                            <div className="card-pizza" >
                                 <ChartBarra receita={receita} despesa={despesa} />
-                                <div style={{ width: "250px", margin: "auto", display: "flex", flexDirection: "column", gap: "10px" }}>
+                                <div className="info-despesa-barra">
                                     <h3>Receitas: <span style={{ color: "#63B967" }}>R$ {receita === undefined ? <FaSpinner className="spinner" /> : receita.toFixed(2).replace('.', ',')}</span></h3>
                                     <h3>Despesas: <span style={{ color: "#E92121" }}>R$ {despesa === undefined ? <FaSpinner className="spinner" /> : despesa.toFixed(2).replace('.', ',')}</span></h3>
                                     <hr />

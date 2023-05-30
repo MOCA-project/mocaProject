@@ -105,7 +105,7 @@ function Cadastro() {
                             <small>{confirmeSenhaAlert}</small>
                         </div>
                         <div className="input-cadastro">
-                            <button type="submit" className="btn-cadastro">Cadastrar</button>
+                            <div className="btn-cadastro"><button type="submit">Cadastrar</button></div>
                         </div>
                     </form>
                 </div>

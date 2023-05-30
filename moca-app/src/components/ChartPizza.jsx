@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useEffect } from "react";
 import { useNavigate } from "react-router";
-import { Cell, Pie, PieChart, Tooltip } from "recharts";
+import { Cell, Pie, PieChart, ResponsiveContainer, Tooltip } from "recharts";
 
 function ChartPizza(props) {
 
@@ -41,28 +41,30 @@ function ChartPizza(props) {
 
     // Return do gráfico de pizza para o card
     return (
-        <PieChart width={500} height={280}>
-            {graficoDespesa && graficoDespesa.length > 0 ? (
-                <Pie
-                    dataKey="porcentagem"
-                    isAnimationActive={true}
-                    data={graficoDespesa}
-                    // cx={200}
-                    // cy={200}
-                    // outerRadius={80}
-                    label={({ descricao }) => `${descricao}`}
-                >
-                    {graficoDespesa.map((item, index) => (
-                        <Cell
-                            key={`cell-${index}`}
-                            fill={colors[index % colors.length]}
-                        />
-                    ))}
-                </Pie>
-            ) : null}
-            <Tooltip />
-            {/* <Legend /> */}
-        </PieChart>
+        <ResponsiveContainer width={350} height={150}>
+            <PieChart>
+                {graficoDespesa && graficoDespesa.length > 0 ? (
+                    <Pie
+                        dataKey="porcentagem"
+                        isAnimationActive={true}
+                        data={graficoDespesa}
+                        // cx={200}
+                        // cy={200}
+                        // outerRadius={80}
+                        label={({ descricao }) => `${descricao}`}
+                    >
+                        {graficoDespesa.map((item, index) => (
+                            <Cell
+                                key={`cell-${index}`}
+                                fill={colors[index % colors.length]}
+                            />
+                        ))}
+                    </Pie>
+                ) : null}
+                <Tooltip />
+                {/* <Legend /> */}
+            </PieChart>
+        </ResponsiveContainer>
     );
 
 }

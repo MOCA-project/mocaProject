@@ -378,7 +378,7 @@ footer .contato .rede-social img{
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 80vh;
+    height: 60vh;
     background-color: var(--branco);
 }
 
@@ -387,7 +387,7 @@ footer .contato .rede-social img{
     flex-direction: column;
     justify-content: center;
     align-items: flex-start;
-    width: 36%;
+    width: 90%;
     height: 44%;
     position: absolute;
     background: #FFFFFF;
@@ -464,6 +464,7 @@ footer .contato .rede-social img{
     z-index: 0;
     width: 18vw;
     height: 40vh;
+    display: none;
 }
 
 .bolaAzul{
@@ -472,6 +473,7 @@ footer .contato .rede-social img{
     left: 20%;
     z-index: 0;
     width: 15%;
+    display: none;
 }
 
 .texto-login{
@@ -483,22 +485,24 @@ footer .contato .rede-social img{
     justify-content: center;
     align-items: center;
     text-align: center;
-    gap: 5%;
+    gap: 20px;
+    margin-top: 20px;
 }
 
 .texto-login p{
-    font-size: 2.5rem;
+    font-size: 2rem;
     font-weight: 100;
     color: var(--preto);
-    letter-spacing: -0.015em
-    
+    letter-spacing: -0.015em;
+    text-align: center;
 }
 
 .texto-login h2{
-    font-size: 1.8rem;
+    font-size: 1.3rem;
     font-weight: 400;
     color: var(--preto);
     letter-spacing: -0.015em;
+    text-align: center;
 }
 
 
@@ -520,7 +524,7 @@ footer .contato .rede-social img{
     flex-direction: column;
     justify-content: center;
     align-items: flex-start;
-    width: 35%;
+    width: 90%;
     height: 60%;
     position: absolute;
     background: #FFFFFF;
@@ -570,9 +574,8 @@ footer .contato .rede-social img{
 }
 
 .input-cadastro button {
-    width: 30%;
+    width: 100px;
     height: 2rem;
-    margin-right: 69%;
     border-radius: 5px;
     background-color: var(--azul-claro);
     color: var(--branco);
@@ -581,6 +584,13 @@ footer .contato .rede-social img{
     transition: all .50s ease;
     cursor: pointer;
     border: none;
+}
+
+.input-cadastro .btn-cadastro {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: left;
 }
 
 .input-cadastro button:hover {
@@ -601,6 +611,7 @@ footer .contato .rede-social img{
     z-index: 0;
     width: 15vw;
     height: 35vh;
+    display: none;
 }
 
 .bolaAzulCadastro{
@@ -609,6 +620,7 @@ footer .contato .rede-social img{
     left: 50%;
     z-index: 0;
     width: 25%;
+    display: none;
 }
 
 .texto-cadastro{
@@ -619,22 +631,26 @@ footer .contato .rede-social img{
     flex-direction: column;
     justify-content: center;
     align-items:center;
-    gap: 5%;
+    gap: 20px;
+    margin-top: 20px;
 }
 
 .texto-cadastro p{
-    font-size: 2.5rem;
+    font-size: 2rem;
     font-weight: 100;
     color: var(--preto);
-    letter-spacing: -0.015em
-    
+    letter-spacing: -0.015em;
+    width: 100%;
+    text-align: center;
 }
 
 .texto-cadastro h2{
-    font-size: 1.7rem;
+    font-size: 1.3rem;
     font-weight: 400;
     color: var(--preto);
     letter-spacing: -0.015em;
+    text-align: center;
+    width: 100%;
 }
 
 .setaPagination {
@@ -715,6 +731,21 @@ footer .contato .rede-social img{
         border-radius: 15px;
         box-shadow: 12px 12px 10px var(--preto);
     }
+
+    .bolaPretaCadastro, .bolaAzulCadastro, .bolaAzul, .bolaPreta {
+        display: block;
+    }
+    .container-cadastro .card-cadastro, .container-login .card-login {
+        width: 40%;
+    }
+    .texto-cadastro p, .texto-login p{
+        font-size: 2.5rem;
+    }
+    
+    .texto-cadastro h2, .texto-login h2 {
+        font-size: 1.7em;
+    }
+
 }
 
 /* lg */

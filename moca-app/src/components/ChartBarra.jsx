@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useEffect } from "react";
 import { useNavigate } from "react-router";
-import { Bar, BarChart, Tooltip, XAxis } from "recharts";
+import { Bar, BarChart, ResponsiveContainer, Tooltip, XAxis } from "recharts";
 
 function ChartBarra(props) {
 
@@ -27,9 +27,9 @@ function ChartBarra(props) {
     // ele retorna para o usuario um botão para adicionar
     if (props.receita === 0 && props.despesa === 0) {
         return (
-            <div style={{display: "flex", flexDirection: "column", alignItems: "center"}}>
+            <div style={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
                 <h4>Ops, parece que você não possui nada cadastrado!</h4>
-                <button className="botaoGrafico" style={{margin: "10px 0"}}
+                <button className="botaoGrafico" style={{ margin: "10px 0" }}
                     onClick={() => navigate('/dashboard/receita')}>
                     Adicionar Receita
                 </button>
@@ -46,25 +46,25 @@ function ChartBarra(props) {
     // Return do gráfico de despesa e receita
     // gráfico de barra na vertical
     return (
-        <BarChart
-            width={230}
-            height={200}
-            data={data}
-            margin={{
-                top: 5,
-                right: 40,
-                left: 40,
-                bottom: 5,
-            }}
-        >
-            {/* <CartesianGrid strokeDasharray="3 3" /> */}
-            <XAxis dataKey="name" />
-            {/* <YAxis /> */}
-            <Tooltip />
-            {/* <Legend /> */}
-            <Bar dataKey="valor" fill="#8884d8" />
-            {/* <Bar dataKey="valor" fill="#82ca9d" /> */}
-        </BarChart>
+        <ResponsiveContainer width={250} height={200}>
+            <BarChart
+                data={data}
+                margin={{
+                    top: 5,
+                    right: 40,
+                    left: 40,
+                    bottom: 5,
+                }}
+            >
+                {/* <CartesianGrid strokeDasharray="3 3" /> */}
+                <XAxis dataKey="name" />
+                {/* <YAxis /> */}
+                <Tooltip />
+                {/* <Legend /> */}
+                <Bar dataKey="valor" fill="#8884d8" />
+                {/* <Bar dataKey="valor" fill="#82ca9d" /> */}
+            </BarChart>
+        </ResponsiveContainer>
     );
 }
 

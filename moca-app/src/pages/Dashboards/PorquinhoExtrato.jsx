@@ -120,15 +120,15 @@ function PorquinhoExtrato() {
                                     <th>Valor</th>
                                 </tr>
                             </thead>
-                            {extratoDados.map((porquinho) => (
-                                <tbody key={porquinho.valor}>
-                                    <tr data-label="Situação">
+                            <tbody >
+                                {extratoDados.map((porquinho) => (
+                                    <tr data-label="Situação" key={porquinho.valor}>
                                         <td>{porquinho.saque === true ? 'Retirado' : 'Adicionado'}</td>
                                         <td data-label="Data">{porquinho.data}</td>
-                                        <td>{porquinho.valor}</td>
+                                        <td>{porquinho.valor.toFixed(2).replace('.', ',')}</td>
                                     </tr>
-                                </tbody>
-                            ))}
+                                ))}
+                            </tbody>
                         </table>
                     </div>
                 </main>
