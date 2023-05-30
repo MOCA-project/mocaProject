@@ -8,14 +8,13 @@ function Configuracoes() {
     // Atributos
     const nomeUsuario = localStorage.getItem("nome");
     const idUsuario = localStorage.getItem("id");
-    const [configUsuario, setConfigUsuario] = useState([]);
+    const [configUsuario, setConfigUsuario] = useState({
+        enviaSms: false,
+        enviaEmail: false,
+        telefone: "",
+        email: "",
+    });
     const [editar, setEditar] = useState(false);
-    const [sms, setSms] = useState();
-    const [enviaEmail, setEnviaEmail] = useState();
-    const [email, setEmail] = useState();
-    const [telefone, setTelefone] = useState();
-    // const [senha, setSenha] = useState();
-    // const [confirmeSenha, setConfirmeSenha] = useState();
 
     function requisicao() {
         api.get(`usuarios/config/${idUsuario}`).then((response) => {
@@ -25,19 +24,24 @@ function Configuracoes() {
     }
 
     function salvarEdicao() {
+        const { enviaEmail, enviaSms, telefone, email } = configUsuario;
+        console.log(enviaEmail, enviaSms, telefone, email)
         api.patch(`usuarios/config/${idUsuario}`, {
             enviarEmail: enviaEmail,
-            enviarSms: sms,
+            enviarSms: enviaSms,
             numeroCelular: telefone,
-            email: email
+            email: email,
         }).then((response) => {
             console.log(response);
-        })
+            requisicao();
+        }).catch((error) => {
+            console.log(error);
+        });
     }
 
     useEffect(() => {
         requisicao();
-    }, [])
+    }, []);
 
     // Return do HTML
     return (
@@ -64,7 +68,17 @@ function Configuracoes() {
                             <div className="section-config">
                                 <span>Ativar lembretes (Notificações do APP)</span>
                                 <label className="toggle-switch">
-                                    <input type="checkbox" defaultChecked={configUsuario.enviaSms} disabled={editar === false} />
+                                    <input
+                                        type="checkbox"
+                                        checked={configUsuario.enviaSms}
+                                        disabled={!editar}
+                                        onChange={(event) =>
+                                            setConfigUsuario({
+                                                ...configUsuario,
+                                                enviaSms: event.target.checked,
+                                            })
+                                        }
+                                    />
                                     <div className="toggle-switch-background">
                                         <div className="toggle-switch-handle"></div>
                                     </div>
@@ -73,31 +87,72 @@ function Configuracoes() {
                             <div className="section-config">
                                 <span>Ativar notificações SMS</span>
                                 <label className="toggle-switch">
-                                    <input type="checkbox" defaultChecked={configUsuario.enviaEmail} disabled={editar === false} />
+                                    <input
+                                        type="checkbox"
+                                        checked={configUsuario.enviaEmail}
+                                        disabled={!editar}
+                                        onChange={(event) =>
+                                            setConfigUsuario({
+                                                ...configUsuario,
+                                                enviaEmail: event.target.checked,
+                                            })
+                                        }
+                                    />
                                     <div className="toggle-switch-background">
                                         <div className="toggle-switch-handle"></div>
                                     </div>
                                 </label>
-
                             </div>
                             <div className="section-config">
                                 <span>Número celular</span>
-                                <input type="text" className="input-text-config" defaultValue={configUsuario.telefone} disabled={editar === false} />
+                                <input
+                                    type="text"
+                                    className="input-text-config"
+                                    value={configUsuario.telefone}
+                                    disabled={!editar}
+                                    onChange={(event) =>
+                                        setConfigUsuario({
+                                            ...configUsuario,
+                                            telefone: event.target.value,
+                                        })
+                                    }
+                                />
                             </div>
                             <div className="section-config">
                                 <span>E-mail</span>
-                                <input type="text" className="input-text-config" defaultValue={configUsuario.email} disabled={editar === false} />
+                                <input
+                                    type="text"
+                                    className="input-text-config"
+                                    value={configUsuario.email}
+                                    disabled={!editar}
+                                    onChange={(event) =>
+                                        setConfigUsuario({
+                                            ...configUsuario,
+                                            email: event.target.value,
+                                        })
+                                    }
+                                />
                             </div>
-                            {/* <div className="section-config">
-                                <span>Alterar senha</span>
-                                <input type="password" className="input-text-config" disabled={editar === false} />
-                            </div>
-                            <div className="section-config">
-                                <span>Confirmar senha</span>
-                                <input type="password" className="input-text-config" disabled={editar === false}/>
-                            </div> */}
-                            {editar === false ? <button className="config-btn-editar" onClick={() => setEditar(true)}><span className="material-symbols-outlined">edit</span> Editar</button> :
-                                <button className="config-btn" onClick={() => { setEditar(false); salvarEdicao() }}><span className="material-symbols-outlined">save</span> Salvar</button>}
+                            {editar ? (
+                                <button
+                                    className="config-btn"
+                                    onClick={() => {
+                                        setEditar(false);
+                                        salvarEdicao();
+                                    }}
+                                >
+                                    <span className="material-symbols-outlined">save</span>{" "}
+                                    Salvar
+                                </button>
+                            ) : (
+                                <button
+                                    className="config-btn-editar"
+                                    onClick={() => setEditar(true)}
+                                >
+                                    <span className="material-symbols-outlined">edit</span>{" "}
+                                    Editar
+                                </button>
+                            )}
                         </div>
                     </div>
                 </main>

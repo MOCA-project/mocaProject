@@ -82,11 +82,29 @@ function Extrato() {
 
     }
 
+    function downloadTxt() {
+        api.get(`extrato/arquivoTxt/${idUsuario}/${mesAtual}/${anoAtual}`).then((response) => {
+            // Cria um blob a partir dos dados recebidos
+            const blob = new Blob([response.data], { type: 'text/plain' }); // Altere o tipo para 'text/plain' para gerar um arquivo TXT
+            // Resto do código permanece igual
+            const url = window.URL.createObjectURL(blob);
+            const link = document.createElement('a');
+            link.href = url;
+            link.setAttribute('download', 'arquivo.txt'); // Altere o nome do arquivo para 'arquivo.txt' ou o nome desejado
+            document.body.appendChild(link);
+            link.click();
+            link.remove();
+        }).catch((err) => {
+            console.error('Erro ao baixar o arquivo:', err);
+        })
+    }
+
 
 
     // Extrato por mes 
     const atualizarMesSelecionado = (novoMes, novoAno) => {
         setMesAtual(novoMes);
+        setAnoAtual(novoAno);
         requisicao(novoMes, novoAno);
     }
 
@@ -139,6 +157,13 @@ function Extrato() {
                         </div>
                         <div className="btn">
                             <button className="buttonDownload" onClick={() => download()}> Download Excel </button>
+                            <button className="buttonDownload" onClick={() => downloadTxt()}> Download TXT </button>
+                            <div>
+                                <label htmlFor="file-upload" className="buttonDownload">
+                                    <i className="fas fa-cloud-upload-alt"></i> Escolher arquivo
+                                </label>
+                                <input id="file-upload" type="file" style={{ display: 'none' }} />
+                            </div>
                         </div>
                     </div>
                     <PaginacaoMesesInput setMesAno={atualizarMesSelecionado} />
@@ -158,7 +183,7 @@ function Extrato() {
                             <tbody>
                                 {extrato.map((extrato) => {
                                     return (
-                                    <LinhaExtrato props={extrato} key={extrato.idReceita === null ? extrato.idDespesa : extrato.idReceita} />
+                                        <LinhaExtrato props={extrato} key={extrato.idReceita === null ? extrato.idDespesa : extrato.idReceita} />
                                     )
                                 })}
                             </tbody>

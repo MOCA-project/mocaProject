@@ -15,6 +15,8 @@ function Login() {
     const [emailValue, setEmailValue] = useState('');
     const [senhaValue, setSenhaValue] = useState('');
     const [emailAlert, setEmailAlert] = useState('');
+    const [emailAlertNotExtist, setEmailAlertNotExist] = useState('');
+    const [alertCredenciais, setAlertCredenciais] = useState('');
     const [senhaAlert, setSenhaAlert] = useState('');
     const navigate = useNavigate();
     const styles = {
@@ -25,29 +27,41 @@ function Login() {
     // Fução para logar o usuário
     function postLogin() {
 
-        if (emailValue === "" || emailValue === " ") {
-            setEmailAlert("Informe um email!");
-        } else if (senhaValue === "" || senhaValue === " ") {
-            setSenhaAlert("Digite a senha!");
-        } else {
-            console.log(emailValue, senhaValue);
+        const regexEmail = /\S+@\S+\.\S+/;
+
+        setEmailAlert(emailValue.trim() === '' ? 'Digite o email' : '');
+        setSenhaAlert(senhaValue.length < 6 || senhaValue.trim() === '' ? 'Digite a senha' : '');
+
+        if (emailValue.trim() !== '' && senhaValue.length >= 6 && senhaValue.trim() !== '') {
+            setClicou(true);
             api.post("usuarios/login", {
                 email: emailValue,
                 senha: senhaValue
             }).then((response) => {
                 console.log(response);
-                if (response.status === 200) {
-                    armazenar("nome", response.data.nome);
-                    armazenar("id", response.data.id);
-                    armazenar("token", response.data.token);
-                    navigate("/dashboard");
-                }
+                armazenar("nome", response.data.nome);
+                armazenar("id", response.data.id);
+                armazenar("token", response.data.token);
+                navigate("/dashboard");
+                setEmailAlertNotExist('');
             }).catch((err) => {
+                setClicou(false);
+                console.error(err.response.data)
                 if (err.response.status === 404) {
-                    alert("Email do usuário não cadastrado!");
+                    setEmailAlertNotExist("Email do usuário não cadastrado!");
+                }
+                if (err.response.status === 403) {
+                    setAlertCredenciais('Email ou senha incorreto');
                 }
             });
         }
+    }
+
+    function handleFormSubmit(event) {
+        event.preventDefault(); // Impede o comportamento padrão de recarregar a página
+
+        // Chamando a função postLogin()
+        postLogin();
     }
 
     // Return do HTML
@@ -62,21 +76,23 @@ function Login() {
                 <img className="bolaAzul" src={bolaAzul} alt="" />
                 <div className="card-login">
                     <h1>Login</h1>
-                    <form className="cont-login">
+                    <form className="cont-login" onSubmit={handleFormSubmit}>
                         <div className="input-login">
                             <input type="text" onChange={(event) => setEmailValue(event.target.value)} placeholder="Email" />
                             <small>{emailAlert}</small>
+                            <small>{emailAlertNotExtist}</small>
                         </div>
                         <div className="input-login">
                             <input type="password" onChange={(event) => setSenhaValue(event.target.value)} placeholder="Senha" />
                             <small>{senhaAlert}</small>
+                            <small>{alertCredenciais}</small>
                         </div>
                         <div className="input-login">
                             <div><FaSpinner className="spinner" style={clicou ? styles.mostrar : styles.esconder} /></div>
-                            <button type="button"
+                            <button type="submit"
                                 style={clicou ? styles.esconder : styles.mostrar}
                                 className="btn-login"
-                                onClick={() => { postLogin(); setClicou(true); }}>Login</button>
+                            >Login</button>
                         </div>
                     </form>
                 </div>

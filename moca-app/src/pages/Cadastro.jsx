@@ -18,6 +18,7 @@ function Cadastro() {
     // Consts para exibir frases de alertas
     const [nomeAlert, setNomeAlert] = useState('');
     const [emailAlert, setEmailAlert] = useState('');
+    const [emailAlertExist, setEmailAlertExist] = useState('');
     const [telefoneAlert, setTelefoneAlert] = useState('');
     const [senhaAlert, setSenhaAlert] = useState('');
     const [confirmeSenhaAlert, setConfirmeSenhaAlert] = useState('');
@@ -26,21 +27,19 @@ function Cadastro() {
     function postCadastro() {
 
         // Regex
-        let regexEmail = /\S+@\S+\.\S+/;
+        const regexEmail = /\S+@\S+\.\S+/;
+        const telefoneRegex = /^\d{4,5}-\d{4}$/;
+        const regexNumbers = /\d/;
+
 
         // Fazendo as validações dos inputs e cadastrando
-        if (nomeValue === "" || nomeValue === " ") {
-            setNomeAlert("Informe um nome!");
-        } else if (!regexEmail.test(emailValue)) {
-            setEmailAlert("Digite um email válido!");
-        } else if (telefoneValue === "" || telefoneValue === " ") {
-            setTelefoneAlert('Telefone inválido! EX: (99) 12345-6789 ou 99 1234-5678');
-        } else if (senhaValue === "" || senhaValue === " " || senhaValue.length < 6) {
-            setSenhaAlert("Senha inválida! Mínimo de 6 caracteres.");
-        } else if (senhaValue !== confirmeSenhaValue) {
-            setConfirmeSenhaAlert("Senhas não conferem!");
-        } else {
+        setNomeAlert(nomeValue.trim() === '' || regexNumbers.test(nomeValue) ? 'Digite um nome e sem números' : '');
+        setEmailAlert(!regexEmail.test(emailValue) ? 'Digite um email válido' : '');
+        setTelefoneAlert(!telefoneRegex.test(telefoneValue) ? 'Telefone inválido! EX: 98765-4321' : '');
+        setSenhaAlert(senhaValue.trim() === '' || senhaValue.length < 6 ? 'Senha inválida! Mínimo de 6 caracteres.' : '');
+        setConfirmeSenhaAlert(confirmeSenhaValue !== senhaValue ? 'Senhas não conferem!' : '');
 
+        if (nomeValue.trim() !== '' && !regexNumbers.test(nomeValue) && regexEmail.test(emailValue) && telefoneRegex.test(telefoneValue) && senhaValue.trim() !== '' && senhaValue.length >= 6 && confirmeSenhaValue === senhaValue) {
             // Chamando o axios para criar um cliente = usuario
             // e passando um json com o valor dos inputs
             api.post("usuarios/cadastrar/", {
@@ -51,15 +50,22 @@ function Cadastro() {
                 idTipoPerfil: 5,
             }).then(() => {
                 navigate('/login');
+                setEmailAlertExist('');
             }).catch((err) => {
-                if (err.response.status() === 409) {
-                    alert("Usuário ja cadastrado!");
-                } else if (err.response.status() === 404) {
-                    alert("Página não encontrada!");
+                console.error(err.response.data.statusCode);
+                if (err.response.status === 409) {
+                    setEmailAlertExist('Email ja existente');
                 }
             });
         }
 
+    }
+
+    function handleFormSubmit(event) {
+        event.preventDefault(); // Impede o comportamento padrão de recarregar a página
+
+        // Chamando a função postLogin()
+        postCadastro();
     }
 
 
@@ -77,13 +83,14 @@ function Cadastro() {
                 <div className="card-cadastro">
                     <h1>Cadastre-se</h1>
                     <form className="cont-cadastro">
-                        <div className="input-cadastro">
+                        <div className="input-cadastro" onSubmit={handleFormSubmit}>
                             <input type="text" onChange={(event) => setNomeValue(event.target.value)} placeholder="Nome completo" />
                             <small>{nomeAlert}</small>
                         </div>
                         <div className="input-cadastro">
                             <input type="text" onChange={(event) => setEmailValue(event.target.value)} placeholder="Email" />
                             <small>{emailAlert}</small>
+                            <small>{emailAlertExist}</small>
                         </div>
                         <div className="input-cadastro">
                             <input type="text" onChange={(event) => setTelefoneValue(event.target.value)} placeholder="Telefone" />
@@ -98,7 +105,7 @@ function Cadastro() {
                             <small>{confirmeSenhaAlert}</small>
                         </div>
                         <div className="input-cadastro">
-                            <button type="button" className="btn-cadastro" onClick={() => postCadastro()}>Cadastrar</button>
+                            <button type="submit" className="btn-cadastro">Cadastrar</button>
                         </div>
                     </form>
                 </div>

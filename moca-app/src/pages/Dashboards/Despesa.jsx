@@ -65,7 +65,13 @@ function Despesas() {
         setAnoAtual(novoAno);
         requisicao(novoMes, novoAno);
         requisicaoListaDespesa(novoMes, novoAno);
-      };
+    };
+
+    const atualizarCampos = () => {
+        requisicao(mesAtual, anoAtual);
+        requisicaoListaDespesa(mesAtual, anoAtual);
+        setLoading(true);
+    };
 
     return (
         <div>
@@ -124,7 +130,7 @@ function Despesas() {
                             </thead>
                             {listaDespesa.map((despesa) => {
                                 return (
-                                    <LinhaTabela despesa={despesa} key={despesa.idDespesa} idDespesa={despesa} />
+                                    <LinhaTabela despesa={despesa} key={despesa.idDespesa} idDespesa={despesa} atualizar={atualizarCampos} />
                                 )
                             })}
                         </table>

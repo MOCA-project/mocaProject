@@ -33,7 +33,7 @@ function Home() {
                         <h1><b>Tenha suas finanças sempre organizadas de qualquer lugar</b></h1>
                         <div className="frase1">
                             <p>Com o nosso app de organização financeira, controle suas despesas e receitas de forma simples e eficiente, para alcançar seus objetivos financeiros sem stress.</p>
-                            <button className="cadastrar">Cadastro</button>
+                            <button className="cadastrar" onClick={() => navigate('/cadastro')}>Cadastro</button>
                         </div>
                         <div className="dados">
                             <div>
@@ -168,8 +168,8 @@ function Home() {
                         </ul>
                     </div>
                     <div className="footer-btn">
-                        <button className="entrar" onClick={() => navigate('../html/cadastro.html')}>LOGIN</button>
-                        <button className="cadastrar" onClick={() => navigate('../html/login.html')}>CADASTRAR</button>
+                        <button className="entrar" onClick={() => navigate('/login')}>LOGIN</button>
+                        <button className="cadastrar" onClick={() => navigate('/cadastro')}>CADASTRAR</button>
                     </div>
                 </div>
                 <hr />

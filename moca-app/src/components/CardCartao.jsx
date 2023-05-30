@@ -3,10 +3,13 @@ import Mastercard from "../assets/img/Mastercard-Logo.png";
 import Visa from "../assets/img/logo-visa.png";
 import Elo from "../assets/img/logo-elo.png";
 import Hipercard from "../assets/img/hipercard.png";
+import Confirmacao from "./PopUpConfirmacao.jsx";
+import { useState } from "react";
 
 function CartoesCard(props) {
     const nomeUsuario = localStorage.getItem("nome");
     // const [loading, setLoading] = useState(false);
+    const [showModal, setShowModal] = useState(false);
     const corCartao = [
         { id: 1, opcao: "Azul Royal", codigo: "#0071C5" },
         { id: 2, opcao: "Verde Esmeralda", codigo: "#50C878" },
@@ -27,14 +30,6 @@ function CartoesCard(props) {
     const corSelecionada = corCartao.find(cor => cor.id === props.props.idCor);
     const bandeiraSelecionada = bandeiraCartao.find(bandeira => bandeira.opcao === props.props.bandeira);
 
-    function deletar() {
-        api.delete(`cartoes/${props.props.idCartao}`).then((response) => {
-            console.log(response);
-            props.atualizar();
-        }).catch((err) => {
-            console.error(err);
-        })
-    }
 
     return (
         <div className="card-credit">
@@ -47,7 +42,7 @@ function CartoesCard(props) {
             </div>
             <div className="informacoes-cartao">
                 <h2>{props.props.apelido}
-                    <button onClick={deletar}>
+                    <button onClick={() => setShowModal(true)}>
                         <span className="material-symbols-outlined deletar-cartao">delete</span>
                         </button></h2>
                 <div className="informacoes">
@@ -61,6 +56,7 @@ function CartoesCard(props) {
                     </div>
                 </div>
             </div>
+            <Confirmacao isOpen={showModal} setModalOpen={() => { setShowModal(!showModal) }} idCartao={props.props.idCartao}/>
         </div>
     );
 }

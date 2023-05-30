@@ -51,6 +51,32 @@
   color: #9C9C9C;
 }
 
+.botoes-popup {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  margin: 1em 0;
+}
+
+.confirme-popup, .nega-popup {
+  width: 150px;
+  height: 40px;
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: 500;
+  font-size: 1.2em;
+  letter-spacing: 0.050em;
+}
+
+.confirme-popup {
+  background-color: #4BA64F;
+}
+
+.nega-popup {
+  background-color: #EC5959;
+}
 
 
 

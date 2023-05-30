@@ -16,7 +16,9 @@ function LinhaTabela(props) {
     function pagarDespesa() {
         api.patch(`despesas/pagar/${props.despesa.idDespesa}`).then((response) => {
             console.log(response.status);
-            navigate('/dashboard/despesa');
+            props.atualizar();
+        }).catch((err) => {
+            console.error(err);
         });
     }
 
@@ -25,24 +27,23 @@ function LinhaTabela(props) {
         if (window.location.pathname === '/dashboard/despesa') {
             api.patch(`despesas/${props.despesa.idDespesa}`, {
                 descricao: descricao,
-                valor: valor,
+                valor: valor !== undefined ? valor : props.receita.valor,
                 data: data
-            })
-                .then((response) => {
-                    console.log(response);
-                    navigate('/dashboard/despesa');
-                })
-                .catch((err) => {
-                    console.log(err);
-                });
-        } else if (window.location.pathname === '/dashboard/receita'){
+            }).then((response) => {
+                console.log(response);
+                props.atualizar();
+            }).catch((err) => {
+                console.log(err);
+            });
+        } else if (window.location.pathname === '/dashboard/receita') {
             api.patch(`receitas/${props.receita.idReceita}`, {
                 descricao: descricao,
-                valor: valor,
+                valor: valor !== undefined ? valor : props.receita.valor,
                 data: data
             }).then((response) => {
                 console.log(response);
                 navigate('/dashboard/receita');
+                props.atualizar();
             }).catch((err) => {
                 console.log(err);
             })
@@ -54,12 +55,12 @@ function LinhaTabela(props) {
         if (window.location.pathname === '/dashboard/despesa') {
             api.delete(`despesas/${props.despesa.idDespesa}`).then((response) => {
                 console.log(response);
-                navigate('/dashboard/despesa');
+                props.atualizar();
             });
-        } else if (window.location.pathname === '/dashboard/receita'){
+        } else if (window.location.pathname === '/dashboard/receita') {
             api.delete(`receitas/${props.receita.idReceita}`).then((response) => {
                 console.log(response);
-                navigate('/dashboard/receita');
+                props.atualizar();
             })
         }
     }
@@ -69,12 +70,12 @@ function LinhaTabela(props) {
             <tr>
                 <td data-label="Situação">
                     {window.location.pathname === '/dashboard/despesa' && props.despesa.paid === false ?
-                        <span id="negativo" className="material-symbols-outlined" onClick={() => pagarDespesa()}>close</span>
+                        <span id="negativo" title="Clicar para pagar" className="material-symbols-outlined" onClick={() => pagarDespesa()}>close</span>
                         :
-                        <span id="positivo" className="material-symbols-outlined">done</span>
+                        <span id="positivo" title="Pago" className="material-symbols-outlined">done</span>
                     }
                     {window.location.pathname === '/dashboard/receita' ??
-                        <span id="positivo" className="material-symbols-outlined">done</span>
+                        <span id="positivo" title="Recebido" className="material-symbols-outlined">done</span>
                     }
                 </td>
                 <td data-label="Data">

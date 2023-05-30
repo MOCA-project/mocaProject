@@ -17,7 +17,7 @@ function HomeDashboard() {
     // Constants para recuperar dados do localStorage
     const nomeUsuario = localStorage.getItem("nome");
     const idUsuario = localStorage.getItem("id");
-    const navigate =useNavigate();
+    const navigate = useNavigate();
     // useStates para salvar os dados e exibir na tela
     const [saldo, setSaldo] = useState();
     const [receita, setReceita] = useState();
@@ -27,7 +27,9 @@ function HomeDashboard() {
     const [graficoReceitas, setGraficoReceitas] = useState([]);
     const [opcoes, setOpcoes] = useState([]);
     const [cartoesUsuario, setCartoesUsuario] = useState([]);
-    const limitarCartoes = cartoesUsuario.slice(0, 4);
+    const limitarCartoes = cartoesUsuario.slice(0, 2);
+    const [porquinhosUsuario, setPorquinhoUsuario] = useState([]);
+    const limitarPorquinho = porquinhosUsuario.slice(0, 4);
     const corCartao = [
         { id: 1, opcao: "Azul Royal", codigo: "#0071C5" },
         { id: 2, opcao: "Verde Esmeralda", codigo: "#50C878" },
@@ -87,6 +89,7 @@ function HomeDashboard() {
             setDespesa(response.data.despesas);
             setSaldoCartao(response.data.despesaCartao);
             setCartoesUsuario(response.data.cartoes);
+            setPorquinhoUsuario(response.data.porquinhos);
         });
     }
 
@@ -197,7 +200,7 @@ function HomeDashboard() {
                                         </div>
                                     )
                                 })}
-                                <div className="saber-mais-cartao" onClick={() => navigate('dashboard/cartoes')}>
+                                <div className="saber-mais-cartao" onClick={() => navigate('/dashboard/cartoes')}>
                                     <span className="material-symbols-outlined">chevron_right</span>
                                     <span>Saber mais</span>
                                 </div>
@@ -210,6 +213,21 @@ function HomeDashboard() {
                         </div>
                         <div className="card-pos">
                             <h2>Porquinho</h2>
+                            <div className="container-card-cartao-dash">
+                                {limitarPorquinho.map((porquinho) => {
+                                    const porcentagem = (porquinho.valorAtual / porquinho.valorFinal) * 100;
+                                    return (
+                                        <div className="card-porquinho-home" key={porquinho.id}>
+                                            <span>{porcentagem.toFixed(0)}%</span>
+                                            <span>{porquinho.nome}</span>
+                                        </div>
+                                    )
+                                })}
+                                <div className="saber-mais-porquinho" onClick={() => navigate('/dashboard/porquinho')}>
+                                    <span className="material-symbols-outlined">chevron_right</span>
+                                    <span>Saber mais</span>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </main>

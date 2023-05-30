@@ -115,22 +115,20 @@ function PorquinhoExtrato() {
                         <table className="table-porquinho">
                             <thead>
                                 <tr>
-                                    <th>Situação</th>
+                                    <th>Ação</th>
                                     <th>Data</th>
                                     <th>Valor</th>
-                                    <th>Ações</th>
                                 </tr>
                             </thead>
-                            <tbody>
-                                {/* {extratoDados.map((porquinho) => (
-                                    <tr data-label="Situação" key={porquinho.valor}>
-                                        <td>{porquinho.saque}</td>
+                            {extratoDados.map((porquinho) => (
+                                <tbody key={porquinho.valor}>
+                                    <tr data-label="Situação">
+                                        <td>{porquinho.saque === true ? 'Retirado' : 'Adicionado'}</td>
                                         <td data-label="Data">{porquinho.data}</td>
                                         <td>{porquinho.valor}</td>
-                                        <td></td>
                                     </tr>
-                                ))} */}
-                            </tbody>
+                                </tbody>
+                            ))}
                         </table>
                     </div>
                 </main>

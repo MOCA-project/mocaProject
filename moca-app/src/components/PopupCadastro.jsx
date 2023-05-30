@@ -58,117 +58,185 @@ function PopUpCadastro({ isOpen, setModalOpen, children }) {
         { id: 12, opcao: "12x" },
     ];
     const dateSystem = new Date();
-    const dataConvertPt = dateSystem.toLocaleDateString("pt-BR");
-    const dataConvert = dateSystem.toLocaleDateString("sv-SE");
-    // Categoria
-    const [categoria, setCategoria] = useState();
+    // Campos
+    const [categoria, setCategoria] = useState('0');
     const [clicou, setClicou] = useState(false);
-    const [valorValue, setValorValue] = useState();
-    const [descricaoValue, setDescricaoValue] = useState();
-    const [tipoDespesaValue, setTipoDespesaValue] = useState();
+    const [valorValue, setValorValue] = useState(0);
+    const [descricaoValue, setDescricaoValue] = useState('');
+    const [tipoDespesaValue, setTipoDespesaValue] = useState('0');
     const [fixa, setFixa] = useState(false);
     const [parcelada, setParcelada] = useState(false);
-    const [isCartao, setIsCartao] = useState();
+    const [isCartao, setIsCartao] = useState('0');
     const [dadosCartao, setDadosCartao] = useState([]);
     const [idCartao, setIdCartao] = useState();
-    const [data, setData] = useState();
-    const [quantidadeParcelas, setQuantidadeParcelas] = useState();
+    const [data, setData] = useState('');
+    const [quantidadeParcelas, setQuantidadeParcelas] = useState('0');
     const [desabilitado, setDesabilitado] = useState(false);
-    const [alertValor, setAlertValor] = useState();
+    // Alerts
+    const [alertValor, setAlertValor] = useState('');
     const [alertCategoria, setAlertCategoria] = useState('');
     const [alertDescricao, setAlertDescricao] = useState('');
     const [alertData, setAlertData] = useState('');
-    const [erroGeral, setErroGeral] = useState('');
+    const [alertQtdParcelas, setAlertQtdParcelas] = useState('');
+    const [alertCartao, setAlertCartao] = useState('');
+    const [alertTpDespesa, setAlertTpDespesa] = useState('');
+    const [alertLimite, setAlertLimite] = useState('');
+
 
 
 
     function adicionarDespesa() {
-        setClicou(true);
+
+        const cartaoEncontrado = dadosCartao.find(cartao => cartao.idCartao === parseInt(isCartao));
 
         if (tipoDespesaValue === '1') {
-            api.post("despesas/", {
-                descricao: descricaoValue,
-                valor: valorValue,
-                data: dataConvert,
-                isPaid: false,
-                isParcela: false,
-                idCliente: idUsuario,
-                idTipoDespesa: categoria,
-            }).then((response) => {
-                console.log(response.data);
-                window.location.href = '/dashboard/despesa';
-            }).catch((err) => {
-                if (err.response.status() === 404) {
-                    alert("Página não encontrada!");
-                }
-            });
+
+            setAlertValor(valorValue <= 0 ? "Informe um valor positivo" : '');
+            setAlertCategoria(categoria === '0' ? "Selecione uma categoria" : '');
+            setAlertDescricao(descricaoValue.trim() === '' ? "Digite uma descrição" : '');
+            setAlertData(data === '' ? "Informe uma data" : '');
+            setAlertTpDespesa(tipoDespesaValue === '0' ? "Selecione o tipo de despesa" : "");
+
+            if (valorValue > 0 && categoria !== '0' && descricaoValue.trim() !== '' && data !== '') {
+                setClicou(true);
+                api.post("despesas/", {
+                    descricao: descricaoValue,
+                    valor: valorValue,
+                    data: data,
+                    isPaid: false,
+                    isParcela: false,
+                    idCliente: idUsuario,
+                    idTipoDespesa: categoria,
+                }).then((response) => {
+                    console.log(response.data);
+                    window.location.href = '/dashboard/despesa';
+                }).catch((err) => {
+                    if (err.response.status() === 404) {
+                        alert("Página não encontrada!");
+                    }
+                    setClicou(false);
+                });
+            }
+
         } else if (tipoDespesaValue === '2') {
-            api.post("despesas/fixa", {
-                descricao: descricaoValue,
-                valor: valorValue,
-                data: data,
-                idCliente: idUsuario,
-                idTipoDespesa: categoria,
-                isCartao: isCartao !== '0' ? true : false,
-                idCartao: isCartao !== '0' ? isCartao : null,
-                paid: false,
-                parcela: true
-            }).then((response) => {
-                console.log(response);
-                window.location.href = '/dashboard/despesa';
-            }).catch((err) => {
-                console.log(err)
-            });
+
+            setAlertValor(valorValue <= 0 ? "Informe um valor positivo" : '');
+            setAlertCategoria(categoria === '0' ? "Selecione uma categoria" : '');
+            setAlertDescricao(descricaoValue.trim() === '' ? "Digite uma descrição" : '');
+            setAlertData(data === '' ? "Informe uma data" : '');
+            setAlertTpDespesa(tipoDespesaValue === '0' ? "Selecione o tipo de despesa" : "");
+
+            if (valorValue > 0 && categoria !== '0' && descricaoValue.trim() !== '' && data !== '' && parseInt(isCartao) !== 0) {
+
+                // setClicou(true);
+                // console.log((cartaoEncontrado.utilizado - cartaoEncontrado.limite));
+                if ((cartaoEncontrado.limite - cartaoEncontrado.utilizado) >= (valorValue * 12)) {
+                    setAlertLimite('');
+                    api.post("despesas/fixa", {
+                        descricao: descricaoValue,
+                        valor: valorValue,
+                        data: data,
+                        idCliente: idUsuario,
+                        idTipoDespesa: categoria,
+                        isCartao: true,
+                        idCartao: isCartao,
+                        paid: false,
+                        parcela: true
+                    }).then((response) => {
+                        console.log(response);
+                        window.location.href = '/dashboard/despesa';
+                    }).catch((err) => {
+                        console.log(err);
+                        setClicou(false);
+                    });
+                } else if ((cartaoEncontrado.limite - cartaoEncontrado.utilizado) < (valorValue * 12)) {
+                    setAlertLimite('Valor ultrapassa o limite do cartão');
+                    setClicou(false);
+                }
+            }
+
+            if (parseInt(isCartao) === 0 && valorValue > 0 && categoria !== '0' && descricaoValue.trim() !== '' && data !== '') {
+                setAlertLimite('');
+                api.post("despesas/fixa", {
+                    descricao: descricaoValue,
+                    valor: valorValue,
+                    data: data,
+                    idCliente: idUsuario,
+                    idTipoDespesa: categoria,
+                    isCartao: false,
+                    idCartao: null,
+                    paid: false,
+                    parcela: true
+                }).then((response) => {
+                    console.log(response);
+                    window.location.href = '/dashboard/despesa';
+                }).catch((err) => {
+                    console.log(err)
+                    setClicou(false);
+                });
+            }
+
         } else if (tipoDespesaValue === '3') {
-            api.post("despesas/parcelada", {
-                descricao: descricaoValue,
-                valor: valorValue,
-                data: data,
-                idCliente: idUsuario,
-                idTipoDespesa: categoria,
-                parcelas: quantidadeParcelas,
-                idCartao: isCartao !== '0' ? isCartao : null
-            }).then((response) => {
-                console.log(response);
-                window.location.href = '/dashboard/despesa';
-            }).catch((err) => {
-                console.log(err)
-            });
+
+            setAlertValor(valorValue <= 0 ? "Informe um valor positivo" : '');
+            setAlertCategoria(categoria === '0' ? "Selecione uma categoria" : '');
+            setAlertDescricao(descricaoValue.trim() === '' ? "Digite uma descrição" : '');
+            setAlertData(data === '' ? "Informe uma data" : '');
+            setAlertQtdParcelas(quantidadeParcelas === '0' ? 'Selecione quantas parcelas' : '');
+            setAlertCartao(isCartao === '0' ? 'Selecione um cartão' : '');
+            setAlertTpDespesa(tipoDespesaValue === '0' ? "Selecione o tipo de despesa" : "");
+
+            if (valorValue > 0 && categoria !== '0' && descricaoValue.trim() !== '' && data !== ''
+                && quantidadeParcelas !== '0' && parseInt(isCartao) !== 0) {
+                setClicou(true);
+                if ((cartaoEncontrado.limite - cartaoEncontrado.utilizado) >= (valorValue * 12)) {
+                    api.post("despesas/parcelada", {
+                        descricao: descricaoValue,
+                        valor: valorValue,
+                        data: data,
+                        idCliente: idUsuario,
+                        idTipoDespesa: categoria,
+                        parcelas: quantidadeParcelas,
+                        idCartao: isCartao
+                    }).then((response) => {
+                        console.log(response);
+                        window.location.href = '/dashboard/despesa';
+                    }).catch((err) => {
+                        console.log(err)
+                        setClicou(false);
+                    });
+                } else if ((cartaoEncontrado.limite - cartaoEncontrado.utilizado) < (valorValue * 12)) {
+                    setAlertLimite('Valor ultrapassa o limite do cartão');
+                    setClicou(false);
+                } else {
+                    setClicou(false);
+                }
+            }
+        } else if (tipoDespesaValue === '0') {
+
+            setAlertValor(valorValue <= 0 ? "Informe um valor positivo" : '');
+            setAlertCategoria(categoria === '0' ? "Selecione uma categoria" : '');
+            setAlertDescricao(descricaoValue.trim() === '' ? "Digite uma descrição" : '');
+            setAlertData(data === '' ? "Informe uma data" : '');
+            setAlertTpDespesa(tipoDespesaValue === '0' ? "Selecione o tipo de despesa" : "");
         }
-
-        //SE A PAGINA ESTIVER EM DESPESA IRA EXECUTAR A FUNCAO DESPESA
-        // console.log({
-        //     valor: valorValue,
-        //     categoria: categoria,
-        //     descricao: descricaoValue,
-        //     data: dataConvert,
-        // });
-
 
     }
 
     function adicionarReceita() {
 
-        // console.log({
-        //     valor: valorValue,
-        //     categoria: categoria,
-        //     descricao: descricaoValue,
-        //     data: dataConvert,
-        // });
-        if (valorValue <= 0 || valorValue === "") {
-            setErroGeral("Erro no preenchimento do formulario!");
-        } else if (categoria === '0') {
-            setErroGeral("Erro no preenchimento do formulario!");
-        } else if (descricaoValue === "") {
-            setErroGeral("Erro no preenchimento do formulario!");
-        } else if (data === '') {
-            setErroGeral("Erro no preenchimento do formulario!");
-        } else {
+        setAlertValor(valorValue <= 0 ? "Informe um valor positivo!" : "");
+        setAlertCategoria(categoria === '0' ? "Selecione uma categoria!" : "");
+        setAlertDescricao(descricaoValue.trim() === '' ? "Digite uma descrição!" : "");
+        setAlertData(data === '' ? "Informe uma data" : "");
+
+
+        if (valorValue > 0 && categoria !== '0' && descricaoValue.trim() !== '' && data !== '') {
             setClicou(true);
             api.post("receitas/", {
                 descricao: descricaoValue,
                 valor: valorValue,
-                data: dataConvert,
+                data: data,
                 idCliente: idUsuario,
                 idTipoReceita: categoria,
             }).then((response) => {
@@ -181,30 +249,6 @@ function PopUpCadastro({ isOpen, setModalOpen, children }) {
 
         }
     }
-
-    useEffect(() => {
-        if (valorValue <= 0 || valorValue === "") {
-            setAlertValor("Informe um valor positivo!");
-            setDesabilitado(true);
-        } else {
-            setAlertValor("");
-        }
-        if (categoria === '0') {
-            setAlertCategoria("Selecione uma categoria!");
-        } else {
-            setAlertCategoria("");
-        }
-        if (descricaoValue === "") {
-            setAlertDescricao("Digite uma descrição!");
-        } else {
-            setAlertDescricao("");
-        }
-        if (data === '') {
-            setAlertData("Informe uma data");
-        } else {
-            setAlertData('');
-        }
-    }, [valorValue, categoria, descricaoValue, data]);
 
     useEffect(() => {
         const data = new Date();
@@ -221,7 +265,6 @@ function PopUpCadastro({ isOpen, setModalOpen, children }) {
             <div id="demo-modal" className="modal">
                 <div className="modal__content">
                     <h1>{window.location.pathname === '/dashboard/despesa' ? 'Nova Despesa' : 'Nova Receita'}</h1>
-                    <small>{erroGeral}</small>
 
                     <div className="input-box">
                         <label className="input-label">Valor</label>
@@ -270,8 +313,10 @@ function PopUpCadastro({ isOpen, setModalOpen, children }) {
                                     setTipoDespesaValue(event.target.value);
                                     const selectedOption = parseInt(event.target.value);
                                     const isParceladaOption = selectedOption === 3;
+                                    const isFixa = selectedOption === 2;
                                     const hasCartoes = dadosCartao.length > 0;
                                     setParcelada(isParceladaOption);
+                                    setFixa(isFixa);
                                     setDesabilitado(isParceladaOption && !hasCartoes);
                                 }} className="selecao">
                                     <option value="0">--Selecione--</option>
@@ -279,6 +324,7 @@ function PopUpCadastro({ isOpen, setModalOpen, children }) {
                                         <option key={tipo.id} value={tipo.id}>{tipo.opcao}</option>
                                     ))}
                                 </select>
+                                <small>{alertTpDespesa}</small>
                                 {parcelada && !desabilitado ? null : (
                                     <small>{desabilitado ? 'Nenhum cartão disponível' : ''}</small>
                                 )}
@@ -299,6 +345,7 @@ function PopUpCadastro({ isOpen, setModalOpen, children }) {
                                         <option key={dados.idCartao} value={dados.idCartao}>{dados.apelido}</option>
                                     ))}
                                 </select>
+                                <small>{alertLimite}</small>
                             </div>
                         </div>
                         : null}
@@ -313,6 +360,7 @@ function PopUpCadastro({ isOpen, setModalOpen, children }) {
                                         <option key={parcelas.id} value={parcelas.id}>{parcelas.opcao}</option>
                                     ))}
                                 </select>
+                                <small>{alertQtdParcelas}</small>
                             </div>
                             <div className="input-box">
                                 <label className="input-label">Cartão</label>
@@ -322,6 +370,7 @@ function PopUpCadastro({ isOpen, setModalOpen, children }) {
                                         <option key={dados.idCartao} value={dados.idCartao}>{dados.apelido}</option>
                                     ))}
                                 </select>
+                                <small>{alertCartao}</small>
                             </div>
                         </div>
                         : null}

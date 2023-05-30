@@ -7,6 +7,16 @@ import api from "../api";
 function CardPorquinho(props) {
     const [porcentagem, setPorcentagem] = useState(0);
     const idUsuario = localStorage.getItem("id");
+    const categoriasPorquinho = [
+        { id: 1, nome: 'Viagem', valor: 'flight' },
+        { id: 2, nome: 'Estudos', valor: 'school' },
+        { id: 3, nome: 'Reserva de emergência', valor: 'payments' },
+        { id: 4, nome: 'Casa', valor: 'home' },
+        { id: 5, nome: 'Carro', valor: 'directions_car' },
+        { id: 6, nome: 'Casamento', valor: 'church' },
+        { id: 7, nome: 'Outros', valor: 'more_horiz' },
+    ];
+    const porquinho = categoriasPorquinho.find(categoria => categoria.id === props.opcao.idIcone);
 
     useEffect(() => {
         const fetchPorcentagem = async () => {
@@ -33,7 +43,7 @@ function CardPorquinho(props) {
             <div className="icone">
                 <h2>{props.opcao.nome}</h2>
                 <br />
-                <span className="material-symbols-outlined">flight_takeoff</span>
+                <span className="material-symbols-outlined">{porquinho.valor}</span>
             </div>
             <div className="linha"></div>
             <div className="grafico">

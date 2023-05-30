@@ -6,12 +6,12 @@ import { useNavigate } from "react-router";
 function PopUpCartao({ isOpen, setModalOpen }) {
     const idUsuario = localStorage.getItem("id");
     const [clicou, setClicou] = useState(false);
-    const limite = document.getElementById("limite");
-    const [tipo, setTipo] = useState();
+    const [limite, setLimite] = useState(0);
+    const [tipo, setTipo] = useState('0');
     const [apelido, setApelido] = useState('');
     const [vencimento, setVencimento] = useState('')
-    const [bandeira, setBandeira] = useState();
-    const [cor, setCor] = useState();
+    const [bandeira, setBandeira] = useState('0');
+    const [cor, setCor] = useState('0');
     const navigate = useNavigate();
     const corCartao = [
         { id: 1, opcao: "Azul Royal", codigo: "#0071C5" },
@@ -36,24 +36,48 @@ function PopUpCartao({ isOpen, setModalOpen }) {
             display: 'block'
         }
     };
+    const [alertLimite, setAlertLimite] = useState('');
+    const [alertTipo, setAlertTipo] = useState('');
+    const [alertBandeira, setAlertBandeira] = useState('');
+    const [alertVencimento, setAlertVencimento] = useState('');
+    const [alertVencimentoRegex, setAlertVencimentoRegex] = useState('');
+    const [alertCor, setAlertCor] = useState('');
+    const [alertApelido, setAlertApelido] = useState('');
 
 
     function requisicao() {
-        api.post(`cartoes/`, {
-            limite: limite.value,
-            idCliente: idUsuario,
-            idTipo: tipo,
-            idCor: cor,
-            bandeira: bandeira,
-            apelido: apelido,
-            vencimento: vencimento
-        }).then((response) => {
-            console.log(response);
-            window.location.href = '/dashboard/cartoes';
-        })
-        console.log(vencimento);
 
-        setClicou(true);
+        const regex = /^(0[1-9]|1[0-2])\/\d{2}$/;
+
+        setAlertLimite(limite <= 0 ? 'Digite um valor válido' : '');
+        setAlertTipo(tipo === '0' ? 'Selecione um tipo' : '');
+        setAlertBandeira(bandeira === '0' ? 'Selecione uma bandeira' : '');
+        setAlertVencimentoRegex(!regex.test(vencimento) ? 'Informe um vencimento válido EX: MM/AA' : '');
+        setAlertVencimento(vencimento.trim() === '' ? 'Informe o vencimento' : '');
+        setAlertCor(cor === '0' ? 'Selecione uma cor' : '');
+        setAlertApelido(apelido.trim() === '' ? 'Digite um apelido para o cartão' : '');
+
+
+        if (limite > 0 && tipo !== '0' && bandeira !== '0' && regex.test(vencimento) && vencimento.trim() !== '' && cor !== '0' && apelido.trim() !== '') {
+            setClicou(true);
+
+            api.post(`cartoes/`, {
+                limite: limite,
+                idCliente: idUsuario,
+                idTipo: tipo,
+                idCor: cor,
+                bandeira: bandeira,
+                apelido: apelido,
+                vencimento: vencimento
+            }).then((response) => {
+                console.log(response);
+                window.location.href = '/dashboard/cartoes';
+            }).catch((err) => {
+                console.error(err);
+                setClicou(false);
+            });
+        }
+
     }
 
 
@@ -66,7 +90,8 @@ function PopUpCartao({ isOpen, setModalOpen }) {
 
                     <div className="input-box">
                         <label className="input-label">Limite</label>
-                        <input placeholder="00,00" id="limite" className="input" type="number" />
+                        <input placeholder="00,00" className="input" type="number" onChange={(event) => setLimite(event.target.value)} />
+                        <small>{alertLimite}</small>
                     </div>
 
                     <div className="input-box">
@@ -76,6 +101,7 @@ function PopUpCartao({ isOpen, setModalOpen }) {
                             <option value="1">Débito</option>
                             <option value="2">Crédito</option>
                         </select>
+                        <small>{alertTipo}</small>
                     </div>
 
                     <div className="input-box">
@@ -86,11 +112,14 @@ function PopUpCartao({ isOpen, setModalOpen }) {
                                 <option key={opcao.id} value={opcao.opcao}>{opcao.opcao}</option>
                             ))}
                         </select>
+                        <small>{alertBandeira}</small>
                     </div>
 
                     <div className="input-box">
                         <label className="input-label">Vencimento</label>
                         <input type="text" placeholder="MM/AA" className="input" id="vencimento" onChange={(event) => { setVencimento(event.target.value) }} />
+                        <small>{alertVencimento}</small>
+                        <small>{alertVencimentoRegex}</small>
                     </div>
 
                     <div className="input-box">
@@ -103,11 +132,13 @@ function PopUpCartao({ isOpen, setModalOpen }) {
                                 </option>
                             ))}
                         </select>
+                        <small>{alertCor}</small>
                     </div>
 
                     <div className="input-box">
                         <label className="input-label">Apelido</label>
                         <input type="text" className="input" onChange={(event) => setApelido(event.target.value)} />
+                        <small>{alertApelido}</small>
                     </div>
 
                     <div className="modal__footer modal_footer_cartao">
