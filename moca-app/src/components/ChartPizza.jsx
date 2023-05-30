@@ -41,7 +41,7 @@ function ChartPizza(props) {
 
     // Return do gráfico de pizza para o card
     return (
-        <ResponsiveContainer width={350} height={150}>
+        <ResponsiveContainer width={380} height={200}>
             <PieChart>
                 {graficoDespesa && graficoDespesa.length > 0 ? (
                     <Pie

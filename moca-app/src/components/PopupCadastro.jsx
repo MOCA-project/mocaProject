@@ -189,7 +189,7 @@ function PopUpCadastro({ isOpen, setModalOpen, children }) {
             if (valorValue > 0 && categoria !== '0' && descricaoValue.trim() !== '' && data !== ''
                 && quantidadeParcelas !== '0' && parseInt(isCartao) !== 0) {
                 setClicou(true);
-                if ((cartaoEncontrado.limite - cartaoEncontrado.utilizado) >= (valorValue * 12)) {
+                if ((cartaoEncontrado.limite - cartaoEncontrado.utilizado) >= valorValue) {
                     api.post("despesas/parcelada", {
                         descricao: descricaoValue,
                         valor: valorValue,
@@ -205,7 +205,7 @@ function PopUpCadastro({ isOpen, setModalOpen, children }) {
                         console.log(err)
                         setClicou(false);
                     });
-                } else if ((cartaoEncontrado.limite - cartaoEncontrado.utilizado) < (valorValue * 12)) {
+                } else if ((cartaoEncontrado.limite - cartaoEncontrado.utilizado) < valorValue) {
                     setAlertLimite('Valor ultrapassa o limite do cartão');
                     setClicou(false);
                 } else {
@@ -371,6 +371,7 @@ function PopUpCadastro({ isOpen, setModalOpen, children }) {
                                     ))}
                                 </select>
                                 <small>{alertCartao}</small>
+                                <small>{alertLimite}</small>
                             </div>
                         </div>
                         : null}
