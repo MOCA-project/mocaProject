@@ -35,7 +35,7 @@ function Cadastro() {
         // Fazendo as validações dos inputs e cadastrando
         setNomeAlert(nomeValue.trim() === '' || regexNumbers.test(nomeValue) ? 'Digite um nome e sem números' : '');
         setEmailAlert(!regexEmail.test(emailValue) ? 'Digite um email válido' : '');
-        setTelefoneAlert(!telefoneRegex.test(telefoneValue) ? 'Telefone inválido! EX: 98765-4321' : '');
+        setTelefoneAlert(!telefoneRegex.test(telefoneValue) ? 'Telefone inválido, utilize 11 digitos! EX: DD912344321' : '');
         setSenhaAlert(senhaValue.trim() === '' || senhaValue.length < 6 ? 'Senha inválida! Mínimo de 6 caracteres.' : '');
         setConfirmeSenhaAlert(confirmeSenhaValue !== senhaValue ? 'Senhas não conferem!' : '');
 

@@ -763,7 +763,7 @@
 
 .bandeira {
   position: relative;
-  right: -200px;
+  /* right: -200px; */
 }
 
 .bandeira img {
