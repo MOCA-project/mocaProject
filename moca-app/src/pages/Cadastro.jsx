@@ -28,7 +28,7 @@ function Cadastro() {
 
         // Regex
         const regexEmail = /\S+@\S+\.\S+/;
-        const telefoneRegex = /^\d{4,5}-\d{4}$/;
+        const telefoneRegex = /^\d{11}$/;
         const regexNumbers = /\d/;
 
 
@@ -82,8 +82,8 @@ function Cadastro() {
                 <img className="bolaAzulCadastro" src={vetorCadastro1} alt="" />
                 <div className="card-cadastro">
                     <h1>Cadastre-se</h1>
-                    <form className="cont-cadastro">
-                        <div className="input-cadastro" onSubmit={handleFormSubmit}>
+                    <form className="cont-cadastro" onSubmit={handleFormSubmit}>
+                        <div className="input-cadastro">
                             <input type="text" onChange={(event) => setNomeValue(event.target.value)} placeholder="Nome completo" />
                             <small>{nomeAlert}</small>
                         </div>
