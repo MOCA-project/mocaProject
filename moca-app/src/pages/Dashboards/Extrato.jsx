@@ -32,15 +32,11 @@ function Extrato() {
         setSelectedFile(file);
 
         if (file) {
-            const filePath = event.target.value; // Obtém o caminho do arquivo selecionado
-            console.log('Caminho do arquivo:', filePath);
+            const formData = new FormData();
+            formData.append('arquivo', file);
 
-            // Exemplo de envio de arquivo usando o Axios:
-            const payload = {
-                arquivo: filePath
-            };
 
-            api.post(`extrato/arquivoTxt/upload/${idUsuario}`, { file: payload })
+            api.post(`extrato/arquivoTxt/upload/${idUsuario}`, { file: formData })
                 .then(response => {
                     console.log(response);
                 })
