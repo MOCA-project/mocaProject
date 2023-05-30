@@ -45,6 +45,7 @@ function HomeDashboard() {
         { id: 3, opcao: "Elo", codigo: Elo },
         { id: 4, opcao: "Hipercard", codigo: Hipercard },
     ];
+    const dateAno = new Date();
 
 
 
@@ -112,7 +113,7 @@ function HomeDashboard() {
                         <select onChange={(event) => { requisicao(event.target.value) }}>
                             {opcoes.map((opcao) => (
                                 <option key={opcao.value} value={opcao.value}>
-                                    {opcao.label}
+                                    {opcao.label} / {dateAno.getFullYear()}
                                 </option>
                             ))}
                         </select>

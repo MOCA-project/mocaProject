@@ -25,6 +25,31 @@ function Extrato() {
     const [anoAtual, setAnoAtual] = useState(new Date().getFullYear());
     const [extrato, setExtrato] = useState([]);
     const navigate = useNavigate();
+    const [selectedFile, setSelectedFile] = useState('');
+
+    const handleFileChange = (event) => {
+        const file = event.target.files[0];
+        setSelectedFile(file);
+
+        if (file) {
+            const filePath = event.target.value; // Obtém o caminho do arquivo selecionado
+            console.log('Caminho do arquivo:', filePath);
+
+            // Exemplo de envio de arquivo usando o Axios:
+            const payload = {
+                arquivo: filePath
+            };
+
+            api.post(`extrato/arquivoTxt/upload/${idUsuario}`, { file: payload })
+                .then(response => {
+                    console.log(response);
+                })
+                .catch(error => {
+                    console.error(error);
+                });
+        };
+    };
+
 
 
     // Validar se o usuario efetuou login antes de acessar a dashboard
@@ -32,6 +57,7 @@ function Extrato() {
         if (idUsuario === "") {
             navigate("/login");
         }
+
     }
     verificarAutenticacao();
 
@@ -162,7 +188,7 @@ function Extrato() {
                                 <label htmlFor="file-upload" className="buttonDownload">
                                     <i className="fas fa-cloud-upload-alt"></i> Escolher arquivo
                                 </label>
-                                <input id="file-upload" type="file" style={{ display: 'none' }} />
+                                <input id="file-upload" type="file" style={{ display: 'none' }} onChange={handleFileChange} />
                             </div>
                         </div>
                     </div>
