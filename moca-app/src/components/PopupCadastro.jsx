@@ -39,9 +39,9 @@ function PopUpCadastro({ isOpen, setModalOpen, children }) {
         { id: 9, opcao: "Outras fontes de receita" }
     ];
     const tipoDespesa = [
-        { id: 1, opcao: "Comum" },
+        { id: 1, opcao: "Dinheiro" },
         { id: 2, opcao: "Fixa" },
-        { id: 3, opcao: "Parcelada" }
+        { id: 3, opcao: "Cartão" }
     ];
     const parcelas = [
         { id: 1, opcao: "1x" },
