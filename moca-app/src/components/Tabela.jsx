@@ -27,7 +27,7 @@ function LinhaTabela(props) {
         if (window.location.pathname === '/dashboard/despesa') {
             api.patch(`despesas/${props.despesa.idDespesa}`, {
                 descricao: descricao,
-                valor: valor !== undefined ? valor : props.receita.valor,
+                valor: valor !== undefined ? valor : props.despesa.valor,
                 data: data
             }).then((response) => {
                 console.log(response);

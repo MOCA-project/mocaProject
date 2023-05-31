@@ -376,7 +376,7 @@ function PopUpCadastro({ isOpen, setModalOpen, children }) {
                         </div>
                         : null}
 
-                    <div className={window.location.pathname === '/dashboard/despesa' ? "modal__footer modal_footer_depesa" : "modal__footer modal_footer_receita"}>
+                    <div className={window.location.pathname === '/dashboard/despesa' ? "modal__footer modal_footer_receita" : "modal__footer modal_footer_receita"}>
                         <div><FaSpinner className="spinner" style={clicou ? styles.mostrar : styles.esconder} /></div>
                         <button disabled={desabilitado === true} style={clicou ? styles.esconder : styles.mostrar}
                             onClick={window.location.pathname === '/dashboard/despesa' ? () => adicionarDespesa() : () => adicionarReceita()}>Adicionar</button>

@@ -20,7 +20,7 @@ function LinhaExtrato(props) {
             <td data-label="Data">{dataFormatada}</td>
             <td data-label="Descrição">{props.props.descricao}</td>
             <td data-label="Categoria">{props.props.categoria}</td>
-            <td data-label="Valor">R$ {props.props.valor.toFixed(2)}</td>
+            <td data-label="Valor">R$ {props.props.valor.toFixed(2).replace('.', ',')}</td>
         </tr>
     );
 }

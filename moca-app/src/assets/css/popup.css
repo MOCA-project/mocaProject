@@ -195,7 +195,7 @@
   font-weight: 700;
 }
 
-@media only screen and (max-width: 768px) {
+@media only screen and (max-width: 960px) {
   .modal__content {
     width: 90%;
   }
@@ -207,7 +207,7 @@
 
   .input,
   .selecao {
-    padding: 0;
+    /* padding: 0; */
     margin: 0;
   }
 
@@ -215,7 +215,7 @@
     margin: 0;
   }
 
-  .input-box {
+  /* .input-box {
      margin: 0;
-  }
+  } */
 }
