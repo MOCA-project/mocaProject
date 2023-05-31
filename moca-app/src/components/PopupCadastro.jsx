@@ -34,7 +34,7 @@ function PopUpCadastro({ isOpen, setModalOpen, children }) {
         { id: 4, opcao: "Freelance" },
         { id: 5, opcao: "Aluguel" },
         { id: 6, opcao: "Ajuda Financeira" },
-        { id: 7, opcao: "ReembolsosReembolsos" },
+        { id: 7, opcao: "Reembolsos" },
         { id: 8, opcao: "Prêmios" },
         { id: 9, opcao: "Outras fontes de receita" }
     ];

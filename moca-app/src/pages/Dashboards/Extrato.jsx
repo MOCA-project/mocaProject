@@ -182,7 +182,7 @@ function Extrato() {
                             <button className="buttonDownload" onClick={() => downloadTxt()}> Download TXT </button>
                             <div>
                                 <label htmlFor="file-upload" className="buttonDownload">
-                                    <i className="fas fa-cloud-upload-alt"></i> Upload de arquivo
+                                    <i className="fas fa-cloud-upload-alt"></i> Upload arquivo
                                 </label>
                                 <input id="file-upload" type="file" style={{ display: 'none' }} onChange={handleFileChange} />
                             </div>
