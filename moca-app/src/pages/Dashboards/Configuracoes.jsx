@@ -25,19 +25,23 @@ function Configuracoes() {
 
     function salvarEdicao() {
         const { enviaEmail, enviaSms, telefone, email } = configUsuario;
-        console.log(enviaEmail, enviaSms, telefone, email)
-        api.patch(`usuarios/config/${idUsuario}`, {
+        const data = {
             enviarEmail: enviaEmail,
             enviarSms: enviaSms,
             numeroCelular: telefone,
             email: email,
-        }).then((response) => {
-            console.log(response);
-            requisicao();
-        }).catch((error) => {
-            console.log(error);
-        });
+        };
+
+        api.patch(`usuarios/config/${idUsuario}`, data)
+            .then((response) => {
+                console.log(response);
+                requisicao();
+            })
+            .catch((error) => {
+                console.log(error);
+            });
     }
+
 
     useEffect(() => {
         requisicao();
@@ -70,13 +74,13 @@ function Configuracoes() {
                                 <label className="toggle-switch">
                                     <input
                                         type="checkbox"
-                                        checked={configUsuario.enviaSms}
+                                        defaultChecked={configUsuario.enviaSms}
                                         disabled={!editar}
                                         onChange={(event) =>
-                                            setConfigUsuario({
-                                                ...configUsuario,
+                                            setConfigUsuario((prevState) => ({
+                                                ...prevState,
                                                 enviaSms: event.target.checked,
-                                            })
+                                            }))
                                         }
                                     />
                                     <div className="toggle-switch-background">
@@ -89,13 +93,13 @@ function Configuracoes() {
                                 <label className="toggle-switch">
                                     <input
                                         type="checkbox"
-                                        checked={configUsuario.enviaEmail}
+                                        defaultChecked={configUsuario.enviaEmail}
                                         disabled={!editar}
                                         onChange={(event) =>
-                                            setConfigUsuario({
-                                                ...configUsuario,
+                                            setConfigUsuario((prevState) => ({
+                                                ...prevState,
                                                 enviaEmail: event.target.checked,
-                                            })
+                                            }))
                                         }
                                     />
                                     <div className="toggle-switch-background">

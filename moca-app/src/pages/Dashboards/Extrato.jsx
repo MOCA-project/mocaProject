@@ -33,17 +33,22 @@ function Extrato() {
 
         if (file) {
             const formData = new FormData();
-            formData.append('arquivo', file);
+            formData.append('file', file);
 
+            const config = {
+                headers: {
+                    'Content-Type': 'multipart/form-data'
+                }
+            };
 
-            api.post(`extrato/arquivoTxt/upload/${idUsuario}`, { file: formData })
+            api.post(`extrato/arquivoTxt/upload/${idUsuario}`, formData, config)
                 .then(response => {
                     console.log(response);
                 })
                 .catch(error => {
                     console.error(error);
                 });
-        };
+        }
     };
 
 
@@ -180,12 +185,12 @@ function Extrato() {
                         <div className="btn">
                             <button className="buttonDownload" onClick={() => download()}> Download Excel </button>
                             <button className="buttonDownload" onClick={() => downloadTxt()}> Download TXT </button>
-                            <div>
+                            {/* <div>
                                 <label htmlFor="file-upload" className="buttonDownload">
                                     <i className="fas fa-cloud-upload-alt"></i> Upload arquivo
                                 </label>
                                 <input id="file-upload" type="file" style={{ display: 'none' }} onChange={handleFileChange} />
-                            </div>
+                            </div> */}
                         </div>
                     </div>
                     <PaginacaoMesesInput setMesAno={atualizarMesSelecionado} />
